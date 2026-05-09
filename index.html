@@ -75,6 +75,8 @@ body{font-family:'Inter','Be Vietnam Pro',system-ui,sans-serif;background:var(--
 /* HERO */
 .hero{position:relative;min-height:100vh;display:flex;align-items:center;justify-content:center;padding:140px 32px 80px;z-index:2}
 .hero-inner{max-width:1280px;margin:0 auto;text-align:center;position:relative}
+#cardCanvas{position:absolute;left:50%;top:0;transform:translateX(-50%);width:100%;max-width:780px;height:480px;z-index:0;pointer-events:none;opacity:.95}
+@media (max-width:880px){#cardCanvas{height:300px}}
 .hero-eyebrow{display:inline-flex;align-items:center;gap:10px;padding:7px 16px;border-radius:30px;background:rgba(255,255,255,.04);border:1px solid var(--line-2);font-size:11px;font-weight:700;color:var(--t2);letter-spacing:.5px;backdrop-filter:blur(12px);margin-bottom:24px}
 .hero-eyebrow .e-ico{width:16px;height:16px;border-radius:5px;background:var(--wxp-grad);display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:900;color:#fff}
 .hero-h1{font-size:clamp(40px,7vw,88px);font-weight:900;line-height:.95;letter-spacing:-.04em;color:#fff;margin-bottom:24px}
@@ -543,7 +545,8 @@ body{font-family:'Inter','Be Vietnam Pro',system-ui,sans-serif;background:var(--
 
 <!-- ======================== HERO ======================== -->
 <section class="hero">
-  <div class="hero-inner reveal">
+  <canvas id="cardCanvas"></canvas>
+  <div class="hero-inner reveal" style="position:relative;z-index:2">
     <div class="hero-eyebrow">
       <span class="e-ico">M</span>
       Memo for Danny Le · Strategy &amp; Development · Pre-decisional
@@ -1885,9 +1888,241 @@ if(!reduceMotion && canvas){
     document.body.style.background = 'radial-gradient(ellipse at top,#1A0A35,#080C16 60%)';
   }
 } else {
-  // reduced motion / no canvas — static fallback
   if(canvas) canvas.style.display = 'none';
   document.body.style.background = 'radial-gradient(ellipse at top,#1A0A35 0%,#080C16 60%)';
+}
+
+// ============= 3D FLOATING WALLET CARD =============
+const cardCanvas = document.getElementById('cardCanvas');
+if(!reduceMotion && cardCanvas){
+  try {
+    const cardRenderer = new THREE.WebGLRenderer({canvas:cardCanvas, alpha:true, antialias:!isMobile});
+    cardRenderer.setPixelRatio(Math.min(window.devicePixelRatio, isMobile ? 1.25 : 1.5));
+    const sizeHero = ()=>{
+      const r = cardCanvas.getBoundingClientRect();
+      cardRenderer.setSize(r.width, r.height, false);
+      cardCamera.aspect = r.width / r.height;
+      cardCamera.updateProjectionMatrix();
+    };
+
+    const cardScene = new THREE.Scene();
+    const cardCamera = new THREE.PerspectiveCamera(35, 1.6, 0.1, 100);
+    cardCamera.position.set(0, 0.2, 5.2);
+    cardCamera.lookAt(0, 0, 0);
+
+    // ---- ROUNDED CARD GEOMETRY (hand-rolled, no addon) ----
+    function roundedRectShape(w, h, r){
+      const s = new THREE.Shape();
+      s.moveTo(-w/2 + r, -h/2);
+      s.lineTo(w/2 - r, -h/2);
+      s.quadraticCurveTo(w/2, -h/2, w/2, -h/2 + r);
+      s.lineTo(w/2, h/2 - r);
+      s.quadraticCurveTo(w/2, h/2, w/2 - r, h/2);
+      s.lineTo(-w/2 + r, h/2);
+      s.quadraticCurveTo(-w/2, h/2, -w/2, h/2 - r);
+      s.lineTo(-w/2, -h/2 + r);
+      s.quadraticCurveTo(-w/2, -h/2, -w/2 + r, -h/2);
+      return s;
+    }
+    const cardGeom = new THREE.ExtrudeGeometry(roundedRectShape(2.6, 1.6, 0.18), {
+      depth:0.06, bevelEnabled:true, bevelSegments:6, steps:1, bevelSize:0.025, bevelThickness:0.025, curveSegments:24
+    });
+    cardGeom.center();
+
+    // ---- CARD FACE TEXTURE (canvas-rendered) ----
+    function makeCardTexture(){
+      const c = document.createElement('canvas');
+      c.width = 1024; c.height = 640;
+      const x = c.getContext('2d');
+
+      // base gradient
+      const g = x.createLinearGradient(0, 0, 1024, 640);
+      g.addColorStop(0, '#FF2E63');
+      g.addColorStop(0.55, '#7C2DFF');
+      g.addColorStop(1.05, '#00D9C0');
+      x.fillStyle = g; x.fillRect(0, 0, 1024, 640);
+
+      // glow blob top right
+      const r1 = x.createRadialGradient(820, 110, 20, 820, 110, 360);
+      r1.addColorStop(0, 'rgba(255,255,255,0.35)');
+      r1.addColorStop(1, 'rgba(255,255,255,0)');
+      x.fillStyle = r1; x.fillRect(0, 0, 1024, 640);
+
+      // glow blob bottom left
+      const r2 = x.createRadialGradient(180, 540, 20, 180, 540, 380);
+      r2.addColorStop(0, 'rgba(0,217,192,0.4)');
+      r2.addColorStop(1, 'rgba(0,217,192,0)');
+      x.fillStyle = r2; x.fillRect(0, 0, 1024, 640);
+
+      // dotted-grid watermark (Masan AGM motif)
+      x.fillStyle = 'rgba(255,255,255,0.08)';
+      for(let i=0;i<22;i++) for(let j=0;j<14;j++){
+        const dx = i*48+24, dy = j*48+24;
+        x.beginPath(); x.arc(dx, dy, 2, 0, Math.PI*2); x.fill();
+      }
+
+      // brand
+      x.fillStyle = '#fff';
+      x.font = '900 80px Inter, system-ui';
+      x.fillText('Win', 60, 160);
+      x.fillStyle = 'rgba(255,255,255,0.9)';
+      x.font = 'italic 900 80px Inter, system-ui';
+      x.fillText('X', 220, 160);
+      x.fillStyle = '#fff';
+      x.font = '900 80px Inter, system-ui';
+      x.fillText('Pay', 280, 160);
+
+      // tag
+      x.fillStyle = 'rgba(255,255,255,0.7)';
+      x.font = '700 22px Inter';
+      x.fillText('CONSUMER WALLET · TCB-LINKED', 60, 200);
+
+      // chip
+      x.fillStyle = 'rgba(255,255,255,0.18)';
+      x.fillRect(60, 250, 100, 76);
+      x.strokeStyle = 'rgba(255,255,255,0.5)';
+      x.lineWidth = 1.5;
+      for(let i=0;i<4;i++){ x.beginPath(); x.moveTo(60, 270+i*16); x.lineTo(160, 270+i*16); x.stroke(); }
+      x.beginPath(); x.moveTo(110, 250); x.lineTo(110, 326); x.stroke();
+
+      // mono number
+      x.fillStyle = 'rgba(255,255,255,0.9)';
+      x.font = '800 44px "JetBrains Mono", ui-monospace';
+      x.fillText('•••• •••• ••••  4291', 60, 410);
+
+      // names
+      x.fillStyle = 'rgba(255,255,255,0.65)';
+      x.font = '700 18px Inter';
+      x.fillText('CARDHOLDER', 60, 470);
+      x.fillStyle = '#fff';
+      x.font = '700 26px Inter';
+      x.fillText('NGUYEN VAN MINH', 60, 500);
+
+      x.fillStyle = 'rgba(255,255,255,0.65)';
+      x.font = '700 18px Inter';
+      x.fillText('VALID THRU', 60, 540);
+      x.fillStyle = '#fff';
+      x.font = '700 26px "JetBrains Mono", ui-monospace';
+      x.fillText('05/30', 60, 570);
+
+      // TCB pill
+      x.fillStyle = 'rgba(255,255,255,0.22)';
+      x.beginPath();
+      const px=820, py=470, pw=160, ph=44, pr=22;
+      x.moveTo(px+pr, py);
+      x.lineTo(px+pw-pr, py); x.quadraticCurveTo(px+pw, py, px+pw, py+pr);
+      x.lineTo(px+pw, py+ph-pr); x.quadraticCurveTo(px+pw, py+ph, px+pw-pr, py+ph);
+      x.lineTo(px+pr, py+ph); x.quadraticCurveTo(px, py+ph, px, py+ph-pr);
+      x.lineTo(px, py+pr); x.quadraticCurveTo(px, py, px+pr, py);
+      x.fill();
+      x.strokeStyle = 'rgba(255,255,255,0.4)';
+      x.lineWidth = 1; x.stroke();
+      x.fillStyle = '#fff';
+      x.font = '900 22px Inter';
+      x.fillText('TCB · NAPAS', 838, 498);
+
+      // VietQR mark
+      x.fillStyle = 'rgba(255,255,255,0.85)';
+      x.font = '900 16px Inter';
+      x.fillText('VietQR · 247', 820, 200);
+      // mini QR pattern
+      x.fillStyle = 'rgba(255,255,255,0.7)';
+      for(let i=0;i<7;i++) for(let j=0;j<7;j++){
+        if((i+j+Math.floor(i*j/3))%2===0) x.fillRect(820+i*8, 220+j*8, 6, 6);
+      }
+
+      const t = new THREE.CanvasTexture(c);
+      t.anisotropy = 8;
+      t.colorSpace = THREE.SRGBColorSpace;
+      return t;
+    }
+
+    const cardTex = makeCardTexture();
+
+    const cardMat = new THREE.MeshPhysicalMaterial({
+      map: cardTex,
+      metalness: 0.35,
+      roughness: 0.28,
+      clearcoat: 1.0,
+      clearcoatRoughness: 0.18,
+      iridescence: 0.55,
+      iridescenceIOR: 1.4,
+      iridescenceThicknessRange: [100, 600],
+      envMapIntensity: 1.1
+    });
+
+    const backMat = new THREE.MeshPhysicalMaterial({
+      color: 0x14081F,
+      metalness: 0.4,
+      roughness: 0.32,
+      clearcoat: 0.8,
+      clearcoatRoughness: 0.25
+    });
+
+    // attach face material to front, back/sides as dark
+    const matArray = [cardMat, backMat];
+    cardGeom.clearGroups();
+    cardGeom.addGroup(0, Infinity, 1);
+    // front face is the last set of faces — front group via index range
+    // Hack: use just one material for now (cardMat) since extrude side faces will be small
+    const card = new THREE.Mesh(cardGeom, cardMat);
+    card.position.y = 0.05;
+    cardScene.add(card);
+
+    // ---- LIGHTS ----
+    const amb = new THREE.AmbientLight(0xffffff, 0.55);
+    cardScene.add(amb);
+
+    const key = new THREE.DirectionalLight(0xffffff, 1.2);
+    key.position.set(3, 4, 5);
+    cardScene.add(key);
+
+    const rim1 = new THREE.PointLight(0xFF2E63, 1.4, 12);
+    rim1.position.set(-3, 1.2, 2);
+    cardScene.add(rim1);
+
+    const rim2 = new THREE.PointLight(0x00D9C0, 1.0, 10);
+    rim2.position.set(3, -1.5, 2.5);
+    cardScene.add(rim2);
+
+    const rim3 = new THREE.PointLight(0x7C2DFF, 0.8, 8);
+    rim3.position.set(0, 2.5, 3);
+    cardScene.add(rim3);
+
+    // ---- INTERACTION ----
+    let mouseX = 0, mouseY = 0, targetRotX = 0, targetRotY = 0;
+    window.addEventListener('mousemove', (e)=>{
+      mouseX = (e.clientX / window.innerWidth - 0.5) * 2;
+      mouseY = (e.clientY / window.innerHeight - 0.5) * 2;
+      targetRotY = mouseX * 0.35;
+      targetRotX = mouseY * -0.18;
+    });
+
+    sizeHero();
+    window.addEventListener('resize', sizeHero);
+
+    function tickCard(t){
+      const time = t / 1000;
+      // base float
+      card.rotation.y += (targetRotY + Math.sin(time*0.5)*0.18 - card.rotation.y) * 0.05;
+      card.rotation.x += (targetRotX + Math.cos(time*0.4)*0.05 - card.rotation.x) * 0.05;
+      card.position.y = 0.05 + Math.sin(time*0.6) * 0.06;
+
+      // moving rim lights
+      rim1.position.x = -3 + Math.sin(time*0.5) * 0.5;
+      rim2.position.y = -1.5 + Math.cos(time*0.4) * 0.5;
+
+      cardRenderer.render(cardScene, cardCamera);
+      requestAnimationFrame(tickCard);
+    }
+    requestAnimationFrame(tickCard);
+    console.log('[WinXPay] 3D wallet card initialized');
+  } catch(err){
+    console.warn('[WinXPay] 3D card init failed:', err);
+    if(cardCanvas) cardCanvas.style.display = 'none';
+  }
+} else {
+  if(cardCanvas) cardCanvas.style.display = 'none';
 }
 </script>
 
