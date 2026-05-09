@@ -686,6 +686,145 @@ body{font-family:var(--font-body);background:var(--paper) !important;color:var(-
 .f2-success-s{font-family:var(--font-body);font-size:12px;color:rgba(255,255,255,0.62);line-height:1.55;margin-bottom:6px}
 .f2-success-mono{font-family:var(--font-mono);font-size:11px;color:rgba(255,255,255,0.50);margin-top:4px;letter-spacing:0.03em}
 
+/* ============================================================
+   FLOW 3 — eKYC (Section 03): voice agent + CCCD scan + VNeID + TCB
+   ============================================================ */
+.f3-stage{display:grid;grid-template-columns:1fr 320px 1fr;gap:36px;align-items:start;padding:32px 0;position:relative}
+@media (max-width:1100px){.f3-stage{grid-template-columns:1fr;gap:32px;justify-items:center}}
+
+/* LEFT panel — voice agent */
+.f3-voice{padding:0;align-self:center;max-width:280px;width:100%}
+.f3-voice-eyebrow{font-family:var(--font-mono);font-size:10.5px;font-weight:500;color:var(--ink-3);letter-spacing:0.16em;text-transform:uppercase;margin-bottom:14px;display:flex;align-items:center;gap:10px}
+.f3-voice-eyebrow::before{content:'';width:24px;height:1px;background:var(--ink-3)}
+.f3-voice-h{font-family:var(--font-display);font-size:24px;font-style:italic;font-weight:400;color:var(--ink);letter-spacing:-0.022em;line-height:1.15;margin-bottom:18px}
+.f3-wave{display:flex;align-items:center;justify-content:flex-start;gap:3px;height:48px;padding:0 0 14px 0}
+.f3-wave span{display:block;width:3px;border-radius:2px;background:var(--accent);transform-origin:50% 50%;height:8px;opacity:.30}
+[data-f3="speaking"] .f3-wave span{animation:f3wave 1s ease-in-out infinite}
+[data-f3="listening"] .f3-wave span{animation:f3wave 1.6s ease-in-out infinite;background:var(--ink-2)}
+.f3-wave span:nth-child(1){animation-delay:.00s}.f3-wave span:nth-child(2){animation-delay:.05s}.f3-wave span:nth-child(3){animation-delay:.10s}
+.f3-wave span:nth-child(4){animation-delay:.15s}.f3-wave span:nth-child(5){animation-delay:.20s}.f3-wave span:nth-child(6){animation-delay:.25s}
+.f3-wave span:nth-child(7){animation-delay:.30s}.f3-wave span:nth-child(8){animation-delay:.35s}.f3-wave span:nth-child(9){animation-delay:.40s}
+.f3-wave span:nth-child(10){animation-delay:.45s}.f3-wave span:nth-child(11){animation-delay:.50s}.f3-wave span:nth-child(12){animation-delay:.55s}
+@keyframes f3wave{0%,100%{transform:scaleY(.4);opacity:.45}50%{transform:scaleY(2.6);opacity:1}}
+.f3-transcript{display:flex;flex-direction:column;gap:10px;min-height:180px}
+.f3-bubble{padding:0 0 10px 0;border-bottom:1px solid var(--rule);animation:f3fadeUp .5s ease}
+.f3-bubble:last-child{border-bottom:none}
+.f3-bubble-tag{font-family:var(--font-mono);font-size:10px;color:var(--ink-3);letter-spacing:0.08em;text-transform:uppercase;margin-bottom:5px}
+.f3-bubble-text{font-family:var(--font-body);font-size:14.5px;color:var(--ink);line-height:1.5;letter-spacing:-0.005em}
+.f3-bubble-text em{font-family:var(--font-display);font-style:italic;font-weight:400;color:var(--accent)}
+@keyframes f3fadeUp{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+
+.f3-timer{margin-top:24px;padding-top:16px;border-top:1px solid var(--rule);display:flex;align-items:baseline;gap:8px}
+.f3-timer-l{font-family:var(--font-mono);font-size:10px;color:var(--ink-3);letter-spacing:0.10em;text-transform:uppercase}
+.f3-timer-v{font-family:var(--font-display);font-size:28px;font-style:italic;font-weight:400;color:var(--ink);letter-spacing:-0.02em;font-variant-numeric:tabular-nums}
+.f3-timer-u{font-family:var(--font-body);font-size:13px;color:var(--ink-2);font-weight:500}
+
+/* CENTER — phone with eKYC UI */
+.f3-phone-wrap{display:flex;flex-direction:column;align-items:center;gap:16px}
+.f3-cam{flex:1;background:#000;display:flex;flex-direction:column;overflow:hidden;position:relative;color:#fff}
+.f3-cam-hdr{padding:14px 18px 6px;text-align:center}
+.f3-cam-hdr-t{font-family:var(--font-display);font-size:15px;font-style:italic;font-weight:400;color:#fff;letter-spacing:-0.01em}
+.f3-cam-hdr-s{font-family:var(--font-body);font-size:11px;color:rgba(255,255,255,.55);margin-top:3px;line-height:1.4}
+.f3-cam-view{flex:1;position:relative;background:#0A0E1A;display:flex;align-items:center;justify-content:center;margin:8px;border-radius:14px;overflow:hidden}
+.f3-cam-frame{position:absolute;inset:14px;border-radius:10px;pointer-events:none}
+.f3-cam-frame::before,.f3-cam-frame::after,.f3-cam-corners::before,.f3-cam-corners::after{content:'';position:absolute;width:22px;height:22px;border:2px solid #A5135C;transition:all .35s}
+.f3-cam-frame::before{top:0;left:0;border-right:none;border-bottom:none;border-top-left-radius:8px}
+.f3-cam-frame::after{top:0;right:0;border-left:none;border-bottom:none;border-top-right-radius:8px}
+.f3-cam-corners{position:absolute;inset:14px;pointer-events:none}
+.f3-cam-corners::before{bottom:0;left:0;border-right:none;border-top:none;border-bottom-left-radius:8px}
+.f3-cam-corners::after{bottom:0;right:0;border-left:none;border-top:none;border-bottom-right-radius:8px}
+.f3-cam-scan{position:absolute;left:14px;right:14px;top:50%;height:1px;background:linear-gradient(90deg,transparent,#A5135C,transparent);box-shadow:0 0 12px rgba(165,19,92,0.65);animation:f3scan 1.6s ease-in-out infinite;display:none}
+[data-f3-step="cccd-front"] .f3-cam-scan,[data-f3-step="cccd-back"] .f3-cam-scan,[data-f3-step="liveness"] .f3-cam-scan{display:block}
+@keyframes f3scan{0%,100%{top:20%;opacity:.4}50%{top:80%;opacity:1}}
+
+/* CCCD card render (CSS art) */
+.f3-cccd{width:88%;max-width:240px;aspect-ratio:1.585/1;border-radius:10px;background:linear-gradient(135deg,#FCE6D8 0%,#F9D5BD 100%);position:relative;box-shadow:0 8px 24px -8px rgba(0,0,0,0.5);overflow:hidden;transform:rotate(-1.5deg);transition:transform .5s,opacity .5s}
+[data-f3-step="cccd-back"] .f3-cccd{transform:rotateY(180deg) rotate(1.5deg)}
+.f3-cccd::before{content:'';position:absolute;left:0;top:0;width:100%;height:30%;background:linear-gradient(180deg,#C0185C 0%,#A5135C 100%)}
+.f3-cccd-emblem{position:absolute;top:6px;left:50%;transform:translateX(-50%);width:18px;height:18px;border-radius:50%;background:#FFD700;box-shadow:inset 0 0 0 1.5px #A5135C}
+.f3-cccd-emblem::before{content:'★';position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:10px;color:#A5135C}
+.f3-cccd-title{position:absolute;top:24px;left:0;right:0;text-align:center;font-family:var(--font-display);font-size:7px;font-weight:600;color:#fff;letter-spacing:0.12em;line-height:1.3}
+.f3-cccd-cnum{position:absolute;top:42px;left:0;right:0;text-align:center;font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:600;color:#fff;letter-spacing:0.10em}
+.f3-cccd-photo{position:absolute;top:38%;left:6%;width:24%;height:48%;border-radius:4px;background:linear-gradient(180deg,#D4A989,#A87A5A);border:1.5px solid rgba(255,255,255,0.6);display:flex;align-items:flex-end;justify-content:center;padding-bottom:4px;color:rgba(255,255,255,.5);font-size:18px}
+.f3-cccd-info{position:absolute;top:36%;left:34%;right:6%;font-family:var(--font-body);color:#7A2D1F}
+.f3-cccd-info .ccc-l{font-size:5px;font-weight:500;letter-spacing:0.06em;text-transform:uppercase;color:#A5135C;opacity:.85;margin-top:3px}
+.f3-cccd-info .ccc-v{font-size:7.5px;font-weight:600;color:#3A1810;line-height:1.2}
+.f3-cccd-info .ccc-v.big{font-size:9px;font-weight:700;letter-spacing:-0.01em}
+.f3-cccd-chip{position:absolute;bottom:8px;left:8%;width:24px;height:18px;border-radius:3px;background:linear-gradient(135deg,#D4AF37,#FFC857);box-shadow:inset 0 0 0 0.5px rgba(0,0,0,0.2)}
+
+/* Liveness — face placeholder */
+.f3-face{display:none;width:60%;aspect-ratio:1;border-radius:50%;background:radial-gradient(circle at 35% 30%,#E8C8A8,#B68658);position:relative;box-shadow:0 8px 24px -8px rgba(0,0,0,0.4);align-items:center;justify-content:center;color:rgba(0,0,0,.25);font-size:60px}
+[data-f3-step="liveness"] .f3-face{display:flex}
+[data-f3-step="liveness"] .f3-cccd{display:none}
+[data-f3-step="liveness"] .f3-cam-frame::before,[data-f3-step="liveness"] .f3-cam-frame::after,
+[data-f3-step="liveness"] .f3-cam-corners::before,[data-f3-step="liveness"] .f3-cam-corners::after{border-color:#5EEAD4}
+
+/* VNeID handshake state — replaces camera with shield */
+.f3-vneid{display:none;flex-direction:column;align-items:center;justify-content:center;gap:14px;color:#fff;text-align:center;padding:0 14px}
+[data-f3-step="vneid"] .f3-vneid,[data-f3-step="tcb"] .f3-vneid{display:flex}
+[data-f3-step="vneid"] .f3-cccd,[data-f3-step="vneid"] .f3-face,[data-f3-step="vneid"] .f3-cam-frame,[data-f3-step="vneid"] .f3-cam-corners,[data-f3-step="vneid"] .f3-cam-scan,
+[data-f3-step="tcb"] .f3-cccd,[data-f3-step="tcb"] .f3-face,[data-f3-step="tcb"] .f3-cam-frame,[data-f3-step="tcb"] .f3-cam-corners,[data-f3-step="tcb"] .f3-cam-scan{display:none}
+.f3-vneid-shield{width:78px;height:88px;background:linear-gradient(135deg,#0068FF 0%,#003580 100%);position:relative;clip-path:polygon(50% 0,100% 25%,100% 70%,50% 100%,0 70%,0 25%);display:flex;align-items:center;justify-content:center;color:#fff;font-family:var(--font-display);font-style:italic;font-weight:500;font-size:18px;letter-spacing:-0.02em;animation:f3pulse 2s ease-in-out infinite}
+.f3-vneid-shield::before{content:'★';position:absolute;font-style:normal;font-size:12px;top:18%;color:rgba(255,255,255,.4);font-family:var(--font-body)}
+@keyframes f3pulse{0%,100%{transform:scale(1);box-shadow:0 0 0 0 rgba(0,104,255,0.45)}50%{transform:scale(1.04);box-shadow:0 0 0 14px rgba(0,104,255,0)}}
+.f3-vneid-t{font-family:var(--font-display);font-style:italic;font-size:18px;color:#fff;letter-spacing:-0.018em}
+.f3-vneid-s{font-family:var(--font-body);font-size:11.5px;color:rgba(255,255,255,.62);line-height:1.5}
+
+/* TCB account creation */
+.f3-tcb-block{display:none;flex-direction:column;align-items:center;gap:10px;padding-top:16px;animation:f3fadeUp .5s ease}
+[data-f3-step="tcb"] .f3-tcb-block{display:flex}
+.f3-tcb-row{display:flex;align-items:center;gap:10px;padding:8px 14px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.10);border-radius:99px;color:#fff;font-family:var(--font-body);font-size:11.5px}
+.f3-tcb-row .f3-tcb-l{width:22px;height:22px;border-radius:6px;background:#ED1C24;display:flex;align-items:center;justify-content:center;font-family:var(--font-display);font-style:italic;font-weight:500;font-size:11px;color:#fff;flex-shrink:0}
+.f3-tcb-row b{font-family:var(--font-mono);font-weight:500;letter-spacing:0.04em}
+
+/* SUCCESS step — shows wallet card animating in */
+.f3-success{display:none;flex-direction:column;align-items:center;justify-content:center;gap:16px;padding:24px 18px;text-align:center;color:#fff;flex:1;animation:f3fadeUp .6s ease}
+[data-f3-step="done"] .f3-success{display:flex}
+[data-f3-step="done"] .f3-cam-view > *:not(.f3-success){display:none !important}
+.f3-success-tick{width:64px;height:64px;border-radius:50%;background:#0F8F5E;display:flex;align-items:center;justify-content:center;color:#fff;font-size:32px;font-weight:600;animation:f3pop .4s cubic-bezier(.34,1.56,.64,1)}
+@keyframes f3pop{from{transform:scale(0);opacity:0}to{transform:scale(1);opacity:1}}
+.f3-success-h{font-family:var(--font-display);font-size:22px;font-style:italic;color:#fff;letter-spacing:-0.022em;line-height:1.18}
+.f3-success-s{font-family:var(--font-body);font-size:12px;color:rgba(255,255,255,0.65);line-height:1.55;max-width:220px}
+
+/* Phone CTA — Bắt đầu / Bắt đầu lại button at bottom */
+.f3-cta{padding:0 18px 14px;display:none}
+[data-f3-step="welcome"] .f3-cta,[data-f3-step="done"] .f3-cta{display:block}
+.f3-cta button{width:100%;padding:14px;border-radius:99px;background:#A5135C;color:#fff;font-family:var(--font-body);font-size:13.5px;font-weight:600;border:none;cursor:pointer;letter-spacing:-.005em;transition:all .15s}
+.f3-cta button:hover{background:#8E1248}
+[data-f3-step="welcome"] .f3-cam-view > *:not(.f3-welcome){display:none}
+.f3-welcome{display:none;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:14px;padding:18px;color:#fff}
+[data-f3-step="welcome"] .f3-welcome{display:flex}
+.f3-welcome-ico{width:54px;height:54px;border-radius:14px;background:rgba(165,19,92,0.18);border:1px solid rgba(165,19,92,0.32);display:flex;align-items:center;justify-content:center;font-size:24px}
+.f3-welcome-h{font-family:var(--font-display);font-size:20px;font-style:italic;color:#fff;letter-spacing:-0.022em;line-height:1.15}
+.f3-welcome-s{font-family:var(--font-body);font-size:11.5px;color:rgba(255,255,255,0.62);line-height:1.55;max-width:220px}
+
+/* RIGHT panel — extracted data */
+.f3-data{padding:0;align-self:center;max-width:280px;width:100%}
+.f3-data-eyebrow{font-family:var(--font-mono);font-size:10.5px;font-weight:500;color:var(--ink-3);letter-spacing:0.16em;text-transform:uppercase;margin-bottom:14px;display:flex;align-items:center;gap:10px}
+.f3-data-eyebrow::before{content:'';width:24px;height:1px;background:var(--ink-3)}
+.f3-data-h{font-family:var(--font-display);font-size:24px;font-style:italic;font-weight:400;color:var(--ink);letter-spacing:-0.022em;line-height:1.15;margin-bottom:18px}
+.f3-field{padding:9px 0;border-bottom:1px solid var(--rule);display:flex;justify-content:space-between;align-items:baseline;gap:12px;opacity:0;transform:translateX(8px);transition:opacity .4s,transform .4s}
+.f3-field.f3-visible{opacity:1;transform:translateX(0)}
+.f3-field:last-child{border-bottom:none}
+.f3-field-l{font-family:var(--font-mono);font-size:10px;color:var(--ink-3);letter-spacing:0.06em;text-transform:uppercase;flex-shrink:0}
+.f3-field-v{font-family:var(--font-body);font-size:13.5px;color:var(--ink);font-weight:500;text-align:right;letter-spacing:-0.005em}
+.f3-field-v.mono{font-family:var(--font-mono);font-size:12.5px;font-weight:500;letter-spacing:0.04em}
+.f3-field-v em{font-family:var(--font-display);font-style:italic;font-weight:400}
+.f3-field .f3-field-tick{display:inline-block;color:#0F8F5E;font-size:11px;margin-left:4px;opacity:0;transition:opacity .3s}
+.f3-field.f3-visible .f3-field-tick{opacity:1;transition-delay:.2s}
+
+.f3-handshake{margin-top:18px;padding:14px 16px;background:rgba(0,104,255,0.06);border:1px solid rgba(0,104,255,0.20);border-radius:10px;display:none}
+[data-f3-step="vneid"] .f3-handshake,[data-f3-step="tcb"] .f3-handshake,[data-f3-step="done"] .f3-handshake{display:block;animation:f3fadeUp .4s ease}
+.f3-handshake-h{font-family:var(--font-mono);font-size:10px;color:#0068FF;letter-spacing:0.10em;text-transform:uppercase;font-weight:600;margin-bottom:6px;display:flex;align-items:center;gap:6px}
+.f3-handshake-h::before{content:'';width:6px;height:6px;border-radius:50%;background:#0068FF;animation:f3pulse 1.4s infinite}
+.f3-handshake-t{font-family:var(--font-display);font-size:15px;font-style:italic;color:#0A2540;letter-spacing:-0.012em;line-height:1.3}
+
+.f3-tcb-acct{margin-top:10px;padding:14px 16px;background:rgba(237,28,36,0.06);border:1px solid rgba(237,28,36,0.18);border-radius:10px;display:none}
+[data-f3-step="tcb"] .f3-tcb-acct,[data-f3-step="done"] .f3-tcb-acct{display:block;animation:f3fadeUp .4s ease}
+.f3-tcb-acct-h{font-family:var(--font-mono);font-size:10px;color:#ED1C24;letter-spacing:0.10em;text-transform:uppercase;font-weight:600;margin-bottom:6px}
+.f3-tcb-acct-num{font-family:var(--font-display);font-size:18px;font-style:italic;color:#0A2540;letter-spacing:0.04em;font-variant-numeric:tabular-nums}
+.f3-tcb-acct-s{font-family:var(--font-body);font-size:11px;color:var(--ink-3);margin-top:4px}
+
 /* RESET LINK */
 .f-reset{margin-top:36px;text-align:center}
 .f-reset button{background:transparent;border:none;font-family:var(--font-display);font-style:italic;font-size:14px;color:var(--ink-3);cursor:pointer;text-decoration:underline;text-decoration-style:dotted;text-underline-offset:4px;transition:color .15s}
@@ -710,6 +849,7 @@ body{font-family:var(--font-body);background:var(--paper) !important;color:var(-
     <div class="flex-1"></div>
     <a class="nav-link" onclick="document.getElementById('sec-flow').scrollIntoView({behavior:'smooth'})">Tại quầy</a>
     <a class="nav-link" onclick="document.getElementById('sec-ai').scrollIntoView({behavior:'smooth'})">Trong Zalo</a>
+    <a class="nav-link" onclick="document.getElementById('sec-ekyc').scrollIntoView({behavior:'smooth'})">Mở ví</a>
     <a class="nav-link" onclick="document.getElementById('sec-api').scrollIntoView({behavior:'smooth'})">Cho người bán</a>
     <a class="nav-link" onclick="document.getElementById('sec-arch').scrollIntoView({behavior:'smooth'})">Kiến trúc</a>
     <div class="nav-pill"><span class="dot"></span>BẢN DEMO TƯƠNG TÁC</div>
@@ -1459,11 +1599,146 @@ body{font-family:var(--font-body);background:var(--paper) !important;color:var(-
 
 <div class="divider-h"></div>
 
-<!-- ======================== SECTION 3: MERCHANT API ======================== -->
+<!-- ======================== SECTION 3: MỞ VÍ (eKYC) ======================== -->
+<section id="sec-ekyc" class="sec" data-f3="idle" data-f3-step="welcome">
+  <div class="sec-inner">
+    <div class="reveal">
+      <div class="sec-eyebrow"><span class="se-num">03</span>Mở ví trong 38 giây</div>
+      <h2 class="sec-h2">Tác nhân thoại hỏi tên. Camera đọc CCCD.<br/><span class="gtext em">VNeID xác thực. Techcombank mở tài khoản.</span></h2>
+      <p class="sec-sub">
+        Onboarding chạy bằng giọng nói tiếng Việt — không biểu mẫu, không gõ phím. Tác nhân AI dẫn khách qua từng bước, camera tự đọc CCCD hai mặt, đối chiếu sinh trắc học, bắt tay với <em style="font-family:var(--font-display);font-style:italic;color:var(--ink)">Cơ sở dữ liệu quốc gia về dân cư</em> qua VNeID, rồi mở tài khoản TCB liên kết — tất cả trong 35–50 giây. Bấm <em style="font-family:var(--font-display);font-style:italic;color:var(--ink)">Bắt đầu</em> để xem.
+      </p>
+    </div>
+
+    <div class="f3-stage reveal">
+      <!-- LEFT: voice agent -->
+      <div class="f3-voice">
+        <div class="f3-voice-eyebrow">Tác nhân thoại</div>
+        <div class="f3-voice-h">Trợ lý mở ví WinXPay</div>
+        <div class="f3-wave" id="f3-wave">
+          <span></span><span></span><span></span><span></span><span></span><span></span>
+          <span></span><span></span><span></span><span></span><span></span><span></span>
+        </div>
+        <div class="f3-transcript" id="f3-transcript"></div>
+        <div class="f3-timer">
+          <div class="f3-timer-l">Đã trôi qua</div>
+          <div class="f3-timer-v" id="f3-timer-v">0,0</div>
+          <div class="f3-timer-u">giây</div>
+        </div>
+      </div>
+
+      <!-- CENTER: phone with eKYC UI -->
+      <div class="f3-phone-wrap">
+        <div class="phone phone-lift">
+          <div class="phone-notch"></div>
+          <div class="phone-screen">
+            <div class="phone-status">
+              <span>9:41</span>
+              <span class="ps-r">●●● <span class="ps-bat"><span></span></span></span>
+            </div>
+            <div class="f3-cam">
+              <div class="f3-cam-hdr">
+                <div class="f3-cam-hdr-t" id="f3-cam-t">Mở ví WinXPay</div>
+                <div class="f3-cam-hdr-s" id="f3-cam-s">An toàn · không cần biểu mẫu · 35–50 giây</div>
+              </div>
+              <div class="f3-cam-view">
+                <!-- Welcome state -->
+                <div class="f3-welcome">
+                  <div class="f3-welcome-ico">🪪</div>
+                  <div class="f3-welcome-h">Sẵn sàng mở ví?</div>
+                  <div class="f3-welcome-s">Bạn cần CCCD và một chiếc điện thoại có camera trước. Tác nhân AI sẽ hỏi và hướng dẫn từng bước.</div>
+                </div>
+
+                <!-- CCCD card (reused for front + flipped for back) -->
+                <div class="f3-cccd">
+                  <div class="f3-cccd-emblem"></div>
+                  <div class="f3-cccd-title">CỘNG HOÀ XÃ HỘI CHỦ NGHĨA VIỆT NAM<br/>CĂN CƯỚC CÔNG DÂN</div>
+                  <div class="f3-cccd-cnum">001 234 567 890</div>
+                  <div class="f3-cccd-photo">👤</div>
+                  <div class="f3-cccd-info">
+                    <div class="ccc-l">Họ tên</div>
+                    <div class="ccc-v big">NGUYỄN VĂN MINH</div>
+                    <div class="ccc-l">Ngày sinh</div>
+                    <div class="ccc-v">15 / 06 / 1992</div>
+                    <div class="ccc-l">Quê quán</div>
+                    <div class="ccc-v">Hà Nội</div>
+                  </div>
+                  <div class="f3-cccd-chip"></div>
+                </div>
+
+                <!-- Liveness face -->
+                <div class="f3-face">😊</div>
+
+                <!-- VNeID handshake -->
+                <div class="f3-vneid">
+                  <div class="f3-vneid-shield">VNe<br/>ID</div>
+                  <div class="f3-vneid-t">Cơ sở dữ liệu quốc gia về dân cư</div>
+                  <div class="f3-vneid-s">Đối chiếu họ tên · CCCD · ngày sinh · nơi cấp</div>
+                  <div class="f3-tcb-block">
+                    <div class="f3-tcb-row"><span class="f3-tcb-l">T</span>Tài khoản TCB · <b>1903 1247 8821</b></div>
+                  </div>
+                </div>
+
+                <!-- Frame markers + scan line -->
+                <div class="f3-cam-frame"></div>
+                <div class="f3-cam-corners"></div>
+                <div class="f3-cam-scan"></div>
+
+                <!-- Success -->
+                <div class="f3-success">
+                  <div class="f3-success-tick">✓</div>
+                  <div class="f3-success-h">Ví đã sẵn sàng</div>
+                  <div class="f3-success-s">Tài khoản Techcombank liên kết. WinXPay sẵn sàng quét trả tại quầy hoặc trong chat.</div>
+                </div>
+              </div>
+
+              <!-- CTA at bottom (visible in welcome + done) -->
+              <div class="f3-cta">
+                <button data-act="f3-start" id="f3-start-btn">Bắt đầu mở ví →</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- RIGHT: data extraction panel -->
+      <div class="f3-data">
+        <div class="f3-data-eyebrow">Dữ liệu trích xuất</div>
+        <div class="f3-data-h">Đọc tự động từ CCCD</div>
+
+        <div class="f3-field" data-f3-field="name"><span class="f3-field-l">Họ tên</span><span class="f3-field-v">Nguyễn Văn Minh<span class="f3-field-tick">✓</span></span></div>
+        <div class="f3-field" data-f3-field="cccd"><span class="f3-field-l">Số CCCD</span><span class="f3-field-v mono">001 234 567 890<span class="f3-field-tick">✓</span></span></div>
+        <div class="f3-field" data-f3-field="dob"><span class="f3-field-l">Ngày sinh</span><span class="f3-field-v mono">15/06/1992<span class="f3-field-tick">✓</span></span></div>
+        <div class="f3-field" data-f3-field="gender"><span class="f3-field-l">Giới tính</span><span class="f3-field-v">Nam<span class="f3-field-tick">✓</span></span></div>
+        <div class="f3-field" data-f3-field="hometown"><span class="f3-field-l">Quê quán</span><span class="f3-field-v">Hà Nội<span class="f3-field-tick">✓</span></span></div>
+        <div class="f3-field" data-f3-field="issued"><span class="f3-field-l">Ngày cấp</span><span class="f3-field-v mono">04/03/2021<span class="f3-field-tick">✓</span></span></div>
+        <div class="f3-field" data-f3-field="authority"><span class="f3-field-l">Nơi cấp</span><span class="f3-field-v">Cục C06 — BCA<span class="f3-field-tick">✓</span></span></div>
+        <div class="f3-field" data-f3-field="liveness"><span class="f3-field-l">Sinh trắc học</span><span class="f3-field-v"><em>khớp 99,2%</em><span class="f3-field-tick">✓</span></span></div>
+
+        <div class="f3-handshake">
+          <div class="f3-handshake-h">VNeID · đang đối chiếu</div>
+          <div class="f3-handshake-t">Định danh đã được xác thực bởi <em style="font-family:var(--font-display);font-style:italic">Cơ sở dữ liệu quốc gia</em></div>
+        </div>
+
+        <div class="f3-tcb-acct">
+          <div class="f3-tcb-acct-h">Techcombank · tài khoản liên kết</div>
+          <div class="f3-tcb-acct-num">1903 1247 8821</div>
+          <div class="f3-tcb-acct-s">Mở tự động · không cần đến chi nhánh</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="f-reset"><button data-act="f3-reset">Bắt đầu lại</button></div>
+  </div>
+</section>
+
+<div class="divider-h"></div>
+
+<!-- ======================== SECTION 4: MERCHANT API ======================== -->
 <section id="sec-api" class="sec">
   <div class="sec-inner">
     <div class="reveal">
-      <div class="sec-eyebrow"><span class="se-num">03</span>Dành cho người bán</div>
+      <div class="sec-eyebrow"><span class="se-num">04</span>Dành cho người bán</div>
       <h2 class="sec-h2">Một dòng mã.<br/><span class="gtext em">QR + Trả 4 lần, gắn vào mọi quầy thanh toán.</span></h2>
       <p class="sec-sub">
         Người bán đã dùng <em style="font-family:var(--font-display);font-style:italic;color:var(--ink)">WinXPay cho Người bán</em> tự động có sẵn tính năng — chỉ là thêm một nút thanh toán. Với mọi người khác, tích hợp gọn trong một nhúng: một nút trên trang, một lệnh API từ máy chủ, hoặc một webhook. Không hợp đồng riêng. Không máy POS mới.
@@ -1569,7 +1844,7 @@ body{font-family:var(--font-body);background:var(--paper) !important;color:var(-
 <section id="sec-arch" class="sec">
   <div class="sec-inner">
     <div class="reveal">
-      <div class="sec-eyebrow"><span class="se-num">04</span>Kiến trúc</div>
+      <div class="sec-eyebrow"><span class="se-num">05</span>Kiến trúc</div>
       <h2 class="sec-h2">Năm bề mặt.<br/><span class="gtext em">Một hạ tầng yên lặng phía dưới.</span></h2>
       <p class="sec-sub">
         WinXPay là một sản phẩm xuất hiện ở năm chỗ. Dù bạn vào từ ví riêng, từ POS của tạp hoá, từ chat với cửa hàng yêu thích, từ một mã nhúng trên web, hay từ tác nhân AI — logic QR, thanh toán, và Trả 4 lần phía sau vẫn là một.
@@ -1905,10 +2180,152 @@ const F2 = {
   }
 };
 
-// Init both flows on DOM ready
+// ============================================================
+// FLOW 3 — eKYC (Section 03): voice agent + CCCD + VNeID + TCB
+// ============================================================
+const F3 = {
+  section: null,
+  current: 'welcome',
+  timers: [],
+  t0: 0,
+  tickHandle: null,
+  // Auto-advancing scripted flow. Each step has a duration before auto-advance.
+  steps: [
+    // step name           duration  bot transcript                                                                       camera title              fields revealed
+    { name:'intro',         dur:1800, bot:'Xin chào, em là trợ lý mở ví WinXPay. Em sẽ giúp anh mở ví trong khoảng 40 giây. Mình bắt đầu nhé?', t:'Mở ví WinXPay',          s:'Sẵn sàng — sẽ chuyển sang quét CCCD',          fields:[] },
+    { name:'cccd-front',    dur:2000, bot:'Anh đặt căn cước công dân mặt trước trước camera giúp em.',                       t:'Quét CCCD · mặt trước',  s:'Giữ thẳng, đủ ánh sáng — em đang đọc',         fields:[] },
+    { name:'cccd-front-x',  dur:900,  bot:'Đã đọc xong mặt trước.',                                                          t:'Quét CCCD · mặt trước',  s:'Đã đọc · 3 trường',                            fields:['name','cccd','dob'] },
+    { name:'cccd-back',     dur:1700, bot:'Giờ mình lật sang mặt sau nhé.',                                                  t:'Quét CCCD · mặt sau',    s:'Đang đọc thông tin nơi cấp',                  fields:['name','cccd','dob'] },
+    { name:'cccd-back-x',   dur:900,  bot:'Đã đọc xong cả hai mặt.',                                                         t:'Quét CCCD · mặt sau',    s:'Đã đọc · 7 trường',                            fields:['name','cccd','dob','gender','hometown','issued','authority'] },
+    { name:'liveness',      dur:2000, bot:'Bây giờ anh nhìn thẳng camera và chớp mắt một lần để em xác minh khuôn mặt nhé.', t:'Sinh trắc học',          s:'Đối chiếu với ảnh trên CCCD',                  fields:['name','cccd','dob','gender','hometown','issued','authority'] },
+    { name:'liveness-x',    dur:800,  bot:'Khuôn mặt khớp với ảnh trên CCCD — 99,2%.',                                       t:'Sinh trắc học',          s:'Khớp 99,2% · đã xác minh',                     fields:['name','cccd','dob','gender','hometown','issued','authority','liveness'] },
+    { name:'vneid',         dur:2000, bot:'Đang đối chiếu với Cơ sở dữ liệu quốc gia về dân cư qua VNeID…',                  t:'VNeID',                  s:'Cục C06 · Bộ Công An',                         fields:['name','cccd','dob','gender','hometown','issued','authority','liveness'] },
+    { name:'tcb',           dur:1700, bot:'Đã xác thực. Em đang mở tài khoản Techcombank liên kết cho anh…',                 t:'Techcombank',            s:'Tài khoản 1903 1247 8821 đã được tạo',         fields:['name','cccd','dob','gender','hometown','issued','authority','liveness'] },
+    { name:'done',          dur:0,    bot:'Hoàn tất. Anh Nguyễn Văn Minh, ví WinXPay đã sẵn sàng. Cảm ơn anh.',              t:'Hoàn tất',               s:'Ví đã liên kết · sẵn sàng quét trả',           fields:['name','cccd','dob','gender','hometown','issued','authority','liveness'] }
+  ],
+  setStep(idx){
+    this.timers.forEach(clearTimeout); this.timers = [];
+    if(idx < 0 || idx >= this.steps.length) return;
+    const step = this.steps[idx];
+    this.current = step.name;
+    this.section.dataset.f3Step = step.name;
+    this.section.dataset.f3 = (idx === 0 || idx === this.steps.length-1) ? 'idle' : 'speaking';
+
+    // Update camera header
+    const camT = document.getElementById('f3-cam-t');
+    const camS = document.getElementById('f3-cam-s');
+    if(camT) camT.textContent = step.t;
+    if(camS) camS.textContent = step.s;
+
+    // Append transcript bubble (if bot has a line)
+    if(step.bot){
+      this._appendBubble(step.bot);
+    }
+
+    // Reveal fields
+    this._revealFields(step.fields);
+
+    // Auto-advance
+    if(step.dur > 0 && idx < this.steps.length - 1){
+      this.timers.push(setTimeout(()=>this.setStep(idx+1), step.dur));
+    } else if(idx === this.steps.length - 1){
+      // last step — stop timer
+      this._stopTick();
+    }
+  },
+  _appendBubble(text){
+    const wrap = document.getElementById('f3-transcript');
+    if(!wrap) return;
+    // dim previous bubbles
+    wrap.querySelectorAll('.f3-bubble').forEach(b => b.style.opacity = '.45');
+    const b = document.createElement('div');
+    b.className = 'f3-bubble';
+    b.innerHTML = `<div class="f3-bubble-tag">Trợ lý · ${this._elapsed()}s</div><div class="f3-bubble-text">${text}</div>`;
+    wrap.appendChild(b);
+    // keep only last 3 bubbles visible
+    const all = wrap.querySelectorAll('.f3-bubble');
+    if(all.length > 3) all[0].remove();
+  },
+  _revealFields(names){
+    const all = this.section.querySelectorAll('.f3-field');
+    all.forEach(el => {
+      const n = el.dataset.f3Field;
+      if(names.includes(n)) el.classList.add('f3-visible');
+      else el.classList.remove('f3-visible');
+    });
+  },
+  _elapsed(){
+    return ((Date.now() - this.t0) / 1000).toFixed(1).replace('.', ',');
+  },
+  _startTick(){
+    this._stopTick();
+    const v = document.getElementById('f3-timer-v');
+    this.tickHandle = setInterval(()=>{
+      if(v) v.textContent = this._elapsed();
+    }, 50);
+  },
+  _stopTick(){
+    if(this.tickHandle){ clearInterval(this.tickHandle); this.tickHandle = null; }
+  },
+  start(){
+    // Reset transcript + fields + timer
+    const wrap = document.getElementById('f3-transcript');
+    if(wrap) wrap.innerHTML = '';
+    this._revealFields([]);
+    this.t0 = Date.now();
+    const v = document.getElementById('f3-timer-v');
+    if(v) v.textContent = '0,0';
+    this._startTick();
+    this.setStep(0);
+  },
+  reset(){
+    this.timers.forEach(clearTimeout); this.timers = [];
+    this._stopTick();
+    this.section.dataset.f3 = 'idle';
+    this.section.dataset.f3Step = 'welcome';
+    this.current = 'welcome';
+    const wrap = document.getElementById('f3-transcript');
+    if(wrap) wrap.innerHTML = '';
+    this._revealFields([]);
+    const v = document.getElementById('f3-timer-v');
+    if(v) v.textContent = '0,0';
+    const camT = document.getElementById('f3-cam-t');
+    const camS = document.getElementById('f3-cam-s');
+    if(camT) camT.textContent = 'Mở ví WinXPay';
+    if(camS) camS.textContent = 'An toàn · không cần biểu mẫu · 35–50 giây';
+  },
+  init(){
+    this.section = document.getElementById('sec-ekyc');
+    if(!this.section) return;
+    document.body.addEventListener('click', (e)=>{
+      const t = e.target.closest('[data-act]');
+      if(!t) return;
+      const act = t.dataset.act;
+      if(act === 'f3-start'){
+        if(this.current === 'welcome' || this.current === 'done'){
+          this.reset();
+          // tiny tick before starting so the welcome→intro transition reads
+          this.timers.push(setTimeout(()=>this.start(), 120));
+        }
+      } else if(act === 'f3-reset'){
+        this.reset();
+      }
+    });
+    // also update CTA label when in done state
+    const observer = new MutationObserver(()=>{
+      const btn = document.getElementById('f3-start-btn');
+      if(!btn) return;
+      btn.textContent = (this.current === 'done') ? 'Mở ví khác →' : 'Bắt đầu mở ví →';
+    });
+    observer.observe(this.section, { attributes:true, attributeFilter:['data-f3-step'] });
+  }
+};
+
+// Init all flows on DOM ready
 function initFlows(){
   if(document.getElementById('sec-flow')) F1.init();
   if(document.getElementById('sec-ai')) F2.init();
+  if(document.getElementById('sec-ekyc')) F3.init();
 }
 if(document.readyState === 'loading') document.addEventListener('DOMContentLoaded', initFlows);
 else initFlows();
