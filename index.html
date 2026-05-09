@@ -3,12 +3,12 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"/>
-<meta name="theme-color" content="#080C16"/>
+<meta name="theme-color" content="#F7F5F2"/>
 <title>WinXPay — Vietnamese consumer wallet</title>
 <meta name="description" content="WinXPay is a Vietnamese consumer wallet that pays at the till. QR scan, Pay-in-4, brand-funded discount. Built on Techcombank rails."/>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800;900&family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap"/>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,300;1,9..144,400;1,9..144,500;1,9..144,600&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Be+Vietnam+Pro:wght@400;500;600;700&display=swap"/>
 <script src="https://cdn.tailwindcss.com"></script>
 <script>tailwind.config={theme:{extend:{colors:{
   ink:'#080C16',masan:'#1B2A4A','masan-r':'#E30613','zalo':'#0068FF','wxp':'#FF2E63','wxp-2':'#7C2DFF','wxp-3':'#00D9C0',
@@ -25,90 +25,134 @@
 </script>
 
 <style>
+/* ============================================================
+   WinXPay — Stripe Press inspired design system
+   Cream paper · serif italic display · editorial restraint
+   ============================================================ */
+
 :root{
-  --ink:#080C16;--ink-2:#0E1322;--ink-3:#141B30;
-  --wxp:#FF2E63;--wxp-2:#7C2DFF;--wxp-3:#00D9C0;
-  --wxp-grad:linear-gradient(135deg,#FF2E63 0%,#7C2DFF 50%,#00D9C0 100%);
-  --wxp-grad-r:linear-gradient(135deg,#7C2DFF 0%,#FF2E63 100%);
-  --line:rgba(255,255,255,.08);--line-2:rgba(255,255,255,.14);
-  --t1:rgba(255,255,255,.95);--t2:rgba(255,255,255,.65);--t3:rgba(255,255,255,.42);--t4:rgba(255,255,255,.28);
-  --tcb:#ED1C24;--zalo:#0068FF;--vqr:#A50064;
-  --good:#00D9C0;--warn:#FFB020;--bad:#FF2E63;
+  /* PAPER */
+  --paper:#F6F4EE;          /* primary cream */
+  --paper-2:#EDEAE2;        /* warmer cream */
+  --paper-3:#E2DFD6;        /* deeper cream */
+  --paper-tint:#FBFAF6;     /* whisper-white card */
+
+  /* INK */
+  --ink:#0A2540;            /* Stripe deep navy */
+  --ink-2:#3C4858;          /* secondary text */
+  --ink-3:#6B7280;          /* tertiary text */
+  --ink-4:#97A0AF;          /* quaternary */
+  --ink-5:#C7CCD4;          /* hairline borders */
+
+  /* RULES */
+  --rule:rgba(10,37,64,0.10);
+  --rule-2:rgba(10,37,64,0.18);
+  --rule-3:rgba(10,37,64,0.30);
+
+  /* ACCENT — single mark color, deep Vietnamese magenta */
+  --accent:#C0185C;
+  --accent-2:#8E1248;
+  --accent-3:#FBE8F0;
+
+  /* Functional */
+  --link:#3D2DDC;
+  --green:#0F8F5E;
+  --tcb:#ED1C24;
+  --zalo:#0068FF;
+  --vqr:#A50064;
+
+  /* Code block (Stripe Press dark navy) */
+  --code-bg:#0A2540;
+
+  /* Type */
+  --font-display:'Fraunces','Times New Roman',Georgia,serif;
+  --font-body:'Inter','Helvetica Neue',Arial,sans-serif;
+  --font-mono:'JetBrains Mono','Source Code Pro',ui-monospace,Menlo,monospace;
+  --font-vn:'Be Vietnam Pro','Inter',sans-serif;
+
+  /* Internal aliases (used by phone-internal styles — keep for compat) */
+  --t1:var(--ink);--t2:var(--ink-2);--t3:var(--ink-3);--t4:var(--ink-4);
+  --line:var(--rule);--line-2:var(--rule-2);
+  --wxp:var(--accent);--wxp-2:#7C2DFF;--wxp-3:#00D9C0;
+  --wxp-grad:linear-gradient(135deg,#C0185C 0%,#8E1248 100%);
+  --good:var(--green);--warn:#B45309;--bad:var(--accent);
 }
+
 *{box-sizing:border-box;margin:0;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}
-html{scroll-behavior:smooth;background:var(--ink)}
-body{font-family:'Inter','Be Vietnam Pro',system-ui,sans-serif;background:var(--ink);color:var(--t1);overflow-x:hidden;min-height:100vh}
-.font-vn{font-family:'Be Vietnam Pro','Inter',sans-serif}
-.font-mono{font-family:'JetBrains Mono',ui-monospace,Menlo,monospace}
+html{scroll-behavior:smooth;background:var(--paper)}
+body{font-family:var(--font-body);background:var(--paper);color:var(--ink);overflow-x:hidden;min-height:100vh;font-feature-settings:'ss01','cv11'}
 
-/* WEBGL CANVAS */
-#bgcanvas{position:fixed;inset:0;z-index:0;pointer-events:none}
-#cardcanvas{position:absolute;inset:0;z-index:1;pointer-events:none}
+.font-vn{font-family:var(--font-vn)}
+.font-mono{font-family:var(--font-mono)}
 
-/* GRAIN */
-.grain::before{content:'';position:fixed;inset:0;z-index:60;pointer-events:none;mix-blend-mode:overlay;opacity:.4;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.18 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+/* WEBGL canvas */
+#bgcanvas{position:fixed;inset:0;z-index:0;pointer-events:none;opacity:.85}
 
-/* GLASS / CARDS */
-.glass{background:rgba(255,255,255,.025);backdrop-filter:blur(20px) saturate(1.2);-webkit-backdrop-filter:blur(20px) saturate(1.2);border:1px solid var(--line);border-radius:18px}
-.glass-2{background:rgba(255,255,255,.04);backdrop-filter:blur(20px) saturate(1.2);-webkit-backdrop-filter:blur(20px) saturate(1.2);border:1px solid var(--line-2);border-radius:14px}
-.divider-h{height:1px;background:linear-gradient(90deg,transparent,var(--line-2),transparent)}
+/* GRAIN — disabled in light mode */
+.grain::before{display:none}
 
-/* GRADIENT TEXT */
-.gtext{background:var(--wxp-grad);-webkit-background-clip:text;background-clip:text;color:transparent;display:inline-block}
-.gtext-r{background:linear-gradient(135deg,#FF2E63 0%,#FF6B9D 100%);-webkit-background-clip:text;background-clip:text;color:transparent}
+/* CARDS */
+.glass{background:var(--paper-tint);backdrop-filter:none;-webkit-backdrop-filter:none;border:1px solid var(--rule);border-radius:6px}
+.glass-2{background:var(--paper-tint);backdrop-filter:none;-webkit-backdrop-filter:none;border:1px solid var(--rule);border-radius:6px}
+.divider-h{height:1px;background:var(--rule);margin:0}
+
+/* GRADIENT TEXT — repurposed as italic accent */
+.gtext{color:var(--accent);font-family:var(--font-display);font-style:italic;font-weight:400;background:none;-webkit-background-clip:initial;background-clip:initial}
+.gtext-r{color:var(--accent);font-family:var(--font-display);font-style:italic;font-weight:400}
 
 /* TOP NAV */
-.nav{position:fixed;top:0;left:0;right:0;z-index:50;backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);background:rgba(8,12,22,.65);border-bottom:1px solid var(--line);transition:all .3s}
-.nav-inner{max-width:1440px;margin:0 auto;padding:14px 32px;display:flex;align-items:center;gap:24px}
-.nav-logo{width:36px;height:36px;border-radius:11px;background:var(--wxp-grad);display:flex;align-items:center;justify-content:center;font-weight:900;color:#fff;font-size:18px;letter-spacing:-.5px;box-shadow:0 6px 20px rgba(255,46,99,.35),inset 0 1px 0 rgba(255,255,255,.3);position:relative;overflow:hidden}
-.nav-logo::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,transparent 30%,rgba(255,255,255,.25) 50%,transparent 70%);animation:shine 3s ease-in-out infinite}
-@keyframes shine{0%,100%{transform:translateX(-100%)}50%{transform:translateX(100%)}}
-.nav-brand{font-size:18px;font-weight:900;letter-spacing:-.5px}
-.nav-brand .x{color:var(--wxp);font-style:italic}
-.nav-tag{font-size:9px;color:var(--t3);font-weight:700;letter-spacing:1.4px;text-transform:uppercase;margin-top:1px}
-.nav-link{font-size:13px;color:var(--t2);font-weight:500;cursor:pointer;transition:color .15s;padding:6px 0}
-.nav-link:hover{color:var(--t1)}
-.nav-pill{display:inline-flex;align-items:center;gap:6px;padding:5px 11px;border-radius:20px;background:rgba(0,217,192,.08);border:1px solid rgba(0,217,192,.25);font-size:10px;font-weight:700;color:var(--good);letter-spacing:.4px}
-.nav-pill .dot{width:6px;height:6px;border-radius:50%;background:var(--good);box-shadow:0 0 8px var(--good);animation:pulse 1.5s infinite}
-@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.6;transform:scale(.85)}}
+.nav{position:fixed;top:0;left:0;right:0;z-index:50;backdrop-filter:blur(20px) saturate(1.05);-webkit-backdrop-filter:blur(20px) saturate(1.05);background:rgba(246,244,238,0.85);border-bottom:1px solid var(--rule);transition:all .3s}
+.nav-inner{max-width:1240px;margin:0 auto;padding:18px 32px;display:flex;align-items:center;gap:32px}
+.nav-logo{width:34px;height:34px;border-radius:7px;background:var(--ink);display:flex;align-items:center;justify-content:center;font-family:var(--font-display);font-style:italic;font-weight:500;color:var(--paper);font-size:19px;letter-spacing:-0.04em;position:relative;overflow:hidden}
+.nav-brand{font-family:var(--font-display);font-size:21px;font-weight:500;letter-spacing:-0.024em;color:var(--ink);font-style:italic;line-height:1}
+.nav-brand .x{font-style:italic;color:var(--accent)}
+.nav-tag{display:none}
+.nav-link{font-size:13.5px;color:var(--ink-2);font-weight:500;cursor:pointer;transition:color .15s;padding:6px 0;letter-spacing:-0.005em}
+.nav-link:hover{color:var(--ink)}
+.nav-pill{display:inline-flex;align-items:center;gap:8px;padding:6px 12px;border-radius:99px;background:transparent;border:1px solid var(--rule-2);font-size:10.5px;font-weight:500;color:var(--ink-2);font-family:var(--font-mono);letter-spacing:0.06em;text-transform:uppercase}
+.nav-pill .dot{width:6px;height:6px;border-radius:50%;background:var(--accent);box-shadow:0 0 0 3px rgba(192,24,92,0.16);animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.65}}
 
 /* HERO */
-.hero{position:relative;min-height:100vh;display:flex;align-items:center;justify-content:center;padding:140px 32px 80px;z-index:2}
-.hero-inner{max-width:1280px;margin:0 auto;text-align:center;position:relative}
-#cardCanvas{position:absolute;left:50%;top:0;transform:translateX(-50%);width:100%;max-width:780px;height:480px;z-index:0;pointer-events:none;opacity:.95}
-@media (max-width:880px){#cardCanvas{height:300px}}
-.hero-eyebrow{display:inline-flex;align-items:center;gap:10px;padding:7px 16px;border-radius:30px;background:rgba(255,255,255,.04);border:1px solid var(--line-2);font-size:11px;font-weight:700;color:var(--t2);letter-spacing:.5px;backdrop-filter:blur(12px);margin-bottom:24px}
-.hero-eyebrow .e-ico{width:16px;height:16px;border-radius:5px;background:var(--wxp-grad);display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:900;color:#fff}
-.hero-h1{font-size:clamp(40px,7vw,88px);font-weight:900;line-height:.95;letter-spacing:-.04em;color:#fff;margin-bottom:24px}
-.hero-h1 .em{font-style:italic;font-weight:800}
-.hero-sub{font-size:clamp(16px,1.6vw,20px);color:var(--t2);max-width:720px;margin:0 auto 40px;line-height:1.55;font-weight:400}
-.hero-cta{display:flex;align-items:center;justify-content:center;gap:12px;flex-wrap:wrap}
-.btn-prim{padding:14px 28px;border-radius:14px;background:var(--wxp-grad);color:#fff;font-size:14px;font-weight:800;border:none;cursor:pointer;letter-spacing:-.1px;box-shadow:0 10px 32px rgba(255,46,99,.35),inset 0 1px 0 rgba(255,255,255,.25);transition:transform .15s,box-shadow .15s}
-.btn-prim:hover{transform:translateY(-1px);box-shadow:0 14px 40px rgba(255,46,99,.45),inset 0 1px 0 rgba(255,255,255,.3)}
-.btn-sec{padding:14px 24px;border-radius:14px;background:rgba(255,255,255,.05);color:var(--t1);font-size:14px;font-weight:700;border:1px solid var(--line-2);cursor:pointer;backdrop-filter:blur(12px);transition:all .15s}
-.btn-sec:hover{background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.22)}
+.hero{position:relative;min-height:100vh;display:flex;align-items:center;justify-content:center;padding:160px 32px 100px;z-index:2}
+.hero-inner{max-width:1100px;margin:0 auto;text-align:center;position:relative}
+#cardCanvas{position:absolute;left:50%;top:-30px;transform:translateX(-50%);width:100%;max-width:680px;height:430px;z-index:0;pointer-events:none}
+@media (max-width:880px){#cardCanvas{height:300px;max-width:480px}}
 
-/* HERO STATS */
-.hero-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:24px;margin-top:80px;max-width:880px;margin-left:auto;margin-right:auto}
-.hs-stat .hs-v{font-size:32px;font-weight:900;letter-spacing:-1.5px;color:#fff;line-height:1}
-.hs-stat .hs-l{font-size:11px;color:var(--t3);font-weight:600;margin-top:6px;letter-spacing:.3px}
-.hs-stat .hs-v.gtext{font-size:34px}
+.hero-eyebrow{display:inline-flex;align-items:center;gap:12px;padding:8px 18px;border-radius:99px;background:transparent;border:1px solid var(--rule-2);font-size:11px;font-weight:500;color:var(--ink-2);letter-spacing:0.14em;text-transform:uppercase;margin-bottom:36px;font-family:var(--font-body)}
+.hero-eyebrow .e-ico{width:18px;height:18px;border-radius:5px;background:var(--ink);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:500;color:var(--paper);font-family:var(--font-display);font-style:italic;letter-spacing:0;text-transform:none}
+
+.hero-h1{font-family:var(--font-display);font-size:clamp(46px,8vw,108px);font-weight:400;line-height:0.96;letter-spacing:-0.038em;color:var(--ink);margin-bottom:32px}
+.hero-h1 .em{font-style:italic;font-weight:400;color:var(--accent)}
+
+.hero-sub{font-family:var(--font-body);font-size:clamp(17px,1.4vw,21px);color:var(--ink-2);max-width:720px;margin:0 auto 44px;line-height:1.5;font-weight:400;letter-spacing:-0.005em}
+
+.hero-cta{display:flex;align-items:center;justify-content:center;gap:14px;flex-wrap:wrap}
+.btn-prim{padding:14px 26px;border-radius:99px;background:var(--ink);color:var(--paper);font-size:14px;font-weight:600;border:none;cursor:pointer;letter-spacing:-0.005em;transition:all .18s;font-family:var(--font-body)}
+.btn-prim:hover{transform:translateY(-1px);background:#031A36;box-shadow:0 12px 30px -10px rgba(10,37,64,0.5)}
+.btn-sec{padding:14px 24px;border-radius:99px;background:transparent;color:var(--ink);font-size:14px;font-weight:600;border:1px solid var(--rule-2);cursor:pointer;transition:all .18s;font-family:var(--font-body)}
+.btn-sec:hover{background:rgba(10,37,64,0.04);border-color:var(--ink)}
+
+/* HERO STATS — hidden (already removed from HTML) */
+.hero-stats{display:none}
 
 /* SECTIONS */
-.sec{position:relative;z-index:2;padding:90px 32px}
-.sec-inner{max-width:1440px;margin:0 auto}
-.sec-eyebrow{display:inline-flex;align-items:center;gap:10px;font-size:11px;font-weight:800;letter-spacing:.18em;color:var(--wxp);text-transform:uppercase;margin-bottom:18px}
-.sec-eyebrow .se-num{width:22px;height:22px;border-radius:6px;background:linear-gradient(135deg,rgba(255,46,99,.18),rgba(124,45,255,.18));border:1px solid rgba(255,46,99,.35);display:inline-flex;align-items:center;justify-content:center;font-size:11px;font-weight:900;color:#fff}
-.sec-h2{font-size:clamp(32px,4.5vw,52px);font-weight:900;letter-spacing:-.025em;line-height:1.05;color:#fff;margin-bottom:20px;max-width:820px}
-.sec-h2 .em{font-style:italic;font-weight:800}
-.sec-h2 .gtext{font-style:italic}
-.sec-sub{font-size:17px;color:var(--t2);line-height:1.55;max-width:680px;margin-bottom:48px}
+.sec{position:relative;z-index:2;padding:140px 32px;border-bottom:1px solid var(--rule)}
+.sec-inner{max-width:1240px;margin:0 auto}
 
-/* PHONE FRAME */
-.phone{background:#0A0E1A;border-radius:38px;padding:9px;box-shadow:0 30px 80px rgba(0,0,0,.6),0 0 0 1px rgba(255,255,255,.06),inset 0 1px 0 rgba(255,255,255,.07);position:relative;width:308px}
-.phone-screen{background:#fff;border-radius:30px;overflow:hidden;display:flex;flex-direction:column;height:640px;position:relative}
-.phone-notch{position:absolute;top:8px;left:50%;transform:translateX(-50%);width:108px;height:24px;background:#0A0E1A;border-radius:20px;z-index:50}
-.phone-status{display:flex;align-items:center;justify-content:space-between;padding:8px 28px 4px;color:#1A1A1A;font-size:11px;font-weight:700;height:32px}
+.sec-eyebrow{display:flex;align-items:center;gap:14px;font-size:11.5px;font-weight:500;letter-spacing:0.16em;color:var(--ink-3);text-transform:uppercase;margin-bottom:32px;font-family:var(--font-body)}
+.sec-eyebrow::before{content:'';width:24px;height:1px;background:var(--ink-3)}
+.sec-eyebrow .se-num{font-family:var(--font-mono);font-weight:500;color:var(--ink-2);letter-spacing:0.04em;background:none;border:none;width:auto;height:auto;display:inline}
+.sec-h2{font-family:var(--font-display);font-size:clamp(36px,5.5vw,68px);font-weight:400;letter-spacing:-0.028em;line-height:1.02;color:var(--ink);margin-bottom:28px;max-width:920px}
+.sec-h2 .em{font-style:italic;font-weight:400;color:var(--accent)}
+.sec-h2 .gtext{color:var(--accent);font-style:italic;font-family:var(--font-display);background:none;-webkit-background-clip:initial}
+.sec-sub{font-family:var(--font-body);font-size:18px;color:var(--ink-2);line-height:1.55;max-width:680px;margin-bottom:60px;letter-spacing:-0.005em;font-weight:400}
+
+/* PHONE FRAME — refined matte ink */
+.phone{background:#1A2030;border-radius:42px;padding:7px;box-shadow:0 36px 80px -32px rgba(10,37,64,0.45),0 14px 28px -14px rgba(10,37,64,0.18),inset 0 0 0 1px rgba(255,255,255,0.06);position:relative;width:308px}
+.phone-screen{background:#fff;border-radius:35px;overflow:hidden;display:flex;flex-direction:column;height:640px;position:relative}
+.phone-notch{position:absolute;top:8px;left:50%;transform:translateX(-50%);width:108px;height:24px;background:#1A2030;border-radius:20px;z-index:50}
+.phone-status{display:flex;align-items:center;justify-content:space-between;padding:8px 28px 4px;color:#1A1A1A;font-size:11px;font-weight:600;height:32px}
 .phone-status .ps-r{display:flex;align-items:center;gap:5px;font-size:10px}
 .phone-status .ps-bat{width:22px;height:11px;border-radius:3px;border:1px solid #1A1A1A;position:relative;padding:1px}
 .phone-status .ps-bat::after{content:'';position:absolute;right:-3px;top:3px;width:2px;height:5px;background:#1A1A1A;border-radius:0 1px 1px 0}
@@ -274,64 +318,41 @@ body{font-family:'Inter','Be Vietnam Pro',system-ui,sans-serif;background:var(--
 .pos-qr-show .pqs-status .pqs-d{width:6px;height:6px;border-radius:50%;background:#15803D;animation:pulse 1.5s infinite}
 
 /* TWO-PANE LAYOUT */
-.flow-grid{display:grid;grid-template-columns:1fr 360px 360px 1fr;gap:0;align-items:center;justify-items:center;padding:28px 0;position:relative}
-.flow-grid::before{content:'';position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:80%;height:1px;background:linear-gradient(90deg,transparent,rgba(255,46,99,.3) 30%,rgba(124,45,255,.5) 50%,rgba(0,217,192,.3) 70%,transparent);z-index:0}
-.flow-arrow{width:120px;height:120px;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:6px;position:relative;z-index:2}
-.flow-arrow-line{width:80%;height:2px;background:linear-gradient(90deg,#FF2E63,#7C2DFF);position:relative;animation:dataPulse 2s ease-in-out infinite}
-.flow-arrow-line::before,.flow-arrow-line::after{content:'';position:absolute;top:50%;width:6px;height:6px;border-radius:50%;background:#FF2E63;transform:translateY(-50%)}
-.flow-arrow-line::before{left:0}.flow-arrow-line::after{right:0;background:#7C2DFF}
-@keyframes dataPulse{0%,100%{opacity:.5}50%{opacity:1}}
-.flow-arrow-pkt{position:absolute;top:50%;left:0;transform:translateY(-50%);width:8px;height:8px;border-radius:50%;background:#fff;box-shadow:0 0 12px #fff;animation:travel 2s ease-in-out infinite}
-@keyframes travel{0%{left:0;opacity:0}10%{opacity:1}90%{opacity:1}100%{left:100%;opacity:0}}
-.flow-arrow-l{font-size:9px;color:var(--t3);font-weight:700;letter-spacing:.3px;text-transform:uppercase;text-align:center;line-height:1.4}
+.flow-grid{display:grid;grid-template-columns:1fr 320px 320px 1fr;gap:32px;align-items:start;justify-items:center;padding:32px 0;position:relative}
+.flow-grid::before{display:none}
 
-/* ANNOTATION PILL */
-.ann{position:absolute;display:flex;align-items:flex-start;gap:8px;padding:10px 14px;background:rgba(8,12,22,.85);backdrop-filter:blur(16px);border:1px solid var(--line-2);border-radius:12px;font-size:11px;color:var(--t1);max-width:240px;line-height:1.5;z-index:5;font-weight:500}
-.ann .ann-num{width:22px;height:22px;border-radius:7px;background:var(--wxp-grad);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:900;color:#fff;flex-shrink:0;box-shadow:0 4px 10px rgba(255,46,99,.4)}
+/* MARGINALIA — annotations as Stripe-Press footnotes */
+.ann{position:absolute;display:flex;align-items:flex-start;gap:14px;padding:0;background:transparent;backdrop-filter:none;border:none;border-radius:0;font-size:13.5px;color:var(--ink-2);max-width:240px;line-height:1.55;z-index:5;font-weight:400;font-family:var(--font-body);letter-spacing:-0.003em}
+.ann .ann-num{width:24px;height:24px;border-radius:50%;background:transparent;border:1px solid var(--ink-2);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:500;color:var(--ink);flex-shrink:0;font-family:var(--font-mono);letter-spacing:0;margin-top:2px;box-shadow:none}
 .ann .ann-body{flex:1}
-.ann .ann-t{font-size:11px;font-weight:800;color:#fff;letter-spacing:-.1px;margin-bottom:2px}
-.ann .ann-s{font-size:10px;color:var(--t2);font-weight:500;line-height:1.5}
-.ann .ann-s b{color:#fff;font-weight:700}
-.ann .ann-s .em-r{color:#FF7090;font-weight:700}
-.ann .ann-s .em-g{color:#00D9C0;font-weight:700}
-.ann .ann-s .em-y{color:#FFB020;font-weight:700}
-.ann::before{content:'';position:absolute;width:10px;height:10px;background:rgba(8,12,22,.85);border:1px solid var(--line-2);border-right:none;border-bottom:none;transform:rotate(45deg)}
-.ann.ann-l::before{left:-6px;top:50%;margin-top:-5px;transform:rotate(-45deg)}
-.ann.ann-r::before{right:-6px;top:50%;margin-top:-5px;transform:rotate(135deg)}
-.ann.ann-t::before{top:-6px;left:50%;margin-left:-5px}
-.ann.ann-b::before{bottom:-6px;left:50%;margin-left:-5px;transform:rotate(225deg)}
+.ann .ann-t{font-family:var(--font-display);font-size:17px;font-weight:400;font-style:italic;color:var(--ink);letter-spacing:-0.018em;margin-bottom:6px;line-height:1.18}
+.ann .ann-s{font-size:13.5px;color:var(--ink-2);font-weight:400;line-height:1.55;font-family:var(--font-body)}
+.ann .ann-s b{color:var(--ink);font-weight:600}
+.ann .ann-s .em-r{color:var(--accent);font-weight:500;font-style:italic;font-family:var(--font-display)}
+.ann .ann-s .em-g{color:var(--green);font-weight:500;font-style:italic;font-family:var(--font-display)}
+.ann .ann-s .em-y{color:#B45309;font-weight:500;font-style:italic;font-family:var(--font-display)}
+.ann::before{display:none}
 
-/* DATA POINT BADGE */
-.dpb{display:inline-flex;align-items:center;gap:6px;padding:4px 10px;border-radius:20px;background:rgba(255,255,255,.04);border:1px solid var(--line-2);font-size:10px;font-weight:700;color:var(--t2);font-family:'JetBrains Mono',monospace;letter-spacing:-.1px}
-.dpb b{color:#fff;font-weight:800}
-.dpb-h{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:18px}
+/* DPB pills — hidden (already removed from HTML) */
+.dpb,.dpb-h{display:none}
 
-/* CALLOUT FROM PDF */
-.pdf-cite{display:inline-flex;align-items:center;gap:5px;padding:3px 8px;border-radius:6px;background:rgba(255,46,99,.08);border:1px solid rgba(255,46,99,.2);font-size:9px;font-weight:700;color:#FF7090;letter-spacing:.3px;text-transform:uppercase;font-family:'JetBrains Mono',monospace}
+/* CODE BLOCK — Stripe Press dark navy */
+.code-blk{background:var(--code-bg);border:none;border-radius:8px;font-family:var(--font-mono);font-size:13.5px;color:#fff;overflow:hidden;box-shadow:0 16px 40px -16px rgba(10,37,64,0.4)}
+.code-hdr{padding:14px 22px;background:rgba(255,255,255,0.04);border-bottom:1px solid rgba(255,255,255,0.08);display:flex;align-items:center;gap:10px;font-size:11px;color:rgba(255,255,255,0.65);font-family:var(--font-body);font-weight:500;letter-spacing:0.06em;text-transform:uppercase}
+.code-hdr .ch-dots{display:none}
+.code-body{padding:22px 28px;line-height:1.75;overflow-x:auto;white-space:pre;color:rgba(255,255,255,0.92);font-feature-settings:'liga' 0}
+.code-body .k{color:#FF8FA9}.code-body .s{color:#7DD3FC}.code-body .n{color:#FCD34D}.code-body .c{color:rgba(255,255,255,0.45);font-style:italic}.code-body .v{color:#fff;opacity:.95}.code-body .p{color:#fff}.code-body .t{color:#C4B5FD}
 
-/* (sections removed in v2 — keeping selectors clean) */
-
-/* CODE BLOCK */
-.code-blk{background:#0A0E1A;border:1px solid var(--line-2);border-radius:14px;font-family:'JetBrains Mono',monospace;font-size:12.5px;color:var(--t1);overflow:hidden}
-.code-hdr{padding:10px 16px;background:rgba(255,255,255,.02);border-bottom:1px solid var(--line);display:flex;align-items:center;gap:8px;font-size:11px;color:var(--t3);font-family:'Inter',sans-serif;font-weight:600}
-.code-hdr .ch-dots{display:flex;gap:5px}
-.code-hdr .ch-dots span{width:9px;height:9px;border-radius:50%}
-.code-hdr .ch-dots span:nth-child(1){background:#FF6058}
-.code-hdr .ch-dots span:nth-child(2){background:#FFBD2E}
-.code-hdr .ch-dots span:nth-child(3){background:#28CA42}
-.code-body{padding:18px 22px;line-height:1.7;overflow-x:auto;white-space:pre}
-.code-body .k{color:#FF7090}.code-body .s{color:#00D9C0}.code-body .n{color:#FFB020}.code-body .c{color:var(--t4);font-style:italic}.code-body .v{color:#7CC0FF}.code-body .p{color:var(--t1)}.code-body .t{color:#A78BFA}
-
-/* PILLAR CARDS */
-.pillar-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
-.pillar{background:linear-gradient(180deg,rgba(255,255,255,.04),rgba(255,255,255,.01));border:1px solid var(--line-2);border-radius:18px;padding:28px 22px;position:relative;overflow:hidden;transition:transform .25s,border-color .25s}
-.pillar:hover{transform:translateY(-3px);border-color:rgba(255,46,99,.35)}
-.pillar::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--wxp-grad)}
-.pillar-num{font-size:11px;font-weight:900;color:var(--wxp);letter-spacing:1.2px;font-family:'JetBrains Mono',monospace}
-.pillar-h{font-size:18px;font-weight:800;color:#fff;letter-spacing:-.3px;margin-top:10px;margin-bottom:10px;line-height:1.2}
-.pillar-d{font-size:13px;color:var(--t2);line-height:1.6}
-.pillar-v{margin-top:14px;font-size:11px;color:var(--t3);font-weight:700;text-transform:uppercase;letter-spacing:.4px}
-.pillar-v b{color:#fff;font-weight:800;font-family:'JetBrains Mono',monospace;font-size:13px;letter-spacing:-.2px}
+/* PILLAR — editorial 4-up bordered grid */
+.pillar-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:0;border-top:1px solid var(--ink);border-left:1px solid var(--ink)}
+.pillar{background:transparent;border:none;border-right:1px solid var(--ink);border-bottom:1px solid var(--ink);border-radius:0;padding:36px 30px 38px;position:relative;overflow:hidden;transition:background .25s}
+.pillar:hover{background:rgba(192,24,92,0.04);transform:none}
+.pillar::before{display:none}
+.pillar-num{font-size:11px;font-weight:500;color:var(--ink-3);letter-spacing:0.16em;font-family:var(--font-mono);text-transform:uppercase}
+.pillar-h{font-family:var(--font-display);font-size:26px;font-weight:400;color:var(--ink);letter-spacing:-0.022em;margin-top:18px;margin-bottom:14px;line-height:1.1;font-style:italic}
+.pillar-d{font-size:14px;color:var(--ink-2);line-height:1.6;font-family:var(--font-body)}
+.pillar-v{margin-top:18px;font-size:11px;color:var(--ink-3);font-weight:500;text-transform:uppercase;letter-spacing:0.08em;font-family:var(--font-mono)}
+.pillar-v b{color:var(--ink);font-weight:500;font-family:var(--font-mono);font-size:11px;letter-spacing:0.04em}
 
 /* CHAT PHONE — ZALO OA AI */
 .zoa-app{flex:1;background:#E8F0F5;display:flex;flex-direction:column;overflow:hidden}
@@ -393,20 +414,22 @@ body{font-family:'Inter','Be Vietnam Pro',system-ui,sans-serif;background:var(--
 .zoa-chips button:hover{background:#FF2E63;color:#fff}
 
 /* MERCHANT INTEGRATION */
-.merch-grid{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:start}
-.merch-feat{display:flex;gap:14px;margin-bottom:22px;padding-bottom:22px;border-bottom:1px solid var(--line)}
-.merch-feat:last-child{border-bottom:none}
-.merch-feat-ico{width:42px;height:42px;border-radius:12px;background:linear-gradient(135deg,rgba(255,46,99,.15),rgba(124,45,255,.15));border:1px solid rgba(255,46,99,.3);display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
-.merch-feat-bd .mf-t{font-size:15px;font-weight:800;color:#fff;letter-spacing:-.2px;margin-bottom:5px}
-.merch-feat-bd .mf-d{font-size:13px;color:var(--t2);line-height:1.55}
-.merch-feat-bd .mf-d b{color:#fff}
+.merch-grid{display:grid;grid-template-columns:1fr 1.1fr;gap:60px;align-items:start}
+.merch-feat{display:flex;gap:18px;margin-bottom:32px;padding-bottom:32px;border-bottom:1px solid var(--rule)}
+.merch-feat:last-child{border-bottom:none;margin-bottom:0;padding-bottom:0}
+.merch-feat-ico{width:44px;height:44px;border-radius:8px;background:var(--paper-2);border:1px solid var(--rule);display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;color:var(--ink)}
+.merch-feat-bd .mf-t{font-family:var(--font-display);font-size:22px;font-weight:400;font-style:italic;color:var(--ink);letter-spacing:-0.020em;margin-bottom:8px;line-height:1.18}
+.merch-feat-bd .mf-d{font-size:14.5px;color:var(--ink-2);line-height:1.6;font-family:var(--font-body)}
+.merch-feat-bd .mf-d b{color:var(--ink);font-weight:600}
+.merch-feat-bd .mf-d .font-mono{font-family:var(--font-mono);font-size:13px;background:var(--paper-2);padding:1px 5px;border-radius:3px;color:var(--ink)}
 
 /* FOOTER */
-.foot{position:relative;z-index:2;padding:48px 32px;border-top:1px solid var(--line);background:linear-gradient(180deg,transparent,rgba(8,12,22,.6))}
-.foot-inner{max-width:1440px;margin:0 auto}
-.foot-meta{display:flex;justify-content:space-between;align-items:center;font-size:11px;color:var(--t3);flex-wrap:wrap;gap:14px}
-.foot-meta .fm-l{font-weight:600}
-.foot-meta .fm-r{display:flex;gap:18px;flex-wrap:wrap}
+.foot{position:relative;z-index:2;padding:60px 32px;border-top:1px solid var(--rule);background:transparent}
+.foot-inner{max-width:1240px;margin:0 auto}
+.foot-meta{display:flex;justify-content:space-between;align-items:center;font-size:13px;color:var(--ink-3);flex-wrap:wrap;gap:18px;font-family:var(--font-body)}
+.foot-meta .fm-l{font-weight:500;color:var(--ink-2)}
+.foot-meta .fm-l b{font-family:var(--font-display);font-style:italic;font-weight:500;color:var(--ink)}
+.foot-meta .fm-r{display:flex;gap:24px;flex-wrap:wrap;font-family:var(--font-mono);font-size:11px;letter-spacing:0.05em;text-transform:uppercase;color:var(--ink-3)}
 
 /* RESPONSIVE */
 @media (max-width:1100px){
@@ -426,50 +449,84 @@ body{font-family:'Inter','Be Vietnam Pro',system-ui,sans-serif;background:var(--
 }
 
 /* SCROLL REVEAL */
-.reveal{opacity:0;transform:translateY(28px);transition:opacity .9s cubic-bezier(.2,.7,.2,1),transform .9s cubic-bezier(.2,.7,.2,1)}
+.reveal{opacity:0;transform:translateY(20px);transition:opacity 1.1s cubic-bezier(.2,.7,.2,1),transform 1.1s cubic-bezier(.2,.7,.2,1)}
 .reveal.in{opacity:1;transform:none}
 
-/* HIDE WEBGL ON MOBILE */
-@media (max-width:640px){#bgcanvas{opacity:.4}}
+/* WEBGL: keep visible on mobile (it's a soft cream gradient now) */
+@media (max-width:640px){#bgcanvas{opacity:.7}}
 
-/* PHONE LIFT */
-.phone-lift{position:relative;transform:perspective(1200px) rotateY(-2deg) rotateX(2deg);transition:transform .3s}
-.phone-lift:hover{transform:perspective(1200px) rotateY(0deg) rotateX(0deg)}
+/* PHONE LIFT — minimal, no aggressive transform */
+.phone-lift{position:relative;transition:transform .35s ease}
+.phone-lift:hover{transform:translateY(-3px)}
 
-/* TIMELINE STEPS */
-.tl-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:14px;margin-top:28px;position:relative}
-.tl-grid::before{content:'';position:absolute;top:30px;left:6%;right:6%;height:2px;background:linear-gradient(90deg,#FF2E63,#7C2DFF,#00D9C0);opacity:.4;z-index:0}
-.tl-step{position:relative;z-index:1}
-.tl-step-num{width:62px;height:62px;border-radius:50%;background:rgba(8,12,22,.95);border:2px solid var(--line-2);display:flex;align-items:center;justify-content:center;font-size:22px;font-weight:900;color:#fff;margin:0 auto 16px;font-family:'JetBrains Mono',monospace;letter-spacing:-1px;backdrop-filter:blur(8px);transition:all .3s;box-shadow:0 8px 22px rgba(0,0,0,.3)}
-.tl-step.act .tl-step-num{background:var(--wxp-grad);border-color:transparent;box-shadow:0 8px 22px rgba(255,46,99,.4),0 0 0 6px rgba(255,46,99,.12)}
-.tl-step-h{font-size:13px;font-weight:800;color:#fff;letter-spacing:-.1px;margin-bottom:5px;text-align:center}
-.tl-step-d{font-size:11.5px;color:var(--t2);line-height:1.5;text-align:center;font-weight:500}
-.tl-step-d b{color:#fff;font-weight:700}
-.tl-step-d .em{color:var(--wxp);font-weight:700}
-.tl-step-time{display:inline-block;margin-top:8px;padding:2px 8px;border-radius:5px;background:rgba(0,217,192,.1);border:1px solid rgba(0,217,192,.3);font-size:9px;color:#00D9C0;font-weight:700;font-family:'JetBrains Mono',monospace;letter-spacing:.3px}
+/* TIMELINE — editorial 5-column with hairline rules */
+.tl-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:0;margin-top:64px;border-top:1px solid var(--ink);position:relative}
+.tl-grid::before{display:none}
+.tl-step{padding:32px 26px 32px 0;border-right:1px solid var(--rule);position:relative;z-index:1}
+.tl-step:last-child{border-right:none;padding-right:0}
+.tl-step::after{content:'';position:absolute;top:-1px;left:0;right:0;height:1px;background:transparent;transition:background .8s ease}
+.tl-step.act::after{background:var(--accent)}
+.tl-step-num{display:inline-block;width:auto;height:auto;background:none;border:none;border-radius:0;font-family:var(--font-mono);font-size:11px;font-weight:500;color:var(--ink-3);letter-spacing:0.04em;margin:0 0 18px;box-shadow:none;padding:0}
+.tl-step-num::before{content:'0';color:var(--ink-3)}
+.tl-step.act .tl-step-num{color:var(--accent)}
+.tl-step-h{font-family:var(--font-display);font-size:24px;font-weight:400;font-style:italic;color:var(--ink);letter-spacing:-0.022em;margin-bottom:10px;line-height:1.1;text-align:left}
+.tl-step.act .tl-step-h{color:var(--accent)}
+.tl-step-d{font-family:var(--font-body);font-size:14px;color:var(--ink-2);line-height:1.55;text-align:left;font-weight:400;letter-spacing:-0.003em}
+.tl-step-d b{color:var(--ink);font-weight:600}
+.tl-step-d .em{color:var(--accent);font-weight:500;font-style:italic;font-family:var(--font-display)}
+.tl-step-time{display:inline-block;margin-top:14px;padding:2px 8px;border-radius:3px;background:transparent;border:1px solid var(--rule-2);font-size:10.5px;color:var(--ink-2);font-weight:500;font-family:var(--font-mono);letter-spacing:0.04em}
 
-/* TICKER */
-.ticker{overflow:hidden;border-top:1px solid var(--line);border-bottom:1px solid var(--line);background:rgba(255,255,255,.02);padding:16px 0;margin:0;position:relative}
-.ticker-track{display:flex;gap:48px;animation:ticker 40s linear infinite;width:max-content}
+/* TICKER — light, editorial */
+.ticker{overflow:hidden;border-top:1px solid var(--rule);border-bottom:1px solid var(--rule);background:transparent;padding:22px 0;margin:0;position:relative}
+.ticker-track{display:flex;gap:56px;animation:ticker 60s linear infinite;width:max-content}
 @keyframes ticker{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
-.ticker-item{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--t2);font-weight:600;white-space:nowrap}
-.ticker-item .ti-d{width:5px;height:5px;border-radius:50%;background:var(--wxp);flex-shrink:0}
-.ticker-item b{color:#fff;font-weight:800}
-.ticker-item .em{color:#00D9C0;font-weight:700}
+.ticker-item{display:flex;align-items:center;gap:10px;font-size:14.5px;color:var(--ink-2);font-weight:400;white-space:nowrap;font-family:var(--font-body);letter-spacing:-0.005em}
+.ticker-item .ti-d{width:5px;height:5px;border-radius:50%;background:var(--accent);flex-shrink:0}
+.ticker-item b{color:var(--ink);font-weight:500;font-family:var(--font-display);font-style:italic;font-size:16px}
+.ticker-item .em{color:var(--accent);font-weight:400;font-family:var(--font-display);font-style:italic}
 
-/* MOAT CHIP */
-.moat-chip{display:inline-flex;align-items:center;gap:6px;padding:6px 12px;border-radius:14px;font-size:11px;font-weight:800;letter-spacing:.2px;font-family:'JetBrains Mono',monospace}
-.mc-y{background:rgba(0,217,192,.15);color:#00D9C0;border:1px solid rgba(0,217,192,.3)}
-.mc-n{background:rgba(255,255,255,.04);color:var(--t4);border:1px solid var(--line-2)}
+/* MOAT CHIP — kept for compat, light variant */
+.moat-chip{display:inline-flex;align-items:center;gap:6px;padding:6px 12px;border-radius:99px;font-size:11px;font-weight:500;letter-spacing:0.04em;font-family:var(--font-mono)}
+.mc-y{background:rgba(15,143,94,0.08);color:var(--green);border:1px solid rgba(15,143,94,0.25)}
+.mc-n{background:transparent;color:var(--ink-3);border:1px solid var(--rule)}
 
-/* LEGEND */
-.legend{display:flex;align-items:center;gap:16px;padding:12px 16px;background:rgba(255,255,255,.02);border:1px solid var(--line);border-radius:12px;font-size:11px;color:var(--t2);flex-wrap:wrap}
-.legend-it{display:flex;align-items:center;gap:5px;font-weight:600}
-.legend-it .ld{width:10px;height:10px;border-radius:3px}
+/* LEGEND — light editorial */
+.legend{display:flex;align-items:center;gap:24px;padding:18px 22px;background:transparent;border:1px solid var(--rule);border-radius:6px;font-size:13px;color:var(--ink-2);flex-wrap:wrap;font-family:var(--font-body);letter-spacing:-0.003em}
+.legend-it{display:flex;align-items:center;gap:8px;font-weight:500}
+.legend-it .ld{width:9px;height:9px;border-radius:2px}
+.legend-it b{color:var(--ink);font-family:var(--font-display);font-style:italic;font-weight:500}
+
+/* PDF-CITE — repurposed as Stripe-Press marginalia note */
+.pdf-cite{display:inline-flex;align-items:center;gap:5px;padding:2px 8px;border-radius:3px;background:transparent;border:1px solid var(--rule);font-size:10.5px;font-weight:500;color:var(--ink-3);letter-spacing:0.04em;text-transform:uppercase;font-family:var(--font-mono)}
+
+/* RESPONSIVE */
+@media (max-width:1100px){
+  .flow-grid{grid-template-columns:1fr;gap:48px}
+  .ann{display:none}
+  .pillar-grid{grid-template-columns:repeat(2,1fr)}
+  .merch-grid{grid-template-columns:1fr;gap:48px}
+  .tl-grid{grid-template-columns:repeat(2,1fr)}
+  .tl-step{border-right:1px solid var(--rule);border-bottom:1px solid var(--rule);padding:28px 22px}
+  .tl-step:nth-child(2n){border-right:none}
+}
+@media (max-width:680px){
+  .nav-inner{padding:14px 18px;gap:14px}
+  .nav-link{display:none}
+  .sec{padding:80px 22px}
+  .hero{padding:130px 22px 70px}
+  .pillar-grid{grid-template-columns:1fr}
+  .tl-grid{grid-template-columns:1fr}
+  .tl-step{border-right:none}
+  .ticker-item{font-size:13px}
+  .ticker-item b{font-size:14.5px}
+}
+
+/* SMALL HELPERS */
+.tabnum{font-variant-numeric:tabular-nums}
 
 </style>
 </head>
-<body class="grain">
+<body>
 
 <canvas id="bgcanvas"></canvas>
 
@@ -1526,36 +1583,42 @@ if(!reduceMotion && canvas){
           vec2 p = uv * 2.0 - 1.0;
           p.x *= uRes.x / uRes.y;
 
-          float t = uTime * 0.045;
-          float n1 = snoise(p * 1.4 + vec2(t, t*0.7));
-          float n2 = snoise(p * 0.8 + vec2(-t*1.2, t*0.5));
-          float n3 = snoise(p * 2.2 + vec2(t*0.4, -t*0.9));
+          float t = uTime * 0.030;
 
-          // brand colors
-          vec3 cInk     = vec3(0.031, 0.047, 0.086);  // #080C16
-          vec3 cWxp     = vec3(1.0, 0.180, 0.388);    // #FF2E63
-          vec3 cWxp2    = vec3(0.486, 0.176, 1.0);    // #7C2DFF
-          vec3 cWxp3    = vec3(0.0, 0.851, 0.753);    // #00D9C0
+          // Three corner-anchored soft blobs (Stripe-style mesh)
+          // Each blob is a radial falloff, drifting with simplex noise
+          vec2 c1 = vec2(-0.85, 0.55) + vec2(snoise(vec2(t*0.7, 0.0)), snoise(vec2(0.0, t*0.5))) * 0.18;
+          vec2 c2 = vec2(0.95, 0.70)  + vec2(snoise(vec2(t*0.5+10.0, 0.0)), snoise(vec2(0.0, t*0.6+10.0))) * 0.15;
+          vec2 c3 = vec2(0.0, -0.95)  + vec2(snoise(vec2(t*0.6+20.0, 0.0)), snoise(vec2(0.0, t*0.4+20.0))) * 0.12;
+          vec2 c4 = vec2(-0.70, -0.30) + vec2(snoise(vec2(t*0.4+30.0, 0.0)), snoise(vec2(0.0, t*0.5+30.0))) * 0.18;
 
-          float m1 = smoothstep(-0.6, 0.6, n1);
-          float m2 = smoothstep(-0.5, 0.7, n2);
-          float m3 = smoothstep(-0.7, 0.5, n3);
+          float d1 = 1.0 - smoothstep(0.0, 1.30, length(p - c1));
+          float d2 = 1.0 - smoothstep(0.0, 1.20, length(p - c2));
+          float d3 = 1.0 - smoothstep(0.0, 1.40, length(p - c3));
+          float d4 = 1.0 - smoothstep(0.0, 1.10, length(p - c4));
 
-          vec3 col = cInk;
-          col = mix(col, cWxp,  m1 * 0.18);
-          col = mix(col, cWxp2, m2 * 0.20);
-          col = mix(col, cWxp3, m3 * 0.10);
+          // Stripe-style soft pastel palette on cream paper
+          vec3 cPaper   = vec3(0.965, 0.957, 0.933);  // #F6F4EE cream
+          vec3 cPeach   = vec3(0.992, 0.880, 0.820);  // #FDE0D1 warm peach
+          vec3 cBlush   = vec3(0.988, 0.835, 0.875);  // #FCD5DF blush pink
+          vec3 cLavender= vec3(0.870, 0.835, 0.965);  // #DED5F6 soft lavender
+          vec3 cSky     = vec3(0.835, 0.910, 0.945);  // #D5E8F1 dusty sky
+          vec3 cSand    = vec3(0.965, 0.910, 0.812);  // #F6E8CF warm sand
 
-          // vignette
-          float vig = smoothstep(1.4, 0.5, length(p));
-          col *= (0.6 + vig * 0.4);
+          vec3 col = cPaper;
+          col = mix(col, cPeach,    d1 * 0.55);
+          col = mix(col, cLavender, d2 * 0.50);
+          col = mix(col, cSky,      d3 * 0.40);
+          col = mix(col, cBlush,    d4 * 0.45);
+          col = mix(col, cSand,     d3 * 0.20);
 
-          // ambient brightness boost
-          col = pow(col, vec3(0.92));
+          // very gentle radial fade keeping the center brighter
+          float vig = smoothstep(1.6, 0.0, length(p));
+          col = mix(col * 0.96, col, vig);
 
-          // grain
-          float g = fract(sin(dot(uv*1000.0, vec2(12.9898,78.233))) * 43758.5453);
-          col += (g - 0.5) * 0.012;
+          // subtle noise/grain (paper texture)
+          float g = fract(sin(dot(uv*900.0, vec2(12.9898,78.233))) * 43758.5453);
+          col += (g - 0.5) * 0.008;
 
           gl_FragColor = vec4(col, 1.0);
         }
@@ -1634,110 +1697,123 @@ if(!reduceMotion && cardCanvas){
     });
     cardGeom.center();
 
-    // ---- CARD FACE TEXTURE (canvas-rendered) ----
+    // ---- CARD FACE TEXTURE (Stripe Press editorial) ----
     function makeCardTexture(){
       const c = document.createElement('canvas');
       c.width = 1024; c.height = 640;
       const x = c.getContext('2d');
 
-      // base gradient
-      const g = x.createLinearGradient(0, 0, 1024, 640);
-      g.addColorStop(0, '#FF2E63');
-      g.addColorStop(0.55, '#7C2DFF');
-      g.addColorStop(1.05, '#00D9C0');
-      x.fillStyle = g; x.fillRect(0, 0, 1024, 640);
+      // Solid deep-magenta face (single Vietnamese signature color)
+      x.fillStyle = '#A5135C';
+      x.fillRect(0, 0, 1024, 640);
 
-      // glow blob top right
-      const r1 = x.createRadialGradient(820, 110, 20, 820, 110, 360);
-      r1.addColorStop(0, 'rgba(255,255,255,0.35)');
-      r1.addColorStop(1, 'rgba(255,255,255,0)');
+      // Soft directional sheen (top-left corner highlight)
+      const sheen = x.createLinearGradient(0, 0, 1024, 640);
+      sheen.addColorStop(0, 'rgba(255,255,255,0.16)');
+      sheen.addColorStop(0.45, 'rgba(255,255,255,0.02)');
+      sheen.addColorStop(1, 'rgba(0,0,0,0.18)');
+      x.fillStyle = sheen; x.fillRect(0, 0, 1024, 640);
+
+      // Subtle radial in upper-right (warm highlight)
+      const r1 = x.createRadialGradient(820, 140, 20, 820, 140, 480);
+      r1.addColorStop(0, 'rgba(255,210,200,0.18)');
+      r1.addColorStop(1, 'rgba(255,210,200,0)');
       x.fillStyle = r1; x.fillRect(0, 0, 1024, 640);
 
-      // glow blob bottom left
-      const r2 = x.createRadialGradient(180, 540, 20, 180, 540, 380);
-      r2.addColorStop(0, 'rgba(0,217,192,0.4)');
-      r2.addColorStop(1, 'rgba(0,217,192,0)');
-      x.fillStyle = r2; x.fillRect(0, 0, 1024, 640);
+      // Hairline inner border (Stripe Press editorial frame)
+      x.strokeStyle = 'rgba(255,255,255,0.22)';
+      x.lineWidth = 1;
+      x.strokeRect(36, 36, 1024 - 72, 640 - 72);
 
-      // dotted-grid watermark (Masan AGM motif)
-      x.fillStyle = 'rgba(255,255,255,0.08)';
-      for(let i=0;i<22;i++) for(let j=0;j<14;j++){
-        const dx = i*48+24, dy = j*48+24;
-        x.beginPath(); x.arc(dx, dy, 2, 0, Math.PI*2); x.fill();
-      }
+      // ============= TYPOGRAPHY =============
 
-      // brand
+      // Top eyebrow — small caps tracked
+      x.fillStyle = 'rgba(255,255,255,0.62)';
+      x.font = '500 18px "Inter", system-ui';
+      x.textBaseline = 'alphabetic';
+      // letter-spacing trick: draw chars manually
+      const eyebrow = 'WINXPAY';
+      const sub = 'A WALLET MADE IN VIETNAM';
+      x.save();
+      x.translate(72, 110);
+      let xPos = 0;
+      x.font = '500 18px "Inter", system-ui';
+      for(const ch of eyebrow){ x.fillText(ch, xPos, 0); xPos += x.measureText(ch).width + 4.5; }
+      x.fillStyle = 'rgba(255,255,255,0.42)';
+      x.fillText(' · ', xPos, 0); xPos += x.measureText(' · ').width;
+      x.fillStyle = 'rgba(255,255,255,0.62)';
+      for(const ch of sub){ x.fillText(ch, xPos, 0); xPos += x.measureText(ch).width + 3.5; }
+      x.restore();
+
+      // Big serif italic wordmark
       x.fillStyle = '#fff';
-      x.font = '900 80px Inter, system-ui';
-      x.fillText('Win', 60, 160);
-      x.fillStyle = 'rgba(255,255,255,0.9)';
-      x.font = 'italic 900 80px Inter, system-ui';
-      x.fillText('X', 220, 160);
+      x.font = 'italic 400 156px "Fraunces", "Times New Roman", serif';
+      x.textBaseline = 'alphabetic';
+      x.fillText('Win', 60, 320);
+      const winW = x.measureText('Win').width;
+      // Italicized "X" in slightly lighter hue
+      x.fillStyle = 'rgba(255,255,255,0.88)';
+      x.font = 'italic 400 156px "Fraunces", "Times New Roman", serif';
+      x.fillText('X', 60 + winW - 8, 320);
+      const xW = x.measureText('X').width;
       x.fillStyle = '#fff';
-      x.font = '900 80px Inter, system-ui';
-      x.fillText('Pay', 280, 160);
+      x.fillText('Pay', 60 + winW - 8 + xW - 8, 320);
 
-      // tag
-      x.fillStyle = 'rgba(255,255,255,0.7)';
-      x.font = '700 22px Inter';
-      x.fillText('CONSUMER WALLET · TCB-LINKED', 60, 200);
+      // Italic tag below wordmark
+      x.fillStyle = 'rgba(255,255,255,0.72)';
+      x.font = 'italic 400 26px "Fraunces", serif';
+      x.fillText('the wallet that meets you at the till', 64, 360);
 
-      // chip
-      x.fillStyle = 'rgba(255,255,255,0.18)';
-      x.fillRect(60, 250, 100, 76);
-      x.strokeStyle = 'rgba(255,255,255,0.5)';
-      x.lineWidth = 1.5;
-      for(let i=0;i<4;i++){ x.beginPath(); x.moveTo(60, 270+i*16); x.lineTo(160, 270+i*16); x.stroke(); }
-      x.beginPath(); x.moveTo(110, 250); x.lineTo(110, 326); x.stroke();
+      // ============= BOTTOM ROW =============
+      // Small caps labels
+      x.fillStyle = 'rgba(255,255,255,0.55)';
+      x.font = '500 13px "Inter"';
+      x.save();
+      x.translate(72, 510);
+      let lx = 0;
+      const lbl = 'ISSUED BY TECHCOMBANK · VIETQR · NAPAS 247';
+      for(const ch of lbl){ x.fillText(ch, lx, 0); lx += x.measureText(ch).width + 2.5; }
+      x.restore();
 
-      // mono number
-      x.fillStyle = 'rgba(255,255,255,0.9)';
-      x.font = '800 44px "JetBrains Mono", ui-monospace';
-      x.fillText('•••• •••• ••••  4291', 60, 410);
+      // Mono account fragment (subtle, low-emphasis)
+      x.fillStyle = 'rgba(255,255,255,0.78)';
+      x.font = '500 28px "JetBrains Mono", ui-monospace';
+      x.fillText('•••• •••• 4291', 72, 562);
 
-      // names
-      x.fillStyle = 'rgba(255,255,255,0.65)';
-      x.font = '700 18px Inter';
-      x.fillText('CARDHOLDER', 60, 470);
+      // Right side — cardholder
+      x.fillStyle = 'rgba(255,255,255,0.55)';
+      x.font = '500 13px "Inter"';
+      x.save();
+      x.translate(620, 510);
+      let cx = 0;
+      const ch2 = 'CARDHOLDER';
+      for(const ch of ch2){ x.fillText(ch, cx, 0); cx += x.measureText(ch).width + 2.5; }
+      x.restore();
+
       x.fillStyle = '#fff';
-      x.font = '700 26px Inter';
-      x.fillText('NGUYEN VAN MINH', 60, 500);
+      x.font = 'italic 400 32px "Fraunces", serif';
+      x.fillText('Nguyen Van Minh', 620, 562);
 
-      x.fillStyle = 'rgba(255,255,255,0.65)';
-      x.font = '700 18px Inter';
-      x.fillText('VALID THRU', 60, 540);
-      x.fillStyle = '#fff';
-      x.font = '700 26px "JetBrains Mono", ui-monospace';
-      x.fillText('05/30', 60, 570);
+      // Edition / volume mark — tiny upper right
+      x.fillStyle = 'rgba(255,255,255,0.58)';
+      x.font = 'italic 400 18px "Fraunces", serif';
+      x.textAlign = 'right';
+      x.fillText('vol. i', 1024 - 72, 110);
+      x.textAlign = 'left';
 
-      // TCB pill
-      x.fillStyle = 'rgba(255,255,255,0.22)';
-      x.beginPath();
-      const px=820, py=470, pw=160, ph=44, pr=22;
-      x.moveTo(px+pr, py);
-      x.lineTo(px+pw-pr, py); x.quadraticCurveTo(px+pw, py, px+pw, py+pr);
-      x.lineTo(px+pw, py+ph-pr); x.quadraticCurveTo(px+pw, py+ph, px+pw-pr, py+ph);
-      x.lineTo(px+pr, py+ph); x.quadraticCurveTo(px, py+ph, px, py+ph-pr);
-      x.lineTo(px, py+pr); x.quadraticCurveTo(px, py, px+pr, py);
-      x.fill();
-      x.strokeStyle = 'rgba(255,255,255,0.4)';
-      x.lineWidth = 1; x.stroke();
-      x.fillStyle = '#fff';
-      x.font = '900 22px Inter';
-      x.fillText('TCB · NAPAS', 838, 498);
-
-      // VietQR mark
-      x.fillStyle = 'rgba(255,255,255,0.85)';
-      x.font = '900 16px Inter';
-      x.fillText('VietQR · 247', 820, 200);
-      // mini QR pattern
-      x.fillStyle = 'rgba(255,255,255,0.7)';
+      // Small VietQR symbol — bottom right
+      x.fillStyle = 'rgba(255,255,255,0.20)';
+      const qrSize = 56, qrX = 1024 - 72 - qrSize, qrY = 640 - 72 - qrSize;
+      // Stylized QR corner blocks
       for(let i=0;i<7;i++) for(let j=0;j<7;j++){
-        if((i+j+Math.floor(i*j/3))%2===0) x.fillRect(820+i*8, 220+j*8, 6, 6);
+        if((i*j*3+i+j)%2===0) x.fillRect(qrX + i*8, qrY + j*8, 6, 6);
       }
+      x.strokeStyle = 'rgba(255,255,255,0.35)';
+      x.lineWidth = 1;
+      x.strokeRect(qrX-4, qrY-4, qrSize+8, qrSize+8);
 
       const t = new THREE.CanvasTexture(c);
-      t.anisotropy = 8;
+      t.anisotropy = 16;
       t.colorSpace = THREE.SRGBColorSpace;
       return t;
     }
@@ -1746,53 +1822,46 @@ if(!reduceMotion && cardCanvas){
 
     const cardMat = new THREE.MeshPhysicalMaterial({
       map: cardTex,
-      metalness: 0.35,
-      roughness: 0.28,
-      clearcoat: 1.0,
-      clearcoatRoughness: 0.18,
-      iridescence: 0.55,
-      iridescenceIOR: 1.4,
-      iridescenceThicknessRange: [100, 600],
-      envMapIntensity: 1.1
+      metalness: 0.10,
+      roughness: 0.42,
+      clearcoat: 0.85,
+      clearcoatRoughness: 0.32,
+      iridescence: 0.18,
+      iridescenceIOR: 1.3,
+      iridescenceThicknessRange: [100, 400],
+      envMapIntensity: 0.6
     });
 
-    const backMat = new THREE.MeshPhysicalMaterial({
-      color: 0x14081F,
-      metalness: 0.4,
-      roughness: 0.32,
-      clearcoat: 0.8,
-      clearcoatRoughness: 0.25
-    });
-
-    // attach face material to front, back/sides as dark
-    const matArray = [cardMat, backMat];
-    cardGeom.clearGroups();
-    cardGeom.addGroup(0, Infinity, 1);
-    // front face is the last set of faces — front group via index range
-    // Hack: use just one material for now (cardMat) since extrude side faces will be small
     const card = new THREE.Mesh(cardGeom, cardMat);
     card.position.y = 0.05;
     cardScene.add(card);
 
-    // ---- LIGHTS ----
-    const amb = new THREE.AmbientLight(0xffffff, 0.55);
+    // ---- LIGHTS — soft, neutral, paper-room ----
+    // Ambient warm cream (matches the page background)
+    const amb = new THREE.AmbientLight(0xFFF5E8, 0.85);
     cardScene.add(amb);
 
-    const key = new THREE.DirectionalLight(0xffffff, 1.2);
-    key.position.set(3, 4, 5);
+    // Key — soft warm directional from upper-left
+    const key = new THREE.DirectionalLight(0xFFFAF0, 1.15);
+    key.position.set(-2.5, 3.5, 4.5);
     cardScene.add(key);
 
-    const rim1 = new THREE.PointLight(0xFF2E63, 1.4, 12);
-    rim1.position.set(-3, 1.2, 2);
+    // Fill — cool sky from right
+    const fill = new THREE.DirectionalLight(0xE8EDF5, 0.45);
+    fill.position.set(3, 1.0, 3);
+    cardScene.add(fill);
+
+    // Subtle rim — cream highlight on the back edge
+    const rim1 = new THREE.PointLight(0xFDE8D5, 0.55, 8);
+    rim1.position.set(2.5, 2.0, -1.5);
     cardScene.add(rim1);
 
-    const rim2 = new THREE.PointLight(0x00D9C0, 1.0, 10);
-    rim2.position.set(3, -1.5, 2.5);
-    cardScene.add(rim2);
-
-    const rim3 = new THREE.PointLight(0x7C2DFF, 0.8, 8);
-    rim3.position.set(0, 2.5, 3);
-    cardScene.add(rim3);
+    // Floor bounce — paper warm
+    const bounce = new THREE.PointLight(0xF6F4EE, 0.30, 6);
+    bounce.position.set(0, -2.5, 1);
+    cardScene.add(bounce);
+    // Stub references for the animate loop
+    const rim2 = rim1, rim3 = rim1;
 
     // ---- INTERACTION ----
     let mouseX = 0, mouseY = 0, targetRotX = 0, targetRotY = 0;
