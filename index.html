@@ -500,25 +500,41 @@ body{font-family:var(--font-body);background:var(--paper);color:var(--ink);overf
 .pdf-cite{display:inline-flex;align-items:center;gap:5px;padding:2px 8px;border-radius:3px;background:transparent;border:1px solid var(--rule);font-size:10.5px;font-weight:500;color:var(--ink-3);letter-spacing:0.04em;text-transform:uppercase;font-family:var(--font-mono)}
 
 /* RESPONSIVE */
+@media (max-width:1280px){
+  .pillar-grid{grid-template-columns:repeat(3,1fr)}
+  .pillar:nth-child(4),.pillar:nth-child(5){border-bottom:1px solid var(--ink)}
+}
 @media (max-width:1100px){
-  .flow-grid{grid-template-columns:1fr;gap:48px}
+  /* hide the annotation gutters entirely on tablet down */
+  .flow-grid{grid-template-columns:1fr;gap:32px;justify-items:center}
+  .flow-grid > div:first-child,
+  .flow-grid > div:last-child{display:none}
   .ann{display:none}
   .pillar-grid{grid-template-columns:repeat(2,1fr)}
   .merch-grid{grid-template-columns:1fr;gap:48px}
   .tl-grid{grid-template-columns:repeat(2,1fr)}
   .tl-step{border-right:1px solid var(--rule);border-bottom:1px solid var(--rule);padding:28px 22px}
   .tl-step:nth-child(2n){border-right:none}
+  .tl-step:last-child{border-bottom:none}
+  /* underneath, always panel */
+  .sec[id="sec-arch"] .reveal[style*="grid-template-columns:1.4fr"]{
+    grid-template-columns:1fr 1fr !important;gap:32px !important
+  }
 }
 @media (max-width:680px){
   .nav-inner{padding:14px 18px;gap:14px}
   .nav-link{display:none}
   .sec{padding:80px 22px}
   .hero{padding:130px 22px 70px}
+  .hero-h1{font-size:clamp(40px,9vw,64px)}
   .pillar-grid{grid-template-columns:1fr}
   .tl-grid{grid-template-columns:1fr}
   .tl-step{border-right:none}
   .ticker-item{font-size:13px}
   .ticker-item b{font-size:14.5px}
+  .sec[id="sec-arch"] .reveal[style*="grid-template-columns:1.4fr"]{
+    grid-template-columns:1fr !important
+  }
 }
 
 /* SMALL HELPERS */
