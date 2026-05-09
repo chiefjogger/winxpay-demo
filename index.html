@@ -79,8 +79,13 @@
 }
 
 *{box-sizing:border-box;margin:0;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}
-html{scroll-behavior:smooth;background:var(--paper)}
-body{font-family:var(--font-body);background:var(--paper);color:var(--ink);overflow-x:hidden;min-height:100vh;font-feature-settings:'ss01','cv11'}
+:root{color-scheme:light only}
+html{scroll-behavior:smooth;background:var(--paper) !important}
+body{font-family:var(--font-body);background:var(--paper) !important;color:var(--ink);overflow-x:hidden;min-height:100vh;font-feature-settings:'ss01','cv11'}
+/* Belt-and-suspenders: force light even if user-agent or extension tries auto-dark */
+@media (prefers-color-scheme:dark){
+  html,body{background:var(--paper) !important;color:var(--ink) !important}
+}
 
 .font-vn{font-family:var(--font-vn)}
 .font-mono{font-family:var(--font-mono)}
@@ -2064,11 +2069,11 @@ if(!reduceMotion && canvas){
   } catch(err){
     console.warn('[WinXPay] WebGL init failed, falling back to CSS:', err);
     canvas.style.display = 'none';
-    document.body.style.background = 'radial-gradient(ellipse at top,#1A0A35,#080C16 60%)';
+    // CSS body background (var(--paper) = cream #F6F4EE) handles the fallback
   }
 } else {
+  // Reduced-motion or no canvas — leave the cream body background as-is
   if(canvas) canvas.style.display = 'none';
-  document.body.style.background = 'radial-gradient(ellipse at top,#1A0A35 0%,#080C16 60%)';
 }
 
 // ============= 3D FLOATING WALLET CARD (disabled — typography-only hero) =============
