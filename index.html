@@ -1822,7 +1822,8 @@ const F2 = {
     this.timers.forEach(clearTimeout); this.timers = [];
     this.current = n;
     this.section.dataset.f2Step = n;
-    this.section.dataset.f2Active = (n >= 5) ? 'true' : 'false';
+    // Wallet lights up the moment user picks payment method (step 4)
+    this.section.dataset.f2Active = (n >= 4) ? 'true' : 'false';
 
     // Update chips based on current step
     this._renderChips();
@@ -1831,14 +1832,29 @@ const F2 = {
     const chat = this.section.querySelector('.zoa-chat');
     if(chat) requestAnimationFrame(()=>{ chat.scrollTop = chat.scrollHeight; });
 
-    // Step 5 transitions
+    // Reset TCB approval state when leaving step 5
+    if(n !== 5 && n !== 6){
+      const card = this.section.querySelector('.f2-tcb-card');
+      const btn  = this.section.querySelector('.f2-confirm-btn');
+      if(card){ card.classList.remove('f2-approved'); const s = card.querySelector('.f2-tcb-s'); if(s) s.innerHTML='<span class="f2-tcb-spinner"></span><span class="f2-tcb-tick">✓</span> Đang kiểm tra hạn mức…'; }
+      if(btn) btn.disabled = true;
+    }
+
+    // STEP 4 — bot says "đã gửi yêu cầu sang ví" → 700ms beat → sheet slides up
+    if(n === 4){
+      this.timers.push(setTimeout(()=>this.setStep(5), 700));
+    }
+
+    // STEP 5 — wallet sheet visible, TCB hạn-mức check ~900ms → enable confirm
     if(n === 5){
-      // Spinner runs ~1s then approve
       this.timers.push(setTimeout(()=>{
         const card = this.section.querySelector('.f2-tcb-card');
-        const btn = this.section.querySelector('.f2-confirm-btn');
-        if(card) card.classList.add('f2-approved');
-        if(card) card.querySelector('.f2-tcb-s').textContent = 'Hạn mức 6.500.000 ₫ · đã duyệt';
+        const btn  = this.section.querySelector('.f2-confirm-btn');
+        if(card){
+          card.classList.add('f2-approved');
+          const s = card.querySelector('.f2-tcb-s');
+          if(s) s.innerHTML = '<span class="f2-tcb-tick">✓</span> Hạn mức 6.500.000 ₫ · đã duyệt';
+        }
         if(btn) btn.disabled = false;
       }, 900));
     }
