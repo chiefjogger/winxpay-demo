@@ -114,10 +114,11 @@ body{font-family:var(--font-body);background:var(--paper);color:var(--ink);overf
 @keyframes pulse{0%,100%{opacity:1}50%{opacity:.65}}
 
 /* HERO */
-.hero{position:relative;min-height:100vh;display:flex;align-items:flex-start;justify-content:center;padding:140px 32px 80px;z-index:2;flex-direction:column}
-.hero-inner{max-width:1080px;margin:0 auto;text-align:center;position:relative;width:100%}
-#cardCanvas{position:relative;left:auto;top:auto;transform:none;display:block;width:100%;max-width:760px;height:460px;margin:48px auto 0;z-index:1;pointer-events:none}
-@media (max-width:880px){#cardCanvas{height:320px;max-width:520px;margin-top:32px}}
+.hero{position:relative;min-height:88vh;display:flex;align-items:center;justify-content:center;padding:160px 32px 120px;z-index:2}
+.hero-inner{max-width:980px;margin:0 auto;text-align:center;position:relative;width:100%}
+.hero-scroll-cue{margin-top:80px;display:inline-flex;align-items:center;gap:10px;font-family:var(--font-mono);font-size:11px;color:var(--ink-3);letter-spacing:0.14em;text-transform:uppercase;font-weight:500}
+.hero-scroll-cue .hsc-line{width:1px;height:32px;background:var(--rule-2);display:inline-block;animation:scrollCue 2s ease-in-out infinite}
+@keyframes scrollCue{0%,100%{transform:scaleY(.6) translateY(0);opacity:.5}50%{transform:scaleY(1) translateY(4px);opacity:1}}
 
 .hero-eyebrow{display:inline-flex;align-items:center;gap:12px;padding:8px 18px;border-radius:99px;background:transparent;border:1px solid var(--rule-2);font-size:11px;font-weight:500;color:var(--ink-2);letter-spacing:0.14em;text-transform:uppercase;margin-bottom:36px;font-family:var(--font-body)}
 .hero-eyebrow .e-ico{width:18px;height:18px;border-radius:5px;background:var(--ink);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:500;color:var(--paper);font-family:var(--font-display);font-style:italic;letter-spacing:0;text-transform:none}
@@ -567,7 +568,6 @@ body{font-family:var(--font-body);background:var(--paper);color:var(--ink);overf
 
 <!-- ======================== HERO ======================== -->
 <section class="hero">
-  <canvas id="cardCanvas"></canvas>
   <div class="hero-inner reveal" style="position:relative;z-index:2">
     <div class="hero-eyebrow">
       <span class="e-ico">W</span>
@@ -581,9 +581,10 @@ body{font-family:var(--font-body);background:var(--paper);color:var(--ink);overf
       WinXPay <em style="font-family:var(--font-display);font-style:italic;color:var(--ink)">cho Người bán</em> là POS miễn phí chạy trên điện thoại của tạp hoá. WinXPay <em style="font-family:var(--font-display);font-style:italic;color:var(--ink)">cho Người dùng</em> là ví quét VietQR, trả ngay hoặc chia làm bốn, nhận ưu đãi do thương hiệu tài trợ ngay tại quầy. Cùng một mã QR, cùng một hạ tầng Techcombank.
     </p>
     <div class="hero-cta">
-      <button class="btn-prim" onclick="document.getElementById('sec-flow').scrollIntoView({behavior:'smooth'})">Xem một giao dịch →</button>
-      <button class="btn-sec" onclick="document.getElementById('sec-api').scrollIntoView({behavior:'smooth'})">Dành cho người bán</button>
+      <button class="btn-prim" onclick="document.getElementById('sec-flow').scrollIntoView({behavior:'smooth'})">Xem demo tương tác →</button>
+      <button class="btn-sec" onclick="document.getElementById('sec-ai').scrollIntoView({behavior:'smooth'})">Mua hàng trong Zalo</button>
     </div>
+    <div class="hero-scroll-cue">Cuộn xuống <span class="hsc-line"></span></div>
   </div>
 </section>
 
@@ -1675,9 +1676,9 @@ if(!reduceMotion && canvas){
   document.body.style.background = 'radial-gradient(ellipse at top,#1A0A35 0%,#080C16 60%)';
 }
 
-// ============= 3D FLOATING WALLET CARD =============
-const cardCanvas = document.getElementById('cardCanvas');
-if(!reduceMotion && cardCanvas){
+// ============= 3D FLOATING WALLET CARD (disabled — typography-only hero) =============
+const cardCanvas = null; // intentionally removed — credit-card metaphor
+if(false){
   try {
     const cardRenderer = new THREE.WebGLRenderer({canvas:cardCanvas, alpha:true, antialias:!isMobile});
     cardRenderer.setPixelRatio(Math.min(window.devicePixelRatio, isMobile ? 1.25 : 1.5));
