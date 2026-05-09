@@ -158,19 +158,19 @@ body{font-family:var(--font-body);background:var(--paper);color:var(--ink);overf
 .phone-status .ps-bat::after{content:'';position:absolute;right:-3px;top:3px;width:2px;height:5px;background:#1A1A1A;border-radius:0 1px 1px 0}
 .phone-status .ps-bat>span{display:block;width:75%;height:100%;background:#1A1A1A;border-radius:1px}
 
-/* WINXPAY APP UI */
-.wxp-app{flex:1;background:linear-gradient(180deg,#0A0612 0%,#15082A 50%,#1A0A35 100%);color:#fff;display:flex;flex-direction:column;overflow:hidden;position:relative}
-.wxp-app::before{content:'';position:absolute;width:300px;height:300px;border-radius:50%;background:radial-gradient(circle,rgba(255,46,99,.4),transparent 70%);top:-100px;left:-100px;filter:blur(60px);pointer-events:none}
-.wxp-app::after{content:'';position:absolute;width:240px;height:240px;border-radius:50%;background:radial-gradient(circle,rgba(0,217,192,.3),transparent 70%);bottom:-80px;right:-80px;filter:blur(60px);pointer-events:none}
+/* WINXPAY APP UI — refined ink + single accent */
+.wxp-app{flex:1;background:linear-gradient(180deg,#0F1422 0%,#0A0E1A 100%);color:#fff;display:flex;flex-direction:column;overflow:hidden;position:relative}
+.wxp-app::before{content:'';position:absolute;width:280px;height:280px;border-radius:50%;background:radial-gradient(circle,rgba(165,19,92,0.32),transparent 70%);top:-90px;right:-90px;filter:blur(60px);pointer-events:none}
+.wxp-app::after{display:none}
 .wxp-hdr{padding:14px 18px 8px;display:flex;align-items:center;justify-content:space-between;position:relative;z-index:2}
 .wxp-hdr .wxp-greet{font-size:11px;color:rgba(255,255,255,.55);font-weight:500}
 .wxp-hdr .wxp-name{font-size:15px;font-weight:700;color:#fff;margin-top:1px;letter-spacing:-.2px}
 .wxp-hdr .wxp-ava{width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,#FF2E63,#7C2DFF);display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:800;border:2px solid rgba(255,255,255,.1)}
 
-/* WALLET CARD */
-.wxp-card{margin:8px 14px 14px;height:170px;border-radius:20px;background:linear-gradient(135deg,#FF2E63 0%,#7C2DFF 60%,#00D9C0 130%);position:relative;overflow:hidden;padding:16px 18px;display:flex;flex-direction:column;justify-content:space-between;box-shadow:0 14px 36px rgba(124,45,255,.35),inset 0 1px 0 rgba(255,255,255,.25)}
-.wxp-card::before{content:'';position:absolute;inset:0;background:radial-gradient(circle at 80% 20%,rgba(255,255,255,.18),transparent 50%),radial-gradient(circle at 20% 80%,rgba(0,217,192,.25),transparent 50%);pointer-events:none}
-.wxp-card::after{content:'';position:absolute;top:-50%;right:-30%;width:200px;height:200px;border-radius:50%;border:1px solid rgba(255,255,255,.2);animation:float 8s ease-in-out infinite}
+/* WALLET CARD — Stripe Press editorial */
+.wxp-card{margin:8px 14px 14px;height:170px;border-radius:14px;background:#A5135C;position:relative;overflow:hidden;padding:16px 18px;display:flex;flex-direction:column;justify-content:space-between;box-shadow:0 16px 36px -16px rgba(165,19,92,0.55),inset 0 0 0 1px rgba(255,255,255,0.18)}
+.wxp-card::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(255,255,255,0.10),transparent 45%,rgba(0,0,0,0.18));pointer-events:none}
+.wxp-card::after{content:'';position:absolute;top:18px;left:18px;right:18px;bottom:18px;border:1px solid rgba(255,255,255,0.18);border-radius:8px;pointer-events:none;animation:none}
 @keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(8px)}}
 .wxp-card-top{display:flex;justify-content:space-between;align-items:start;position:relative;z-index:2}
 .wxp-card-top .wxp-brand{font-size:10px;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;color:rgba(255,255,255,.85)}
@@ -191,10 +191,10 @@ body{font-family:var(--font-body);background:var(--paper);color:var(--ink);overf
 .wxp-qa{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;padding:0 14px;margin-bottom:14px;position:relative;z-index:2}
 .wxp-qa-b{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.08);border-radius:14px;padding:10px 4px;text-align:center;cursor:pointer;backdrop-filter:blur(8px);transition:all .15s}
 .wxp-qa-b:hover{background:rgba(255,255,255,.1);transform:translateY(-2px)}
-.wxp-qa-b .qa-ico{width:30px;height:30px;border-radius:9px;background:linear-gradient(135deg,#FF2E63,#7C2DFF);display:flex;align-items:center;justify-content:center;font-size:14px;margin:0 auto 4px;box-shadow:0 4px 12px rgba(255,46,99,.3)}
-.wxp-qa-b .qa-ico.qa-pay{background:linear-gradient(135deg,#00D9C0,#0099B0)}
-.wxp-qa-b .qa-ico.qa-tx{background:linear-gradient(135deg,#7C2DFF,#5C00FF)}
-.wxp-qa-b .qa-ico.qa-rew{background:linear-gradient(135deg,#FFB020,#FF7E1B)}
+.wxp-qa-b .qa-ico{width:30px;height:30px;border-radius:8px;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.12);display:flex;align-items:center;justify-content:center;font-size:14px;margin:0 auto 4px}
+.wxp-qa-b .qa-ico.qa-pay{background:#A5135C;border-color:rgba(255,255,255,0.20);box-shadow:0 4px 12px -4px rgba(165,19,92,0.6)}
+.wxp-qa-b .qa-ico.qa-tx{background:rgba(255,255,255,0.08)}
+.wxp-qa-b .qa-ico.qa-rew{background:rgba(255,255,255,0.08)}
 .wxp-qa-b .qa-l{font-size:9.5px;font-weight:700;color:#fff;letter-spacing:-.1px}
 
 /* WALLET SECTIONS */
@@ -210,8 +210,8 @@ body{font-family:var(--font-body);background:var(--paper);color:var(--ink);overf
 .wxp-tx .wtx-m{font-size:9px;color:rgba(255,255,255,.5);margin-top:2px}
 .wxp-tx .wtx-amt{text-align:right}
 .wxp-tx .wtx-amt .wta-v{font-size:11px;color:#fff;font-weight:800}
-.wxp-tx .wtx-amt .wta-v.neg{color:#FF7090}
-.wxp-tx .wtx-amt .wta-v.pos{color:#00D9C0}
+.wxp-tx .wtx-amt .wta-v.neg{color:#FF8FA9}
+.wxp-tx .wtx-amt .wta-v.pos{color:#5EEAD4}
 .wxp-tx .wtx-amt .wta-tag{font-size:7.5px;color:rgba(255,255,255,.5);font-weight:600;margin-top:1px;text-transform:uppercase;letter-spacing:.3px}
 
 /* BNPL ROW */
@@ -284,7 +284,7 @@ body{font-family:var(--font-body);background:var(--paper);color:var(--ink);overf
 .pos-cart-r .pcr-q{font-size:8.5px;color:#6B7280;margin-top:1px}
 .pos-cart-r .pcr-p{font-size:11px;font-weight:800;color:#111827;white-space:nowrap}
 .pos-cart-tot{display:flex;justify-content:space-between;padding-top:8px;margin-top:8px;border-top:1.5px solid #E5E7EB;font-size:13px;font-weight:900;color:#111827}
-.pos-cart-tot .pct-v{color:#FF2E63}
+.pos-cart-tot .pct-v{color:#A5135C}
 
 /* POS PAY OPTIONS */
 .pos-pay-h{font-size:10px;color:#6B7280;font-weight:700;text-transform:uppercase;letter-spacing:.5px;margin:14px 0 8px;padding:0 2px}
@@ -300,13 +300,13 @@ body{font-family:var(--font-body);background:var(--paper);color:var(--ink);overf
 .pos-pay-opt-info .ppo-t{font-size:13px;font-weight:800;color:#111827;letter-spacing:-.2px}
 .pos-pay-opt-info .ppo-s{font-size:9.5px;color:#6B7280;margin-top:2px;line-height:1.4}
 .pos-pay-opt-info .ppo-s b{color:#111827;font-weight:700}
-.pos-pay-opt-info .ppo-s .ppo-em{color:#FF2E63;font-weight:800}
+.pos-pay-opt-info .ppo-s .ppo-em{color:#A5135C;font-weight:700}
 .pos-pay-opt-arr{font-size:18px;color:#9CA3AF}
 
 /* POS QR DISPLAY */
 .pos-qr-show{background:#fff;border-radius:14px;padding:14px;border:1px solid #E5E7EB;text-align:center;margin-top:6px}
 .pos-qr-show .pqs-h{font-size:10px;color:#6B7280;font-weight:700;text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px}
-.pos-qr-show .pqs-amt{font-size:22px;font-weight:900;color:#FF2E63;letter-spacing:-1px;margin-bottom:6px}
+.pos-qr-show .pqs-amt{font-size:22px;font-weight:800;color:#A5135C;letter-spacing:-1px;margin-bottom:6px}
 .pos-qr-show .pqs-disc{display:inline-block;background:#FEF3C7;color:#92400E;font-size:9.5px;font-weight:800;padding:3px 9px;border-radius:14px;margin-bottom:10px}
 .pos-qr-show .pqs-box{width:158px;height:158px;background:#fff;border:2px solid #111827;border-radius:14px;padding:10px;margin:0 auto;position:relative}
 .pos-qr-show .pqs-box canvas{width:100%;height:100%;display:block}
@@ -385,12 +385,12 @@ body{font-family:var(--font-body);background:var(--paper);color:var(--ink);overf
 .zoa-reco .zr-t{font-size:11.5px;font-weight:800;color:#111827;letter-spacing:-.2px}
 .zoa-reco .zr-s{font-size:9.5px;color:#6B7280;margin-top:2px;line-height:1.4}
 .zoa-reco .zr-pri{display:flex;justify-content:space-between;align-items:center;margin-top:8px;padding-top:8px;border-top:1px dashed #E5E7EB}
-.zoa-reco .zr-p{font-size:14px;font-weight:900;color:#FF2E63;letter-spacing:-.3px}
+.zoa-reco .zr-p{font-size:14px;font-weight:800;color:#A5135C;letter-spacing:-.3px}
 .zoa-reco .zr-old{font-size:9px;color:#9CA3AF;text-decoration:line-through;margin-left:5px}
 .zoa-reco .zr-cta{margin:6px 8px 8px;padding:8px;background:var(--wxp-grad);color:#fff;font-size:11px;font-weight:800;border:none;border-radius:8px;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px}
 
 /* AI ORDER CARD */
-.zoa-ord{background:#fff;border-radius:12px;overflow:hidden;max-width:90%;border:1.5px solid #FF2E63;box-shadow:0 4px 14px rgba(255,46,99,.18)}
+.zoa-ord{background:#fff;border-radius:12px;overflow:hidden;max-width:90%;border:1px solid #A5135C;box-shadow:0 6px 16px -8px rgba(165,19,92,0.30)}
 .zoa-ord .zo-h{background:var(--wxp-grad);padding:8px 12px;color:#fff;display:flex;align-items:center;gap:6px}
 .zoa-ord .zo-h-ico{width:24px;height:24px;border-radius:7px;background:rgba(255,255,255,.22);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:900;letter-spacing:-.3px}
 .zoa-ord .zo-h-t{font-size:11px;font-weight:800;letter-spacing:-.1px}
@@ -400,7 +400,7 @@ body{font-family:var(--font-body);background:var(--paper);color:var(--ink);overf
 .zoa-ord .zo-line:last-of-type{border-bottom:none}
 .zoa-ord .zo-line .zol-n{color:#374151;font-weight:600}
 .zoa-ord .zo-line .zol-p{color:#111827;font-weight:700;font-family:'JetBrains Mono',monospace}
-.zoa-ord .zo-tot{padding:8px 12px;background:linear-gradient(135deg,#FFF1F4,#FFE4EC);display:flex;justify-content:space-between;font-weight:900;font-size:12.5px;color:#FF2E63;border-top:1px solid #FBCFE8}
+.zoa-ord .zo-tot{padding:8px 12px;background:#FBE8F0;display:flex;justify-content:space-between;font-weight:800;font-size:12.5px;color:#A5135C;border-top:1px solid #F4D0DD}
 .zoa-ord .zo-pay{display:grid;grid-template-columns:1fr 1fr;gap:6px;padding:8px 10px;background:#FAFBFC;border-top:1px solid #E5E7EB}
 .zoa-ord .zo-pay button{padding:7px 4px;border-radius:8px;font-size:10px;font-weight:800;border:none;cursor:pointer;letter-spacing:-.1px}
 .zoa-ord .zo-pay-now{background:var(--wxp-grad);color:#fff;box-shadow:0 4px 12px rgba(255,46,99,.3)}
@@ -410,8 +410,8 @@ body{font-family:var(--font-body);background:var(--paper);color:var(--ink);overf
 .zoa-input{padding:6px 8px;border-top:1px solid #D6E4F0;background:#fff;display:flex;gap:6px;align-items:center;color:#9CA3AF;font-size:11px}
 .zoa-input .zi-bx{flex:1;background:#F3F5F6;border-radius:14px;padding:6px 12px;color:#9CA3AF;font-size:10px}
 .zoa-chips{display:flex;flex-wrap:wrap;gap:4px;padding:0 28px 2px;margin-top:-2px}
-.zoa-chips button{background:#fff;border:1.5px solid #FF2E63;color:#FF2E63;padding:5px 10px;border-radius:14px;font-size:10px;font-weight:700;cursor:pointer;transition:all .12s}
-.zoa-chips button:hover{background:#FF2E63;color:#fff}
+.zoa-chips button{background:#fff;border:1px solid #A5135C;color:#A5135C;padding:5px 10px;border-radius:99px;font-size:10px;font-weight:600;cursor:pointer;transition:all .12s}
+.zoa-chips button:hover{background:#A5135C;color:#fff}
 
 /* MERCHANT INTEGRATION */
 .merch-grid{display:grid;grid-template-columns:1fr 1.1fr;gap:60px;align-items:start}
