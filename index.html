@@ -1,0 +1,1807 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"/>
+<meta name="theme-color" content="#080C16"/>
+<title>WinXPay — At-till consumer wallet · Masan × Techcombank</title>
+<meta name="description" content="WinXPay is the Vietnamese consumer wallet acquired at the till through brand-funded discount, with BNPL underwritten by Techcombank. A demo for Danny Le, May 2026."/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800;900&family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap"/>
+<script src="https://cdn.tailwindcss.com"></script>
+<script>tailwind.config={theme:{extend:{colors:{
+  ink:'#080C16',masan:'#1B2A4A','masan-r':'#E30613','zalo':'#0068FF','wxp':'#FF2E63','wxp-2':'#7C2DFF','wxp-3':'#00D9C0',
+  tcb:'#ED1C24',momo:'#A50064',shopee:'#EE4D2D','vqr':'#A50064'
+}}}}</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrious/4.0.2/qrious.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+<script type="importmap">
+{"imports":{
+  "three":"https://unpkg.com/three@0.170.0/build/three.module.js",
+  "three/addons/":"https://unpkg.com/three@0.170.0/examples/jsm/"
+}}
+</script>
+
+<style>
+:root{
+  --ink:#080C16;--ink-2:#0E1322;--ink-3:#141B30;
+  --wxp:#FF2E63;--wxp-2:#7C2DFF;--wxp-3:#00D9C0;
+  --wxp-grad:linear-gradient(135deg,#FF2E63 0%,#7C2DFF 50%,#00D9C0 100%);
+  --wxp-grad-r:linear-gradient(135deg,#7C2DFF 0%,#FF2E63 100%);
+  --line:rgba(255,255,255,.08);--line-2:rgba(255,255,255,.14);
+  --t1:rgba(255,255,255,.95);--t2:rgba(255,255,255,.65);--t3:rgba(255,255,255,.42);--t4:rgba(255,255,255,.28);
+  --tcb:#ED1C24;--zalo:#0068FF;--vqr:#A50064;--momo:#A50064;
+  --good:#00D9C0;--warn:#FFB020;--bad:#FF2E63;
+}
+*{box-sizing:border-box;margin:0;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}
+html{scroll-behavior:smooth;background:var(--ink)}
+body{font-family:'Inter','Be Vietnam Pro',system-ui,sans-serif;background:var(--ink);color:var(--t1);overflow-x:hidden;min-height:100vh}
+.font-vn{font-family:'Be Vietnam Pro','Inter',sans-serif}
+.font-mono{font-family:'JetBrains Mono',ui-monospace,Menlo,monospace}
+
+/* WEBGL CANVAS */
+#bgcanvas{position:fixed;inset:0;z-index:0;pointer-events:none}
+#cardcanvas{position:absolute;inset:0;z-index:1;pointer-events:none}
+
+/* GRAIN */
+.grain::before{content:'';position:fixed;inset:0;z-index:60;pointer-events:none;mix-blend-mode:overlay;opacity:.4;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.18 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+
+/* GLASS / CARDS */
+.glass{background:rgba(255,255,255,.025);backdrop-filter:blur(20px) saturate(1.2);-webkit-backdrop-filter:blur(20px) saturate(1.2);border:1px solid var(--line);border-radius:18px}
+.glass-2{background:rgba(255,255,255,.04);backdrop-filter:blur(20px) saturate(1.2);-webkit-backdrop-filter:blur(20px) saturate(1.2);border:1px solid var(--line-2);border-radius:14px}
+.divider-h{height:1px;background:linear-gradient(90deg,transparent,var(--line-2),transparent)}
+
+/* GRADIENT TEXT */
+.gtext{background:var(--wxp-grad);-webkit-background-clip:text;background-clip:text;color:transparent;display:inline-block}
+.gtext-r{background:linear-gradient(135deg,#FF2E63 0%,#FF6B9D 100%);-webkit-background-clip:text;background-clip:text;color:transparent}
+
+/* TOP NAV */
+.nav{position:fixed;top:0;left:0;right:0;z-index:50;backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);background:rgba(8,12,22,.65);border-bottom:1px solid var(--line);transition:all .3s}
+.nav-inner{max-width:1440px;margin:0 auto;padding:14px 32px;display:flex;align-items:center;gap:24px}
+.nav-logo{width:36px;height:36px;border-radius:11px;background:var(--wxp-grad);display:flex;align-items:center;justify-content:center;font-weight:900;color:#fff;font-size:18px;letter-spacing:-.5px;box-shadow:0 6px 20px rgba(255,46,99,.35),inset 0 1px 0 rgba(255,255,255,.3);position:relative;overflow:hidden}
+.nav-logo::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,transparent 30%,rgba(255,255,255,.25) 50%,transparent 70%);animation:shine 3s ease-in-out infinite}
+@keyframes shine{0%,100%{transform:translateX(-100%)}50%{transform:translateX(100%)}}
+.nav-brand{font-size:18px;font-weight:900;letter-spacing:-.5px}
+.nav-brand .x{color:var(--wxp);font-style:italic}
+.nav-tag{font-size:9px;color:var(--t3);font-weight:700;letter-spacing:1.4px;text-transform:uppercase;margin-top:1px}
+.nav-link{font-size:13px;color:var(--t2);font-weight:500;cursor:pointer;transition:color .15s;padding:6px 0}
+.nav-link:hover{color:var(--t1)}
+.nav-pill{display:inline-flex;align-items:center;gap:6px;padding:5px 11px;border-radius:20px;background:rgba(0,217,192,.08);border:1px solid rgba(0,217,192,.25);font-size:10px;font-weight:700;color:var(--good);letter-spacing:.4px}
+.nav-pill .dot{width:6px;height:6px;border-radius:50%;background:var(--good);box-shadow:0 0 8px var(--good);animation:pulse 1.5s infinite}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.6;transform:scale(.85)}}
+
+/* HERO */
+.hero{position:relative;min-height:100vh;display:flex;align-items:center;justify-content:center;padding:140px 32px 80px;z-index:2}
+.hero-inner{max-width:1280px;margin:0 auto;text-align:center;position:relative}
+.hero-eyebrow{display:inline-flex;align-items:center;gap:10px;padding:7px 16px;border-radius:30px;background:rgba(255,255,255,.04);border:1px solid var(--line-2);font-size:11px;font-weight:700;color:var(--t2);letter-spacing:.5px;backdrop-filter:blur(12px);margin-bottom:24px}
+.hero-eyebrow .e-ico{width:16px;height:16px;border-radius:5px;background:var(--wxp-grad);display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:900;color:#fff}
+.hero-h1{font-size:clamp(40px,7vw,88px);font-weight:900;line-height:.95;letter-spacing:-.04em;color:#fff;margin-bottom:24px}
+.hero-h1 .em{font-style:italic;font-weight:800}
+.hero-sub{font-size:clamp(16px,1.6vw,20px);color:var(--t2);max-width:720px;margin:0 auto 40px;line-height:1.55;font-weight:400}
+.hero-cta{display:flex;align-items:center;justify-content:center;gap:12px;flex-wrap:wrap}
+.btn-prim{padding:14px 28px;border-radius:14px;background:var(--wxp-grad);color:#fff;font-size:14px;font-weight:800;border:none;cursor:pointer;letter-spacing:-.1px;box-shadow:0 10px 32px rgba(255,46,99,.35),inset 0 1px 0 rgba(255,255,255,.25);transition:transform .15s,box-shadow .15s}
+.btn-prim:hover{transform:translateY(-1px);box-shadow:0 14px 40px rgba(255,46,99,.45),inset 0 1px 0 rgba(255,255,255,.3)}
+.btn-sec{padding:14px 24px;border-radius:14px;background:rgba(255,255,255,.05);color:var(--t1);font-size:14px;font-weight:700;border:1px solid var(--line-2);cursor:pointer;backdrop-filter:blur(12px);transition:all .15s}
+.btn-sec:hover{background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.22)}
+
+/* HERO STATS */
+.hero-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:24px;margin-top:80px;max-width:880px;margin-left:auto;margin-right:auto}
+.hs-stat .hs-v{font-size:32px;font-weight:900;letter-spacing:-1.5px;color:#fff;line-height:1}
+.hs-stat .hs-l{font-size:11px;color:var(--t3);font-weight:600;margin-top:6px;letter-spacing:.3px}
+.hs-stat .hs-v.gtext{font-size:34px}
+
+/* SECTIONS */
+.sec{position:relative;z-index:2;padding:90px 32px}
+.sec-inner{max-width:1440px;margin:0 auto}
+.sec-eyebrow{display:inline-flex;align-items:center;gap:10px;font-size:11px;font-weight:800;letter-spacing:.18em;color:var(--wxp);text-transform:uppercase;margin-bottom:18px}
+.sec-eyebrow .se-num{width:22px;height:22px;border-radius:6px;background:linear-gradient(135deg,rgba(255,46,99,.18),rgba(124,45,255,.18));border:1px solid rgba(255,46,99,.35);display:inline-flex;align-items:center;justify-content:center;font-size:11px;font-weight:900;color:#fff}
+.sec-h2{font-size:clamp(32px,4.5vw,52px);font-weight:900;letter-spacing:-.025em;line-height:1.05;color:#fff;margin-bottom:20px;max-width:820px}
+.sec-h2 .em{font-style:italic;font-weight:800}
+.sec-h2 .gtext{font-style:italic}
+.sec-sub{font-size:17px;color:var(--t2);line-height:1.55;max-width:680px;margin-bottom:48px}
+
+/* PHONE FRAME */
+.phone{background:#0A0E1A;border-radius:38px;padding:9px;box-shadow:0 30px 80px rgba(0,0,0,.6),0 0 0 1px rgba(255,255,255,.06),inset 0 1px 0 rgba(255,255,255,.07);position:relative;width:308px}
+.phone-screen{background:#fff;border-radius:30px;overflow:hidden;display:flex;flex-direction:column;height:640px;position:relative}
+.phone-notch{position:absolute;top:8px;left:50%;transform:translateX(-50%);width:108px;height:24px;background:#0A0E1A;border-radius:20px;z-index:50}
+.phone-status{display:flex;align-items:center;justify-content:space-between;padding:8px 28px 4px;color:#1A1A1A;font-size:11px;font-weight:700;height:32px}
+.phone-status .ps-r{display:flex;align-items:center;gap:5px;font-size:10px}
+.phone-status .ps-bat{width:22px;height:11px;border-radius:3px;border:1px solid #1A1A1A;position:relative;padding:1px}
+.phone-status .ps-bat::after{content:'';position:absolute;right:-3px;top:3px;width:2px;height:5px;background:#1A1A1A;border-radius:0 1px 1px 0}
+.phone-status .ps-bat>span{display:block;width:75%;height:100%;background:#1A1A1A;border-radius:1px}
+
+/* WINXPAY APP UI */
+.wxp-app{flex:1;background:linear-gradient(180deg,#0A0612 0%,#15082A 50%,#1A0A35 100%);color:#fff;display:flex;flex-direction:column;overflow:hidden;position:relative}
+.wxp-app::before{content:'';position:absolute;width:300px;height:300px;border-radius:50%;background:radial-gradient(circle,rgba(255,46,99,.4),transparent 70%);top:-100px;left:-100px;filter:blur(60px);pointer-events:none}
+.wxp-app::after{content:'';position:absolute;width:240px;height:240px;border-radius:50%;background:radial-gradient(circle,rgba(0,217,192,.3),transparent 70%);bottom:-80px;right:-80px;filter:blur(60px);pointer-events:none}
+.wxp-hdr{padding:14px 18px 8px;display:flex;align-items:center;justify-content:space-between;position:relative;z-index:2}
+.wxp-hdr .wxp-greet{font-size:11px;color:rgba(255,255,255,.55);font-weight:500}
+.wxp-hdr .wxp-name{font-size:15px;font-weight:700;color:#fff;margin-top:1px;letter-spacing:-.2px}
+.wxp-hdr .wxp-ava{width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,#FF2E63,#7C2DFF);display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:800;border:2px solid rgba(255,255,255,.1)}
+
+/* WALLET CARD */
+.wxp-card{margin:8px 14px 14px;height:170px;border-radius:20px;background:linear-gradient(135deg,#FF2E63 0%,#7C2DFF 60%,#00D9C0 130%);position:relative;overflow:hidden;padding:16px 18px;display:flex;flex-direction:column;justify-content:space-between;box-shadow:0 14px 36px rgba(124,45,255,.35),inset 0 1px 0 rgba(255,255,255,.25)}
+.wxp-card::before{content:'';position:absolute;inset:0;background:radial-gradient(circle at 80% 20%,rgba(255,255,255,.18),transparent 50%),radial-gradient(circle at 20% 80%,rgba(0,217,192,.25),transparent 50%);pointer-events:none}
+.wxp-card::after{content:'';position:absolute;top:-50%;right:-30%;width:200px;height:200px;border-radius:50%;border:1px solid rgba(255,255,255,.2);animation:float 8s ease-in-out infinite}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(8px)}}
+.wxp-card-top{display:flex;justify-content:space-between;align-items:start;position:relative;z-index:2}
+.wxp-card-top .wxp-brand{font-size:10px;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;color:rgba(255,255,255,.85)}
+.wxp-card-top .wxp-id{font-size:9px;color:rgba(255,255,255,.65);margin-top:2px;font-family:'JetBrains Mono',monospace;letter-spacing:.3px}
+.wxp-card-tcb{display:flex;align-items:center;gap:5px;background:rgba(255,255,255,.18);border:1px solid rgba(255,255,255,.25);padding:3px 8px;border-radius:12px;font-size:8.5px;font-weight:700;letter-spacing:.3px;backdrop-filter:blur(8px)}
+.wxp-card-tcb .tcb-d{width:6px;height:6px;border-radius:1px;background:#fff}
+.wxp-card-bal{position:relative;z-index:2}
+.wxp-card-bal .wcb-l{font-size:10px;color:rgba(255,255,255,.7);font-weight:500;text-transform:uppercase;letter-spacing:1px}
+.wxp-card-bal .wcb-v{font-size:30px;font-weight:900;color:#fff;letter-spacing:-1.5px;line-height:1;margin-top:4px;display:flex;align-items:baseline;gap:5px}
+.wxp-card-bal .wcb-v sup{font-size:14px;font-weight:700;opacity:.7;letter-spacing:0}
+.wxp-card-bot{display:flex;justify-content:space-between;align-items:end;position:relative;z-index:2}
+.wxp-card-bot .wcb-credit .wcc-l{font-size:8px;color:rgba(255,255,255,.65);font-weight:600;text-transform:uppercase;letter-spacing:.5px}
+.wxp-card-bot .wcb-credit .wcc-v{font-size:11px;font-weight:800;color:#fff;margin-top:1px}
+.wxp-card-bot .wcb-vqr{display:flex;align-items:center;gap:4px;font-size:8px;font-weight:800;color:rgba(255,255,255,.85);letter-spacing:.5px;text-transform:uppercase}
+.wxp-card-bot .wcb-vqr .v-d{width:14px;height:14px;background:repeating-conic-gradient(#fff 0% 25%,transparent 0% 50%) 50% / 4px 4px;border-radius:2px}
+
+/* WALLET QUICK ACTIONS */
+.wxp-qa{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;padding:0 14px;margin-bottom:14px;position:relative;z-index:2}
+.wxp-qa-b{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.08);border-radius:14px;padding:10px 4px;text-align:center;cursor:pointer;backdrop-filter:blur(8px);transition:all .15s}
+.wxp-qa-b:hover{background:rgba(255,255,255,.1);transform:translateY(-2px)}
+.wxp-qa-b .qa-ico{width:30px;height:30px;border-radius:9px;background:linear-gradient(135deg,#FF2E63,#7C2DFF);display:flex;align-items:center;justify-content:center;font-size:14px;margin:0 auto 4px;box-shadow:0 4px 12px rgba(255,46,99,.3)}
+.wxp-qa-b .qa-ico.qa-pay{background:linear-gradient(135deg,#00D9C0,#0099B0)}
+.wxp-qa-b .qa-ico.qa-tx{background:linear-gradient(135deg,#7C2DFF,#5C00FF)}
+.wxp-qa-b .qa-ico.qa-rew{background:linear-gradient(135deg,#FFB020,#FF7E1B)}
+.wxp-qa-b .qa-l{font-size:9.5px;font-weight:700;color:#fff;letter-spacing:-.1px}
+
+/* WALLET SECTIONS */
+.wxp-sec{padding:14px 14px 8px;position:relative;z-index:2}
+.wxp-sec-h{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}
+.wxp-sec-h .wsh-t{font-size:11px;font-weight:700;color:#fff;letter-spacing:-.1px}
+.wxp-sec-h .wsh-m{font-size:9px;color:rgba(255,255,255,.55);font-weight:600}
+.wxp-tx{display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid rgba(255,255,255,.05);font-size:11px}
+.wxp-tx:last-child{border-bottom:none}
+.wxp-tx .wtx-i{width:32px;height:32px;border-radius:10px;background:rgba(255,255,255,.06);display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0}
+.wxp-tx .wtx-info{flex:1;min-width:0}
+.wxp-tx .wtx-n{font-size:11px;color:#fff;font-weight:700;line-height:1.2}
+.wxp-tx .wtx-m{font-size:9px;color:rgba(255,255,255,.5);margin-top:2px}
+.wxp-tx .wtx-amt{text-align:right}
+.wxp-tx .wtx-amt .wta-v{font-size:11px;color:#fff;font-weight:800}
+.wxp-tx .wtx-amt .wta-v.neg{color:#FF7090}
+.wxp-tx .wtx-amt .wta-v.pos{color:#00D9C0}
+.wxp-tx .wtx-amt .wta-tag{font-size:7.5px;color:rgba(255,255,255,.5);font-weight:600;margin-top:1px;text-transform:uppercase;letter-spacing:.3px}
+
+/* BNPL ROW */
+.wxp-bnpl{margin:8px 14px;background:linear-gradient(135deg,rgba(255,176,32,.18),rgba(255,46,99,.06));border:1px solid rgba(255,176,32,.3);border-radius:12px;padding:10px 12px;position:relative;z-index:2;overflow:hidden}
+.wxp-bnpl .bn-h{display:flex;align-items:center;gap:6px;font-size:10px;font-weight:800;color:#FFB020;margin-bottom:6px;letter-spacing:.2px;text-transform:uppercase}
+.wxp-bnpl .bn-r{display:flex;justify-content:space-between;align-items:center;font-size:11px;color:#fff}
+.wxp-bnpl .bn-amt{font-weight:800;font-size:13px}
+.wxp-bnpl .bn-due{font-size:9px;color:rgba(255,255,255,.55);margin-top:2px;font-weight:500}
+.wxp-bnpl .bn-bar{height:3px;background:rgba(255,255,255,.08);border-radius:3px;margin-top:8px;overflow:hidden}
+.wxp-bnpl .bn-bar-f{height:100%;width:25%;background:linear-gradient(90deg,#FFB020,#FF7E1B);border-radius:3px}
+.wxp-bnpl .bn-info{display:flex;justify-content:space-between;font-size:8.5px;color:rgba(255,255,255,.5);margin-top:5px;font-weight:600}
+
+/* BOTTOM TAB */
+.wxp-tab{display:flex;border-top:1px solid rgba(255,255,255,.08);background:rgba(8,12,22,.65);backdrop-filter:blur(20px);padding:6px 0 14px;position:relative;z-index:3}
+.wxp-tab button{flex:1;padding:6px 4px;background:transparent;border:none;color:rgba(255,255,255,.4);font-size:9px;font-weight:700;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:3px;transition:color .15s}
+.wxp-tab button.act{color:#fff}
+.wxp-tab button.act .tab-ico{background:var(--wxp-grad);box-shadow:0 4px 12px rgba(255,46,99,.4)}
+.wxp-tab .tab-ico{width:28px;height:28px;border-radius:9px;background:rgba(255,255,255,.06);display:flex;align-items:center;justify-content:center;font-size:13px}
+.wxp-tab .tab-ico.tab-pay{position:relative}
+.wxp-tab .tab-ico.tab-pay::before{content:'';position:absolute;inset:-3px;border-radius:11px;background:var(--wxp-grad);z-index:-1;opacity:.4;filter:blur(6px)}
+
+/* QR PAY OVERLAY */
+.wxp-qr-overlay{position:absolute;inset:0;background:rgba(8,6,18,.92);backdrop-filter:blur(28px);z-index:40;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:30px 24px;color:#fff}
+.wxp-qr-overlay.hidden{display:none}
+.wxp-qr-h{font-size:11px;color:rgba(255,255,255,.6);font-weight:600;text-transform:uppercase;letter-spacing:1.5px;margin-bottom:6px}
+.wxp-qr-amt{font-size:42px;font-weight:900;color:#fff;letter-spacing:-2px;margin-bottom:4px;line-height:1}
+.wxp-qr-merchant{font-size:12px;color:rgba(255,255,255,.7);font-weight:600;margin-bottom:18px}
+.wxp-qr-box{width:200px;height:200px;background:#fff;border-radius:18px;padding:14px;display:flex;align-items:center;justify-content:center;box-shadow:0 0 60px rgba(255,46,99,.3);position:relative}
+.wxp-qr-box::before{content:'';position:absolute;inset:-3px;border-radius:21px;background:var(--wxp-grad);z-index:-1;opacity:.6;filter:blur(8px)}
+.wxp-qr-box canvas{width:100%;height:100%;display:block;border-radius:6px}
+.wxp-qr-foot{margin-top:18px;text-align:center}
+.wxp-qr-foot .qf-l{font-size:10px;color:rgba(255,255,255,.5);font-weight:600}
+.wxp-qr-foot .qf-banks{display:flex;align-items:center;gap:6px;margin-top:8px;justify-content:center}
+.wxp-qr-foot .qf-banks .qf-b{padding:3px 8px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:6px;font-size:8.5px;font-weight:700;letter-spacing:.3px}
+
+/* POS PHONE — ZALO MINI APP */
+.pos-app{flex:1;background:#F0F2F5;display:flex;flex-direction:column;overflow:hidden}
+.pos-zalo-bar{background:#0068FF;padding:8px 14px;display:flex;align-items:center;gap:8px;color:#fff}
+.pos-zalo-bar .pzb-back{font-size:18px;opacity:.85;cursor:pointer}
+.pos-zalo-bar .pzb-info{flex:1}
+.pos-zalo-bar .pzb-t{font-size:12px;font-weight:700;letter-spacing:-.1px}
+.pos-zalo-bar .pzb-s{font-size:8.5px;opacity:.75;display:flex;align-items:center;gap:4px;margin-top:1px}
+.pos-zalo-bar .pzb-s .ps-d{width:5px;height:5px;border-radius:50%;background:#5EF38C}
+.pos-zalo-bar .pzb-menu{font-size:14px;opacity:.65;cursor:pointer}
+.pos-url-bar{background:#E8F0FE;padding:4px 14px;font-size:8.5px;color:#5F6368;display:flex;align-items:center;gap:5px;border-bottom:1px solid #D6E4F0}
+.pos-url-bar .pul-lock{color:#0F9D58;font-size:8px}
+.pos-url-bar .pul-url{flex:1}
+.pos-url-bar .pul-info{font-size:9px;color:#9CA3AF}
+
+/* POS BODY */
+.pos-body{flex:1;overflow-y:auto;padding:12px;background:#F8F9FA}
+.pos-body::-webkit-scrollbar{width:3px}
+.pos-body::-webkit-scrollbar-thumb{background:#D1D5DB;border-radius:2px}
+.pos-store{background:#fff;border-radius:12px;padding:10px 12px;margin-bottom:10px;display:flex;align-items:center;gap:10px;box-shadow:0 1px 3px rgba(0,0,0,.04);border:1px solid #E5E7EB}
+.pos-store .pst-logo{width:34px;height:34px;border-radius:9px;background:linear-gradient(135deg,#F97316,#FB923C);display:flex;align-items:center;justify-content:center;font-size:15px;color:#fff;flex-shrink:0}
+.pos-store .pst-info{flex:1;min-width:0}
+.pos-store .pst-name{font-size:12px;font-weight:800;color:#111827;letter-spacing:-.2px}
+.pos-store .pst-meta{font-size:9px;color:#6B7280;margin-top:1px}
+.pos-store .pst-tag{font-size:7.5px;font-weight:800;padding:2px 6px;border-radius:5px;background:#FEF3C7;color:#92400E;letter-spacing:.3px;text-transform:uppercase}
+
+/* POS CART */
+.pos-cart{background:#fff;border-radius:12px;padding:10px;margin-bottom:10px;border:1px solid #E5E7EB}
+.pos-cart-h{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;padding-bottom:8px;border-bottom:1px dashed #E5E7EB}
+.pos-cart-h .pch-t{font-size:11px;font-weight:800;color:#111827}
+.pos-cart-h .pch-c{font-size:9px;color:#6B7280;font-weight:600}
+.pos-cart-r{display:flex;align-items:center;gap:8px;padding:6px 0;font-size:11px}
+.pos-cart-r .pcr-img{width:32px;height:32px;border-radius:8px;background:#F3F4F6;display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0}
+.pos-cart-r .pcr-info{flex:1;min-width:0}
+.pos-cart-r .pcr-n{font-size:10.5px;font-weight:700;color:#111827;line-height:1.2}
+.pos-cart-r .pcr-q{font-size:8.5px;color:#6B7280;margin-top:1px}
+.pos-cart-r .pcr-p{font-size:11px;font-weight:800;color:#111827;white-space:nowrap}
+.pos-cart-tot{display:flex;justify-content:space-between;padding-top:8px;margin-top:8px;border-top:1.5px solid #E5E7EB;font-size:13px;font-weight:900;color:#111827}
+.pos-cart-tot .pct-v{color:#FF2E63}
+
+/* POS PAY OPTIONS */
+.pos-pay-h{font-size:10px;color:#6B7280;font-weight:700;text-transform:uppercase;letter-spacing:.5px;margin:14px 0 8px;padding:0 2px}
+.pos-pay-opt{background:#fff;border-radius:14px;padding:12px 14px;border:2px solid #E5E7EB;cursor:pointer;transition:all .18s;margin-bottom:8px;position:relative;overflow:hidden}
+.pos-pay-opt.wxp-rec{border-color:transparent;background:#fff;box-shadow:0 0 0 2px transparent;background-image:linear-gradient(#fff,#fff),var(--wxp-grad);background-origin:border-box;background-clip:padding-box,border-box}
+.pos-pay-opt.wxp-rec::before{content:'KHUYẾN NGHỊ · −50K';position:absolute;top:8px;right:10px;font-size:7.5px;font-weight:900;background:var(--wxp-grad);color:#fff;padding:2px 7px;border-radius:5px;letter-spacing:.3px}
+.pos-pay-opt-row{display:flex;align-items:center;gap:11px}
+.pos-pay-opt-ico{width:42px;height:42px;border-radius:11px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
+.pos-pay-opt-ico.wxp-i{background:var(--wxp-grad);box-shadow:0 6px 16px rgba(255,46,99,.3);color:#fff;font-weight:900;font-size:15px;letter-spacing:-.5px}
+.pos-pay-opt-ico.cash-i{background:#F0FDF4;color:#15803D}
+.pos-pay-opt-ico.qr-i{background:#FEF3C7;color:#92400E}
+.pos-pay-opt-info{flex:1}
+.pos-pay-opt-info .ppo-t{font-size:13px;font-weight:800;color:#111827;letter-spacing:-.2px}
+.pos-pay-opt-info .ppo-s{font-size:9.5px;color:#6B7280;margin-top:2px;line-height:1.4}
+.pos-pay-opt-info .ppo-s b{color:#111827;font-weight:700}
+.pos-pay-opt-info .ppo-s .ppo-em{color:#FF2E63;font-weight:800}
+.pos-pay-opt-arr{font-size:18px;color:#9CA3AF}
+
+/* POS QR DISPLAY */
+.pos-qr-show{background:#fff;border-radius:14px;padding:14px;border:1px solid #E5E7EB;text-align:center;margin-top:6px}
+.pos-qr-show .pqs-h{font-size:10px;color:#6B7280;font-weight:700;text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px}
+.pos-qr-show .pqs-amt{font-size:22px;font-weight:900;color:#FF2E63;letter-spacing:-1px;margin-bottom:6px}
+.pos-qr-show .pqs-disc{display:inline-block;background:#FEF3C7;color:#92400E;font-size:9.5px;font-weight:800;padding:3px 9px;border-radius:14px;margin-bottom:10px}
+.pos-qr-show .pqs-box{width:158px;height:158px;background:#fff;border:2px solid #111827;border-radius:14px;padding:10px;margin:0 auto;position:relative}
+.pos-qr-show .pqs-box canvas{width:100%;height:100%;display:block}
+.pos-qr-show .pqs-vqr{position:absolute;top:6px;left:8px;background:#fff;padding:1px 4px;border-radius:3px;font-size:7px;font-weight:900;color:#A50064;letter-spacing:.3px;border:1px solid #A50064}
+.pos-qr-show .pqs-tcb{position:absolute;bottom:6px;right:8px;background:#fff;padding:1px 4px;border-radius:3px;font-size:7px;font-weight:900;color:#ED1C24;letter-spacing:.3px;border:1px solid #ED1C24}
+.pos-qr-show .pqs-meta{font-size:9px;color:#6B7280;margin-top:8px;line-height:1.4}
+.pos-qr-show .pqs-meta b{color:#111827}
+.pos-qr-show .pqs-status{display:inline-flex;align-items:center;gap:5px;background:#F0FDF4;border:1px solid #86EFAC;color:#15803D;padding:4px 10px;border-radius:14px;font-size:9.5px;font-weight:800;margin-top:8px}
+.pos-qr-show .pqs-status .pqs-d{width:6px;height:6px;border-radius:50%;background:#15803D;animation:pulse 1.5s infinite}
+
+/* TWO-PANE LAYOUT */
+.flow-grid{display:grid;grid-template-columns:1fr 360px 360px 1fr;gap:0;align-items:center;justify-items:center;padding:28px 0;position:relative}
+.flow-grid::before{content:'';position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:80%;height:1px;background:linear-gradient(90deg,transparent,rgba(255,46,99,.3) 30%,rgba(124,45,255,.5) 50%,rgba(0,217,192,.3) 70%,transparent);z-index:0}
+.flow-arrow{width:120px;height:120px;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:6px;position:relative;z-index:2}
+.flow-arrow-line{width:80%;height:2px;background:linear-gradient(90deg,#FF2E63,#7C2DFF);position:relative;animation:dataPulse 2s ease-in-out infinite}
+.flow-arrow-line::before,.flow-arrow-line::after{content:'';position:absolute;top:50%;width:6px;height:6px;border-radius:50%;background:#FF2E63;transform:translateY(-50%)}
+.flow-arrow-line::before{left:0}.flow-arrow-line::after{right:0;background:#7C2DFF}
+@keyframes dataPulse{0%,100%{opacity:.5}50%{opacity:1}}
+.flow-arrow-pkt{position:absolute;top:50%;left:0;transform:translateY(-50%);width:8px;height:8px;border-radius:50%;background:#fff;box-shadow:0 0 12px #fff;animation:travel 2s ease-in-out infinite}
+@keyframes travel{0%{left:0;opacity:0}10%{opacity:1}90%{opacity:1}100%{left:100%;opacity:0}}
+.flow-arrow-l{font-size:9px;color:var(--t3);font-weight:700;letter-spacing:.3px;text-transform:uppercase;text-align:center;line-height:1.4}
+
+/* ANNOTATION PILL */
+.ann{position:absolute;display:flex;align-items:flex-start;gap:8px;padding:10px 14px;background:rgba(8,12,22,.85);backdrop-filter:blur(16px);border:1px solid var(--line-2);border-radius:12px;font-size:11px;color:var(--t1);max-width:240px;line-height:1.5;z-index:5;font-weight:500}
+.ann .ann-num{width:22px;height:22px;border-radius:7px;background:var(--wxp-grad);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:900;color:#fff;flex-shrink:0;box-shadow:0 4px 10px rgba(255,46,99,.4)}
+.ann .ann-body{flex:1}
+.ann .ann-t{font-size:11px;font-weight:800;color:#fff;letter-spacing:-.1px;margin-bottom:2px}
+.ann .ann-s{font-size:10px;color:var(--t2);font-weight:500;line-height:1.5}
+.ann .ann-s b{color:#fff;font-weight:700}
+.ann .ann-s .em-r{color:#FF7090;font-weight:700}
+.ann .ann-s .em-g{color:#00D9C0;font-weight:700}
+.ann .ann-s .em-y{color:#FFB020;font-weight:700}
+.ann::before{content:'';position:absolute;width:10px;height:10px;background:rgba(8,12,22,.85);border:1px solid var(--line-2);border-right:none;border-bottom:none;transform:rotate(45deg)}
+.ann.ann-l::before{left:-6px;top:50%;margin-top:-5px;transform:rotate(-45deg)}
+.ann.ann-r::before{right:-6px;top:50%;margin-top:-5px;transform:rotate(135deg)}
+.ann.ann-t::before{top:-6px;left:50%;margin-left:-5px}
+.ann.ann-b::before{bottom:-6px;left:50%;margin-left:-5px;transform:rotate(225deg)}
+
+/* DATA POINT BADGE */
+.dpb{display:inline-flex;align-items:center;gap:6px;padding:4px 10px;border-radius:20px;background:rgba(255,255,255,.04);border:1px solid var(--line-2);font-size:10px;font-weight:700;color:var(--t2);font-family:'JetBrains Mono',monospace;letter-spacing:-.1px}
+.dpb b{color:#fff;font-weight:800}
+.dpb-h{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:18px}
+
+/* CALLOUT FROM PDF */
+.pdf-cite{display:inline-flex;align-items:center;gap:5px;padding:3px 8px;border-radius:6px;background:rgba(255,46,99,.08);border:1px solid rgba(255,46,99,.2);font-size:9px;font-weight:700;color:#FF7090;letter-spacing:.3px;text-transform:uppercase;font-family:'JetBrains Mono',monospace}
+
+/* MOAT TABLE */
+.moat-tbl{background:rgba(255,255,255,.02);border:1px solid var(--line);border-radius:18px;overflow:hidden}
+.moat-tbl table{width:100%;border-collapse:collapse;font-size:13px}
+.moat-tbl th,.moat-tbl td{text-align:left;padding:14px 18px;border-bottom:1px solid var(--line)}
+.moat-tbl th{font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.6px;color:var(--t3);background:rgba(255,255,255,.02)}
+.moat-tbl th.h-masan{color:var(--wxp);background:rgba(255,46,99,.05)}
+.moat-tbl td:first-child{font-weight:700;color:var(--t1);width:30%}
+.moat-tbl td.t-y{color:#00D9C0;font-weight:800}
+.moat-tbl td.t-y .y-mark{display:inline-flex;align-items:center;justify-content:center;width:18px;height:18px;border-radius:50%;background:rgba(0,217,192,.18);color:#00D9C0;font-size:10px;font-weight:900;margin-right:6px}
+.moat-tbl td.t-n{color:var(--t4);font-weight:600}
+.moat-tbl td.t-n .n-mark{display:inline-flex;align-items:center;justify-content:center;width:18px;height:18px;border-radius:50%;background:rgba(255,255,255,.04);color:var(--t4);font-size:11px;font-weight:900;margin-right:6px}
+.moat-tbl td.t-p{color:#FFB020;font-weight:700}
+.moat-tbl td.t-p .p-mark{display:inline-flex;align-items:center;justify-content:center;width:18px;height:18px;border-radius:50%;background:rgba(255,176,32,.15);color:#FFB020;font-size:10px;font-weight:900;margin-right:6px}
+.moat-tbl tr:last-child td{border-bottom:none}
+.moat-tbl tr:hover td{background:rgba(255,255,255,.02)}
+.moat-tbl td.h-masan-cell{background:rgba(255,46,99,.03)}
+
+/* CAC BARS */
+.cac-grid{display:grid;grid-template-columns:160px 1fr 90px;gap:14px;align-items:center;padding:11px 0;border-bottom:1px solid var(--line);font-size:13px}
+.cac-grid:last-child{border-bottom:none}
+.cac-grid .cac-l{font-weight:700;color:var(--t1);font-size:13px;display:flex;align-items:center;gap:8px}
+.cac-grid .cac-l .cac-d{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+.cac-grid .cac-bar{height:14px;background:rgba(255,255,255,.04);border-radius:8px;overflow:hidden;position:relative}
+.cac-grid .cac-bar-f{height:100%;border-radius:8px;display:flex;align-items:center;padding:0 9px;font-size:9.5px;font-weight:800;color:#fff;white-space:nowrap;letter-spacing:-.1px;font-family:'JetBrains Mono',monospace}
+.cac-grid .cac-amt{font-size:13px;font-weight:800;color:#fff;text-align:right;font-family:'JetBrains Mono',monospace;letter-spacing:-.3px}
+.cac-grid .cac-amt.cac-em{color:#00D9C0}
+
+/* GPV CHART */
+.gpv-chart{display:grid;grid-template-columns:repeat(5,1fr);gap:14px;padding:30px 0 12px;height:300px;align-items:end;position:relative}
+.gpv-bar-wrap{display:flex;flex-direction:column;align-items:center;gap:9px;height:100%;justify-content:flex-end;position:relative}
+.gpv-bar-v{font-size:18px;font-weight:900;color:#fff;letter-spacing:-.5px;font-family:'JetBrains Mono',monospace}
+.gpv-bar-rev{font-size:10px;color:var(--wxp);font-weight:700;margin-top:-4px}
+.gpv-bar{width:100%;background:linear-gradient(180deg,#FF2E63,#7C2DFF);border-radius:10px 10px 0 0;position:relative;box-shadow:0 -8px 30px rgba(124,45,255,.3),inset 0 1px 0 rgba(255,255,255,.2);transition:height 1s cubic-bezier(.4,0,.2,1);min-height:14px}
+.gpv-bar::after{content:'';position:absolute;inset:0;border-radius:10px 10px 0 0;background:linear-gradient(180deg,rgba(255,255,255,.15),transparent 30%)}
+.gpv-bar-yr{font-size:11px;color:var(--t3);font-weight:700;margin-top:4px;font-family:'JetBrains Mono',monospace}
+
+/* CODE BLOCK */
+.code-blk{background:#0A0E1A;border:1px solid var(--line-2);border-radius:14px;font-family:'JetBrains Mono',monospace;font-size:12.5px;color:var(--t1);overflow:hidden}
+.code-hdr{padding:10px 16px;background:rgba(255,255,255,.02);border-bottom:1px solid var(--line);display:flex;align-items:center;gap:8px;font-size:11px;color:var(--t3);font-family:'Inter',sans-serif;font-weight:600}
+.code-hdr .ch-dots{display:flex;gap:5px}
+.code-hdr .ch-dots span{width:9px;height:9px;border-radius:50%}
+.code-hdr .ch-dots span:nth-child(1){background:#FF6058}
+.code-hdr .ch-dots span:nth-child(2){background:#FFBD2E}
+.code-hdr .ch-dots span:nth-child(3){background:#28CA42}
+.code-body{padding:18px 22px;line-height:1.7;overflow-x:auto;white-space:pre}
+.code-body .k{color:#FF7090}.code-body .s{color:#00D9C0}.code-body .n{color:#FFB020}.code-body .c{color:var(--t4);font-style:italic}.code-body .v{color:#7CC0FF}.code-body .p{color:var(--t1)}.code-body .t{color:#A78BFA}
+
+/* PILLAR CARDS */
+.pillar-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
+.pillar{background:linear-gradient(180deg,rgba(255,255,255,.04),rgba(255,255,255,.01));border:1px solid var(--line-2);border-radius:18px;padding:28px 22px;position:relative;overflow:hidden;transition:transform .25s,border-color .25s}
+.pillar:hover{transform:translateY(-3px);border-color:rgba(255,46,99,.35)}
+.pillar::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--wxp-grad)}
+.pillar-num{font-size:11px;font-weight:900;color:var(--wxp);letter-spacing:1.2px;font-family:'JetBrains Mono',monospace}
+.pillar-h{font-size:18px;font-weight:800;color:#fff;letter-spacing:-.3px;margin-top:10px;margin-bottom:10px;line-height:1.2}
+.pillar-d{font-size:13px;color:var(--t2);line-height:1.6}
+.pillar-v{margin-top:14px;font-size:11px;color:var(--t3);font-weight:700;text-transform:uppercase;letter-spacing:.4px}
+.pillar-v b{color:#fff;font-weight:800;font-family:'JetBrains Mono',monospace;font-size:13px;letter-spacing:-.2px}
+
+/* CHAT PHONE — ZALO OA AI */
+.zoa-app{flex:1;background:#E8F0F5;display:flex;flex-direction:column;overflow:hidden}
+.zoa-hdr{background:#0068FF;padding:8px 12px;display:flex;align-items:center;gap:8px;color:#fff}
+.zoa-hdr .zh-back{font-size:18px;opacity:.8;cursor:pointer}
+.zoa-hdr .zh-ava{width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,#FF6B00,#FF8C33);display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:900;color:#fff;border:2px solid rgba(255,255,255,.3);flex-shrink:0;letter-spacing:-.5px}
+.zoa-hdr .zh-info{flex:1;min-width:0}
+.zoa-hdr .zh-n{font-size:12px;font-weight:800;display:flex;align-items:center;gap:5px;line-height:1.1}
+.zoa-hdr .zh-v{background:rgba(255,255,255,.22);font-size:7.5px;font-weight:800;padding:1px 5px;border-radius:5px;letter-spacing:.3px}
+.zoa-hdr .zh-s{font-size:8.5px;opacity:.85;display:flex;align-items:center;gap:4px;margin-top:1px}
+.zoa-hdr .zh-s .zsd{width:5px;height:5px;border-radius:50%;background:#5EF38C}
+.zoa-hdr .zh-act{display:flex;gap:11px;opacity:.7;font-size:13px}
+.zoa-chat{flex:1;overflow-y:auto;padding:10px;background:#E8F0F5;display:flex;flex-direction:column;gap:7px;scroll-behavior:smooth}
+.zoa-chat::-webkit-scrollbar{width:3px}
+.zoa-chat::-webkit-scrollbar-thumb{background:#C0C8D0;border-radius:2px}
+.zoa-row{display:flex;gap:5px;align-items:flex-end;animation:zfade .3s ease}
+.zoa-row.zr-u{justify-content:flex-end}
+@keyframes zfade{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
+.zoa-m{width:22px;height:22px;border-radius:50%;background:linear-gradient(135deg,#FF6B00,#FF8C33);display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:900;color:#fff;flex-shrink:0;letter-spacing:-.3px}
+.zoa-bubble{max-width:78%;padding:8px 12px;border-radius:16px;font-size:12px;line-height:1.45}
+.zoa-row.zr-bot .zoa-bubble{background:#fff;color:#1A1A1A;border-bottom-left-radius:4px;box-shadow:0 1px 2px rgba(0,0,0,.04)}
+.zoa-row.zr-u .zoa-bubble{background:#E5EFFF;color:#1A1A1A;border-bottom-right-radius:4px}
+
+/* AI RECO CARD IN CHAT */
+.zoa-reco{background:#fff;border-radius:12px;overflow:hidden;max-width:88%;box-shadow:0 1px 3px rgba(0,0,0,.06);border:1px solid #E5E7EB}
+.zoa-reco .zr-img{width:100%;height:96px;background:linear-gradient(135deg,#FFE5B4,#FFB75E);display:flex;align-items:center;justify-content:center;font-size:36px;position:relative}
+.zoa-reco .zr-img::before{content:'';position:absolute;inset:0;background:linear-gradient(180deg,transparent 50%,rgba(0,0,0,.15));pointer-events:none}
+.zoa-reco .zr-tag{position:absolute;top:6px;left:6px;background:rgba(0,0,0,.6);color:#fff;font-size:8px;font-weight:800;padding:2px 7px;border-radius:5px;letter-spacing:.3px}
+.zoa-reco .zr-bd{padding:8px 10px}
+.zoa-reco .zr-t{font-size:11.5px;font-weight:800;color:#111827;letter-spacing:-.2px}
+.zoa-reco .zr-s{font-size:9.5px;color:#6B7280;margin-top:2px;line-height:1.4}
+.zoa-reco .zr-pri{display:flex;justify-content:space-between;align-items:center;margin-top:8px;padding-top:8px;border-top:1px dashed #E5E7EB}
+.zoa-reco .zr-p{font-size:14px;font-weight:900;color:#FF2E63;letter-spacing:-.3px}
+.zoa-reco .zr-old{font-size:9px;color:#9CA3AF;text-decoration:line-through;margin-left:5px}
+.zoa-reco .zr-cta{margin:6px 8px 8px;padding:8px;background:var(--wxp-grad);color:#fff;font-size:11px;font-weight:800;border:none;border-radius:8px;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px}
+
+/* AI ORDER CARD */
+.zoa-ord{background:#fff;border-radius:12px;overflow:hidden;max-width:90%;border:1.5px solid #FF2E63;box-shadow:0 4px 14px rgba(255,46,99,.18)}
+.zoa-ord .zo-h{background:var(--wxp-grad);padding:8px 12px;color:#fff;display:flex;align-items:center;gap:6px}
+.zoa-ord .zo-h-ico{width:24px;height:24px;border-radius:7px;background:rgba(255,255,255,.22);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:900;letter-spacing:-.3px}
+.zoa-ord .zo-h-t{font-size:11px;font-weight:800;letter-spacing:-.1px}
+.zoa-ord .zo-h-s{font-size:8.5px;opacity:.85}
+.zoa-ord .zo-bd{padding:4px 12px}
+.zoa-ord .zo-line{display:flex;justify-content:space-between;padding:5px 0;font-size:10.5px;border-bottom:1px dashed #F3F4F6}
+.zoa-ord .zo-line:last-of-type{border-bottom:none}
+.zoa-ord .zo-line .zol-n{color:#374151;font-weight:600}
+.zoa-ord .zo-line .zol-p{color:#111827;font-weight:700;font-family:'JetBrains Mono',monospace}
+.zoa-ord .zo-tot{padding:8px 12px;background:linear-gradient(135deg,#FFF1F4,#FFE4EC);display:flex;justify-content:space-between;font-weight:900;font-size:12.5px;color:#FF2E63;border-top:1px solid #FBCFE8}
+.zoa-ord .zo-pay{display:grid;grid-template-columns:1fr 1fr;gap:6px;padding:8px 10px;background:#FAFBFC;border-top:1px solid #E5E7EB}
+.zoa-ord .zo-pay button{padding:7px 4px;border-radius:8px;font-size:10px;font-weight:800;border:none;cursor:pointer;letter-spacing:-.1px}
+.zoa-ord .zo-pay-now{background:var(--wxp-grad);color:#fff;box-shadow:0 4px 12px rgba(255,46,99,.3)}
+.zoa-ord .zo-pay-bnpl{background:#fff;border:1.5px solid #FFB020;color:#92400E}
+
+/* CHAT INPUT */
+.zoa-input{padding:6px 8px;border-top:1px solid #D6E4F0;background:#fff;display:flex;gap:6px;align-items:center;color:#9CA3AF;font-size:11px}
+.zoa-input .zi-bx{flex:1;background:#F3F5F6;border-radius:14px;padding:6px 12px;color:#9CA3AF;font-size:10px}
+.zoa-chips{display:flex;flex-wrap:wrap;gap:4px;padding:0 28px 2px;margin-top:-2px}
+.zoa-chips button{background:#fff;border:1.5px solid #FF2E63;color:#FF2E63;padding:5px 10px;border-radius:14px;font-size:10px;font-weight:700;cursor:pointer;transition:all .12s}
+.zoa-chips button:hover{background:#FF2E63;color:#fff}
+
+/* MERCHANT INTEGRATION */
+.merch-grid{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:start}
+.merch-feat{display:flex;gap:14px;margin-bottom:22px;padding-bottom:22px;border-bottom:1px solid var(--line)}
+.merch-feat:last-child{border-bottom:none}
+.merch-feat-ico{width:42px;height:42px;border-radius:12px;background:linear-gradient(135deg,rgba(255,46,99,.15),rgba(124,45,255,.15));border:1px solid rgba(255,46,99,.3);display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
+.merch-feat-bd .mf-t{font-size:15px;font-weight:800;color:#fff;letter-spacing:-.2px;margin-bottom:5px}
+.merch-feat-bd .mf-d{font-size:13px;color:var(--t2);line-height:1.55}
+.merch-feat-bd .mf-d b{color:#fff}
+
+/* FOOTER */
+.foot{position:relative;z-index:2;padding:60px 32px 80px;border-top:1px solid var(--line);background:linear-gradient(180deg,transparent,rgba(8,12,22,.6))}
+.foot-inner{max-width:1440px;margin:0 auto}
+.foot-grid{display:grid;grid-template-columns:1fr 1fr;gap:60px;margin-bottom:48px}
+.foot-h{font-size:32px;font-weight:900;letter-spacing:-.025em;color:#fff;line-height:1.05;max-width:480px}
+.foot-h .em{color:var(--wxp);font-style:italic}
+.foot-asks{display:flex;flex-direction:column;gap:10px}
+.foot-ask{display:flex;align-items:center;gap:10px;padding:11px 14px;background:rgba(255,255,255,.02);border:1px solid var(--line);border-radius:11px}
+.foot-ask-num{width:24px;height:24px;border-radius:7px;background:var(--wxp-grad);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:900;color:#fff;flex-shrink:0;font-family:'JetBrains Mono',monospace}
+.foot-ask-bd .fa-t{font-size:12px;font-weight:700;color:#fff;letter-spacing:-.1px}
+.foot-ask-bd .fa-d{font-size:11px;color:var(--t3);font-weight:600;font-family:'JetBrains Mono',monospace;margin-top:1px}
+.foot-meta{display:flex;justify-content:space-between;align-items:center;padding-top:24px;border-top:1px solid var(--line);font-size:11px;color:var(--t3)}
+.foot-meta .fm-l{font-weight:600}
+.foot-meta .fm-r{display:flex;gap:18px}
+
+/* RESPONSIVE */
+@media (max-width:1100px){
+  .flow-grid{grid-template-columns:1fr;gap:32px}
+  .flow-arrow{transform:rotate(90deg);width:60px;height:60px}
+  .flow-arrow-l{transform:rotate(-90deg)}
+  .ann{display:none}
+  .pillar-grid{grid-template-columns:repeat(2,1fr)}
+  .merch-grid{grid-template-columns:1fr;gap:32px}
+  .foot-grid{grid-template-columns:1fr;gap:32px}
+  .gpv-chart{height:240px}
+}
+@media (max-width:680px){
+  .nav-inner{padding:12px 18px}
+  .nav-link{display:none}
+  .sec{padding:60px 22px}
+  .hero{padding:120px 22px 60px}
+  .hero-stats{grid-template-columns:repeat(2,1fr);gap:18px;margin-top:48px}
+  .pillar-grid{grid-template-columns:1fr}
+  .gpv-chart{gap:6px;height:200px}
+  .gpv-bar-v{font-size:13px}
+  .moat-tbl{font-size:11px;overflow-x:auto}
+  .moat-tbl table{min-width:640px}
+  .cac-grid{grid-template-columns:120px 1fr 80px;gap:8px;font-size:11px}
+}
+
+/* SCROLL REVEAL */
+.reveal{opacity:0;transform:translateY(28px);transition:opacity .9s cubic-bezier(.2,.7,.2,1),transform .9s cubic-bezier(.2,.7,.2,1)}
+.reveal.in{opacity:1;transform:none}
+
+/* HIDE WEBGL ON MOBILE */
+@media (max-width:640px){#bgcanvas{opacity:.4}}
+
+/* PHONE LIFT */
+.phone-lift{position:relative;transform:perspective(1200px) rotateY(-2deg) rotateX(2deg);transition:transform .3s}
+.phone-lift:hover{transform:perspective(1200px) rotateY(0deg) rotateX(0deg)}
+
+/* TIMELINE STEPS */
+.tl-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:14px;margin-top:28px;position:relative}
+.tl-grid::before{content:'';position:absolute;top:30px;left:6%;right:6%;height:2px;background:linear-gradient(90deg,#FF2E63,#7C2DFF,#00D9C0);opacity:.4;z-index:0}
+.tl-step{position:relative;z-index:1}
+.tl-step-num{width:62px;height:62px;border-radius:50%;background:rgba(8,12,22,.95);border:2px solid var(--line-2);display:flex;align-items:center;justify-content:center;font-size:22px;font-weight:900;color:#fff;margin:0 auto 16px;font-family:'JetBrains Mono',monospace;letter-spacing:-1px;backdrop-filter:blur(8px);transition:all .3s;box-shadow:0 8px 22px rgba(0,0,0,.3)}
+.tl-step.act .tl-step-num{background:var(--wxp-grad);border-color:transparent;box-shadow:0 8px 22px rgba(255,46,99,.4),0 0 0 6px rgba(255,46,99,.12)}
+.tl-step-h{font-size:13px;font-weight:800;color:#fff;letter-spacing:-.1px;margin-bottom:5px;text-align:center}
+.tl-step-d{font-size:11.5px;color:var(--t2);line-height:1.5;text-align:center;font-weight:500}
+.tl-step-d b{color:#fff;font-weight:700}
+.tl-step-d .em{color:var(--wxp);font-weight:700}
+.tl-step-time{display:inline-block;margin-top:8px;padding:2px 8px;border-radius:5px;background:rgba(0,217,192,.1);border:1px solid rgba(0,217,192,.3);font-size:9px;color:#00D9C0;font-weight:700;font-family:'JetBrains Mono',monospace;letter-spacing:.3px}
+
+/* TICKER */
+.ticker{overflow:hidden;border-top:1px solid var(--line);border-bottom:1px solid var(--line);background:rgba(255,255,255,.02);padding:16px 0;margin:0;position:relative}
+.ticker-track{display:flex;gap:48px;animation:ticker 40s linear infinite;width:max-content}
+@keyframes ticker{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+.ticker-item{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--t2);font-weight:600;white-space:nowrap}
+.ticker-item .ti-d{width:5px;height:5px;border-radius:50%;background:var(--wxp);flex-shrink:0}
+.ticker-item b{color:#fff;font-weight:800}
+.ticker-item .em{color:#00D9C0;font-weight:700}
+
+/* MOAT CHIP */
+.moat-chip{display:inline-flex;align-items:center;gap:6px;padding:6px 12px;border-radius:14px;font-size:11px;font-weight:800;letter-spacing:.2px;font-family:'JetBrains Mono',monospace}
+.mc-y{background:rgba(0,217,192,.15);color:#00D9C0;border:1px solid rgba(0,217,192,.3)}
+.mc-n{background:rgba(255,255,255,.04);color:var(--t4);border:1px solid var(--line-2)}
+
+/* LEGEND */
+.legend{display:flex;align-items:center;gap:16px;padding:12px 16px;background:rgba(255,255,255,.02);border:1px solid var(--line);border-radius:12px;font-size:11px;color:var(--t2);flex-wrap:wrap}
+.legend-it{display:flex;align-items:center;gap:5px;font-weight:600}
+.legend-it .ld{width:10px;height:10px;border-radius:3px}
+
+</style>
+</head>
+<body class="grain">
+
+<canvas id="bgcanvas"></canvas>
+
+<!-- ======================== NAV ======================== -->
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="#" class="flex items-center gap-3" style="text-decoration:none;color:inherit">
+      <div class="nav-logo">W</div>
+      <div>
+        <div class="nav-brand">Win<span class="x">X</span>Pay</div>
+        <div class="nav-tag">Masan × Techcombank</div>
+      </div>
+    </a>
+    <div class="flex-1"></div>
+    <a class="nav-link" onclick="document.getElementById('sec-flow').scrollIntoView({behavior:'smooth'})">At-the-till flow</a>
+    <a class="nav-link" onclick="document.getElementById('sec-ai').scrollIntoView({behavior:'smooth'})">AI checkout</a>
+    <a class="nav-link" onclick="document.getElementById('sec-api').scrollIntoView({behavior:'smooth'})">Merchant API</a>
+    <a class="nav-link" onclick="document.getElementById('sec-moat').scrollIntoView({behavior:'smooth'})">Moat</a>
+    <a class="nav-link" onclick="document.getElementById('sec-econ').scrollIntoView({behavior:'smooth'})">Economics</a>
+    <div class="nav-pill"><span class="dot"></span>LIVE DEMO · MAY 2026</div>
+  </div>
+</nav>
+
+<!-- ======================== HERO ======================== -->
+<section class="hero">
+  <div class="hero-inner reveal">
+    <div class="hero-eyebrow">
+      <span class="e-ico">M</span>
+      Memo for Danny Le · Strategy &amp; Development · Pre-decisional
+    </div>
+    <h1 class="hero-h1">
+      The Vietnamese consumer wallet,<br/>
+      <span class="gtext em">born at the till.</span>
+    </h1>
+    <p class="hero-sub">
+      WinXPay is a consumer payment wallet acquired at the till through brand-funded discount, with BNPL underwritten by Techcombank as channeling bank. Zero credit on our balance sheet. Open ground vs MoMo, ZaloPay, ShopeePay because Masan owns the consumer wallet, the merchant rail, the brand budgets, and the bank — in one stack.
+    </p>
+    <div class="hero-cta">
+      <button class="btn-prim" onclick="document.getElementById('sec-flow').scrollIntoView({behavior:'smooth'})">Watch the at-till flow →</button>
+      <button class="btn-sec" onclick="document.getElementById('sec-econ').scrollIntoView({behavior:'smooth'})">See the economics</button>
+    </div>
+
+    <div class="hero-stats">
+      <div class="hs-stat">
+        <div class="hs-v gtext">$50m → $8bn</div>
+        <div class="hs-l">GPV trajectory · FY27 → FY34E</div>
+      </div>
+      <div class="hs-stat">
+        <div class="hs-v">200K → 20M</div>
+        <div class="hs-l">Active consumers · pilot → FY34E</div>
+      </div>
+      <div class="hs-stat">
+        <div class="hs-v">~$0.32</div>
+        <div class="hs-l">Net CAC · vs MoMo $8–20</div>
+      </div>
+      <div class="hs-stat">
+        <div class="hs-v">$4–6m</div>
+        <div class="hs-l">Phase 0 build · 12 months</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TICKER -->
+<div class="ticker">
+  <div class="ticker-track">
+    <div class="ticker-item"><span class="ti-d"></span><b>1.0% MDR</b> on non-BNPL volume</div>
+    <div class="ticker-item"><span class="ti-d"></span><b>3.0% net</b> BNPL fee · after 1.5% to TCB</div>
+    <div class="ticker-item"><span class="ti-d"></span><b>1.5–2 sec</b> TCB underwriting decision</div>
+    <div class="ticker-item"><span class="ti-d"></span><b>4 × VND 50K</b> Pay in 4 weeks</div>
+    <div class="ticker-item"><span class="ti-d"></span><b>VND 50K</b> instant at-till discount</div>
+    <div class="ticker-item"><span class="ti-d"></span><b>50K → 500K outlets</b> WinX Tạp Hóa POS rail</div>
+    <div class="ticker-item"><span class="ti-d"></span><span class="em">Klarna–Cross River</span> pattern, transposed</div>
+    <div class="ticker-item"><span class="ti-d"></span><b>19.7%</b> Masan economic interest in TCB</div>
+    <div class="ticker-item"><span class="ti-d"></span><b>4-pillar moat</b> · wallet · rail · brands · bank</div>
+    <!-- duplicate for seamless loop -->
+    <div class="ticker-item"><span class="ti-d"></span><b>1.0% MDR</b> on non-BNPL volume</div>
+    <div class="ticker-item"><span class="ti-d"></span><b>3.0% net</b> BNPL fee · after 1.5% to TCB</div>
+    <div class="ticker-item"><span class="ti-d"></span><b>1.5–2 sec</b> TCB underwriting decision</div>
+    <div class="ticker-item"><span class="ti-d"></span><b>4 × VND 50K</b> Pay in 4 weeks</div>
+    <div class="ticker-item"><span class="ti-d"></span><b>VND 50K</b> instant at-till discount</div>
+    <div class="ticker-item"><span class="ti-d"></span><b>50K → 500K outlets</b> WinX Tạp Hóa POS rail</div>
+    <div class="ticker-item"><span class="ti-d"></span><span class="em">Klarna–Cross River</span> pattern, transposed</div>
+    <div class="ticker-item"><span class="ti-d"></span><b>19.7%</b> Masan economic interest in TCB</div>
+    <div class="ticker-item"><span class="ti-d"></span><b>4-pillar moat</b> · wallet · rail · brands · bank</div>
+  </div>
+</div>
+
+<!-- ======================== SECTION 1: AT-THE-TILL FLOW ======================== -->
+<section id="sec-flow" class="sec">
+  <div class="sec-inner">
+    <div class="reveal">
+      <div class="sec-eyebrow"><span class="se-num">01</span>The at-till flow</div>
+      <h2 class="sec-h2">A consumer with VND 200K of groceries.<br/>A tạp hóa with our POS. <span class="gtext em">Five seconds to settled cash.</span></h2>
+      <p class="sec-sub">
+        On the left: the WinX Tạp Hóa POS, our Zalo Mini-App that already runs on the GT rail. On the right: the new WinXPay consumer wallet. The two surfaces sync over our merchant rail; the BNPL leg is underwritten by Techcombank in real time. Zero credit on our balance sheet.
+      </p>
+      <div class="dpb-h">
+        <div class="dpb">Source <b>· WinXPay Memo §4</b></div>
+        <div class="dpb">Decision time <b>· 1.5–2 sec</b></div>
+        <div class="dpb">MDR <b>· 4.5% on BNPL</b></div>
+        <div class="dpb">TCB take <b>· 1.5%</b></div>
+        <div class="dpb">WinXPay take <b>· 3.0%</b></div>
+      </div>
+    </div>
+
+    <!-- TIMELINE STEPS -->
+    <div class="tl-grid reveal">
+      <div class="tl-step act" id="tl-1">
+        <div class="tl-step-num">1</div>
+        <div class="tl-step-h">Scan at till</div>
+        <div class="tl-step-d">Consumer opens WinXPay; merchant POS shows <b>VND 200K basket</b>. <span class="em">"Pay now or 4 × 50K with 50K instant discount"</span>.</div>
+      </div>
+      <div class="tl-step" id="tl-2">
+        <div class="tl-step-num">2</div>
+        <div class="tl-step-h">TCB BNPL call</div>
+        <div class="tl-step-d">Decisioning engine calls TCB API with WinXPay <b>internal score</b>, CIC bureau hit, basket data. Approve / decline.</div>
+        <div class="tl-step-time">≤ 2.0 s</div>
+      </div>
+      <div class="tl-step" id="tl-3">
+        <div class="tl-step-num">3</div>
+        <div class="tl-step-h">Merchant settled</div>
+        <div class="tl-step-d">TCB books receivable. Merchant gets <b>VND 200K instant</b> into WintelPay wallet, less <b>4.5% MDR</b>.</div>
+      </div>
+      <div class="tl-step" id="tl-4">
+        <div class="tl-step-num">4</div>
+        <div class="tl-step-h">Auto-debit, 4 weeks</div>
+        <div class="tl-step-d">Consumer pays TCB <b>4 × VND 50K</b> via auto-debit. WinXPay services collections, dunning, fraud, support.</div>
+      </div>
+      <div class="tl-step" id="tl-5">
+        <div class="tl-step-num">5</div>
+        <div class="tl-step-h">Economics flow</div>
+        <div class="tl-step-d">4.5% split: TCB <b>1.5%</b> · WinXPay <b>3.0%</b>. Masan's <b>19.7% TCB stake</b> recycles ~20% of TCB BNPL P&amp;L back through equity.</div>
+      </div>
+    </div>
+
+    <!-- ========== INTERACTIVE FLOW PHONES ========== -->
+    <div class="flow-grid reveal" style="margin-top:60px">
+      <!-- LEFT GUTTER (annotations on big screens) -->
+      <div></div>
+
+      <!-- LEFT PHONE: WinX TẠP HÓA POS (Zalo Mini App) -->
+      <div class="phone phone-lift">
+        <div class="phone-notch"></div>
+        <div class="phone-screen">
+          <div class="phone-status">
+            <span>9:41</span>
+            <span class="ps-r">●●● <span class="ps-bat"><span></span></span></span>
+          </div>
+          <div class="pos-app">
+            <div class="pos-zalo-bar">
+              <span class="pzb-back">‹</span>
+              <div class="pzb-info">
+                <div class="pzb-t">WinX Tạp Hóa POS</div>
+                <div class="pzb-s"><span class="ps-d"></span>Zalo Mini App · Cô Lan, Q.1</div>
+              </div>
+              <span class="pzb-menu">⋯</span>
+            </div>
+            <div class="pos-url-bar">
+              <span class="pul-lock">🔒</span>
+              <span class="pul-url">m.zaloapp.com / winx-tap-hoa</span>
+              <span class="pul-info">ⓘ</span>
+            </div>
+            <div class="pos-body">
+              <div class="pos-store">
+                <div class="pst-logo">🏪</div>
+                <div class="pst-info">
+                  <div class="pst-name">Tạp Hóa Cô Lan</div>
+                  <div class="pst-meta">12 Lê Lợi · Q.1 · GT outlet · MS001247</div>
+                </div>
+                <span class="pst-tag">Pilot</span>
+              </div>
+
+              <div class="pos-cart">
+                <div class="pos-cart-h">
+                  <div class="pch-t">Giỏ hàng</div>
+                  <div class="pch-c">5 mặt hàng</div>
+                </div>
+                <div class="pos-cart-r">
+                  <div class="pcr-img">🍜</div>
+                  <div class="pcr-info">
+                    <div class="pcr-n">Mì Omachi sườn hầm × 6</div>
+                    <div class="pcr-q">8.500 ₫ × 6</div>
+                  </div>
+                  <div class="pcr-p">51.000 ₫</div>
+                </div>
+                <div class="pos-cart-r">
+                  <div class="pcr-img">🥛</div>
+                  <div class="pcr-info">
+                    <div class="pcr-n">Sữa Vinamilk 1L × 2</div>
+                    <div class="pcr-q">31.000 ₫ × 2</div>
+                  </div>
+                  <div class="pcr-p">62.000 ₫</div>
+                </div>
+                <div class="pos-cart-r">
+                  <div class="pcr-img">🥫</div>
+                  <div class="pcr-info">
+                    <div class="pcr-n">Tương ớt Chinsu 250g</div>
+                    <div class="pcr-q">22.000 ₫ × 1</div>
+                  </div>
+                  <div class="pcr-p">22.000 ₫</div>
+                </div>
+                <div class="pos-cart-r">
+                  <div class="pcr-img">☕</div>
+                  <div class="pcr-info">
+                    <div class="pcr-n">Wake-Up Coffee 10 gói</div>
+                    <div class="pcr-q">35.000 ₫ × 1</div>
+                  </div>
+                  <div class="pcr-p">35.000 ₫</div>
+                </div>
+                <div class="pos-cart-r">
+                  <div class="pcr-img">🧴</div>
+                  <div class="pcr-info">
+                    <div class="pcr-n">Dầu gội Sunsilk 340g</div>
+                    <div class="pcr-q">30.000 ₫ × 1</div>
+                  </div>
+                  <div class="pcr-p">30.000 ₫</div>
+                </div>
+                <div class="pos-cart-tot">
+                  <span>Tổng cộng</span>
+                  <span class="pct-v">200.000 ₫</span>
+                </div>
+              </div>
+
+              <div class="pos-pay-h">Phương thức thanh toán</div>
+
+              <div class="pos-pay-opt wxp-rec">
+                <div class="pos-pay-opt-row">
+                  <div class="pos-pay-opt-ico wxp-i">W</div>
+                  <div class="pos-pay-opt-info">
+                    <div class="ppo-t">WinXPay</div>
+                    <div class="ppo-s">Trả ngay <b>200K</b> hoặc <span class="ppo-em">4 × 50K</span> qua TCB · giảm ngay <span class="ppo-em">50K</span></div>
+                  </div>
+                  <div class="pos-pay-opt-arr">›</div>
+                </div>
+              </div>
+
+              <div class="pos-pay-opt">
+                <div class="pos-pay-opt-row">
+                  <div class="pos-pay-opt-ico cash-i">💵</div>
+                  <div class="pos-pay-opt-info">
+                    <div class="ppo-t">Tiền mặt</div>
+                    <div class="ppo-s">Thanh toán cho cô Lan trực tiếp</div>
+                  </div>
+                  <div class="pos-pay-opt-arr">›</div>
+                </div>
+              </div>
+
+              <div class="pos-pay-opt">
+                <div class="pos-pay-opt-row">
+                  <div class="pos-pay-opt-ico qr-i">📱</div>
+                  <div class="pos-pay-opt-info">
+                    <div class="ppo-t">VietQR / MoMo / ZaloPay</div>
+                    <div class="ppo-s">Quét mã, thanh toán tài khoản · không có ưu đãi</div>
+                  </div>
+                  <div class="pos-pay-opt-arr">›</div>
+                </div>
+              </div>
+
+              <!-- POS QR (revealed when WinXPay tapped) -->
+              <div class="pos-qr-show" style="margin-top:12px">
+                <div class="pqs-h">Quét bằng app WinXPay</div>
+                <div class="pqs-amt">200.000 ₫</div>
+                <div class="pqs-disc">−50.000 ₫ ưu đãi · do MCH tài trợ</div>
+                <div class="pqs-box">
+                  <span class="pqs-vqr">VietQR</span>
+                  <canvas id="pos-qr"></canvas>
+                  <span class="pqs-tcb">TCB</span>
+                </div>
+                <div class="pqs-meta"><b>Cô Lan · 12 Lê Lợi · Q.1</b><br/>Mã GD: <span class="font-mono">WXP-2026-0509-001247</span></div>
+                <div class="pqs-status"><span class="pqs-d"></span>Chờ khách quét...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- RIGHT PHONE: WINXPAY CONSUMER APP -->
+      <div class="phone phone-lift">
+        <div class="phone-notch"></div>
+        <div class="phone-screen">
+          <div class="phone-status">
+            <span>9:41</span>
+            <span class="ps-r">●●● <span class="ps-bat"><span></span></span></span>
+          </div>
+          <div class="wxp-app" id="wxp-app">
+            <div class="wxp-hdr">
+              <div>
+                <div class="wxp-greet">Chào buổi sáng</div>
+                <div class="wxp-name">Anh Minh 👋</div>
+              </div>
+              <div class="wxp-ava">M</div>
+            </div>
+
+            <!-- WALLET CARD -->
+            <div class="wxp-card">
+              <div class="wxp-card-top">
+                <div>
+                  <div class="wxp-brand">WinXPay</div>
+                  <div class="wxp-id">•••• 4291 · TCB-linked</div>
+                </div>
+                <div class="wxp-card-tcb"><span class="tcb-d"></span>TCB</div>
+              </div>
+              <div class="wxp-card-bal">
+                <div class="wcb-l">Số dư khả dụng</div>
+                <div class="wcb-v">2.847.500 <sup>₫</sup></div>
+              </div>
+              <div class="wxp-card-bot">
+                <div class="wcb-credit">
+                  <div class="wcc-l">Hạn mức Pay-in-4</div>
+                  <div class="wcc-v">3.500.000 ₫ · còn 3.300K</div>
+                </div>
+                <div class="wcb-vqr"><span class="v-d"></span>VietQR · NAPAS</div>
+              </div>
+            </div>
+
+            <!-- QUICK ACTIONS -->
+            <div class="wxp-qa">
+              <div class="wxp-qa-b" onclick="openQR()">
+                <div class="qa-ico qa-pay">📱</div>
+                <div class="qa-l">Quét trả</div>
+              </div>
+              <div class="wxp-qa-b">
+                <div class="qa-ico">💸</div>
+                <div class="qa-l">Chuyển</div>
+              </div>
+              <div class="wxp-qa-b">
+                <div class="qa-ico qa-tx">📊</div>
+                <div class="qa-l">Lịch sử</div>
+              </div>
+              <div class="wxp-qa-b">
+                <div class="qa-ico qa-rew">🎁</div>
+                <div class="qa-l">Quà</div>
+              </div>
+            </div>
+
+            <!-- BNPL ROW -->
+            <div class="wxp-bnpl">
+              <div class="bn-h">⚡ Pay-in-4 đang hoạt động</div>
+              <div class="bn-r">
+                <div>
+                  <div class="bn-amt">VND 200.000</div>
+                  <div class="bn-due">Đợt 1/4 · đến hạn 15/05</div>
+                </div>
+                <div style="text-align:right;font-size:9px;color:rgba(255,255,255,.55);font-weight:600">
+                  Tổng vay<br/><b style="color:#fff;font-size:11px">800.000 ₫</b>
+                </div>
+              </div>
+              <div class="bn-bar"><div class="bn-bar-f"></div></div>
+              <div class="bn-info"><span>VND 50K paid</span><span>3 × 50K còn lại</span></div>
+            </div>
+
+            <!-- TRANSACTIONS -->
+            <div class="wxp-sec">
+              <div class="wxp-sec-h">
+                <div class="wsh-t">Hoạt động gần đây</div>
+                <div class="wsh-m">Xem tất cả</div>
+              </div>
+              <div class="wxp-tx">
+                <div class="wtx-i">🏪</div>
+                <div class="wtx-info">
+                  <div class="wtx-n">Tạp Hóa Cô Lan</div>
+                  <div class="wtx-m">Hôm nay · 09:41 · WXP-001247</div>
+                </div>
+                <div class="wtx-amt"><div class="wta-v neg">−200.000 ₫</div><div class="wta-tag">Pay in 4</div></div>
+              </div>
+              <div class="wxp-tx">
+                <div class="wtx-i">🎁</div>
+                <div class="wtx-info">
+                  <div class="wtx-n">MCH × WinX cashback</div>
+                  <div class="wtx-m">Hôm nay · 09:41 · 5 SKUs</div>
+                </div>
+                <div class="wtx-amt"><div class="wta-v pos">+50.000 ₫</div><div class="wta-tag">Brand-funded</div></div>
+              </div>
+              <div class="wxp-tx">
+                <div class="wtx-i">☕</div>
+                <div class="wtx-info">
+                  <div class="wtx-n">Highlands Q.3</div>
+                  <div class="wtx-m">Hôm qua · 14:22</div>
+                </div>
+                <div class="wtx-amt"><div class="wta-v neg">−85.000 ₫</div><div class="wta-tag">Trả ngay</div></div>
+              </div>
+            </div>
+
+            <div style="flex:1"></div>
+
+            <!-- TAB BAR -->
+            <div class="wxp-tab">
+              <button class="act"><div class="tab-ico">🏠</div>Trang chủ</button>
+              <button><div class="tab-ico">📊</div>Lịch sử</button>
+              <button><div class="tab-ico tab-pay">📱</div>Quét</button>
+              <button><div class="tab-ico">🎁</div>Quà</button>
+              <button><div class="tab-ico">👤</div>Tôi</button>
+            </div>
+
+            <!-- QR OVERLAY (hidden by default) -->
+            <div class="wxp-qr-overlay hidden" id="wxp-qr-overlay">
+              <div class="wxp-qr-h">Quét để trả</div>
+              <div class="wxp-qr-amt">200.000 ₫</div>
+              <div class="wxp-qr-merchant">Tạp Hóa Cô Lan · 12 Lê Lợi, Q.1</div>
+              <div class="wxp-qr-box"><canvas id="wxp-qr"></canvas></div>
+              <div class="wxp-qr-foot">
+                <div class="qf-l">Thanh toán qua</div>
+                <div class="qf-banks">
+                  <div class="qf-b">VietQR</div>
+                  <div class="qf-b">TCB</div>
+                  <div class="qf-b">NAPAS 247</div>
+                </div>
+              </div>
+              <button class="btn-prim" style="margin-top:18px;padding:10px 22px;font-size:12px" onclick="closeQR()">Pay 4 × 50K →</button>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+      <!-- RIGHT GUTTER -->
+      <div></div>
+    </div>
+
+    <!-- LEGEND -->
+    <div class="legend reveal" style="margin-top:36px">
+      <div class="legend-it"><span class="ld" style="background:#FF2E63"></span>WinXPay surface (consumer)</div>
+      <div class="legend-it"><span class="ld" style="background:#0068FF"></span>Zalo Mini App POS (merchant)</div>
+      <div class="legend-it"><span class="ld" style="background:#ED1C24"></span>Techcombank rail (BNPL underwriting)</div>
+      <div class="legend-it"><span class="ld" style="background:#A50064"></span>VietQR / NAPAS 247 (settlement)</div>
+      <div class="legend-it" style="margin-left:auto"><b style="color:#fff">Annotated for Danny Le, May 2026</b></div>
+    </div>
+  </div>
+</section>
+
+<div class="divider-h"></div>
+
+<!-- ======================== SECTION 2: AI CHATBOT CHECKOUT ======================== -->
+<section id="sec-ai" class="sec">
+  <div class="sec-inner">
+    <div class="reveal">
+      <div class="sec-eyebrow"><span class="se-num">02</span>AI Checkout · Zalo Official Account</div>
+      <h2 class="sec-h2">"Hôm nay ăn gì?" → basket → <span class="gtext em">paid in 4 taps.</span></h2>
+      <p class="sec-sub">
+        WinMart's Zalo OA already serves <b>200K followers</b>. Our AI agent recommends the basket; WinXPay closes the loop. The user never leaves the chat — payment, BNPL approval, e-invoice, and receipt all settle inside Zalo via VietQR. Same rail, same TCB underwriting, same brand-funded discount.
+      </p>
+      <div class="dpb-h">
+        <div class="dpb">Source <b>· WinXPay Memo §3</b></div>
+        <div class="dpb">WinX MAU <b>· 40%+ on 12.6M</b></div>
+        <div class="dpb">Win+ Zalo OA <b>· 200K followers</b></div>
+        <div class="dpb">No app switch <b>· in-Zalo settlement</b></div>
+      </div>
+    </div>
+
+    <div class="flow-grid reveal" style="margin-top:32px">
+      <div></div>
+
+      <!-- LEFT PHONE: ZALO OA AI CHAT -->
+      <div class="phone phone-lift">
+        <div class="phone-notch"></div>
+        <div class="phone-screen">
+          <div class="phone-status">
+            <span>9:41</span>
+            <span class="ps-r">●●● <span class="ps-bat"><span></span></span></span>
+          </div>
+          <div class="zoa-app">
+            <div class="zoa-hdr">
+              <span class="zh-back">‹</span>
+              <div class="zh-ava">W+</div>
+              <div class="zh-info">
+                <div class="zh-n">WinMart <span class="zh-v">OA</span></div>
+                <div class="zh-s"><span class="zsd"></span>Đang hoạt động · AI agent</div>
+              </div>
+              <div class="zh-act"><span>📞</span><span>📹</span></div>
+            </div>
+            <div class="zoa-chat" id="zoa-chat">
+              <div class="zoa-row zr-bot">
+                <div class="zoa-m">W+</div>
+                <div class="zoa-bubble">Chào anh Minh! Hôm nay ăn gì ạ? 🍜<br/>Em gợi ý 1 mâm cơm gia đình 4 người, dưới 200K nhé?</div>
+              </div>
+              <div class="zoa-row zr-u">
+                <div class="zoa-bubble">Ok thử xem</div>
+              </div>
+              <div class="zoa-row zr-bot">
+                <div class="zoa-m">W+</div>
+                <div class="zoa-bubble" style="max-width:88%">Em đề xuất menu <b>thịt kho trứng + canh rau</b> 👇</div>
+              </div>
+              <div class="zoa-row zr-bot">
+                <div class="zoa-m" style="visibility:hidden"></div>
+                <div class="zoa-reco">
+                  <div class="zr-img">🍳<span class="zr-tag">Tài trợ bởi MCH</span></div>
+                  <div class="zr-bd">
+                    <div class="zr-t">Mâm cơm 4 người · Combo Masan</div>
+                    <div class="zr-s">Thịt kho · trứng · Chinsu nước mắm · Omachi · Wake-Up tráng miệng</div>
+                    <div class="zr-pri">
+                      <div><span class="zr-p">182.000 ₫</span><span class="zr-old">232.000 ₫</span></div>
+                      <div style="font-size:9px;color:#00BB7C;font-weight:800">−50K WinXPay</div>
+                    </div>
+                  </div>
+                  <button class="zr-cta">Thêm vào giỏ →</button>
+                </div>
+              </div>
+              <div class="zoa-row zr-u">
+                <div class="zoa-bubble">Thêm 6 mì Omachi nữa, 2 sữa Vinamilk</div>
+              </div>
+              <div class="zoa-row zr-bot">
+                <div class="zoa-m">W+</div>
+                <div class="zoa-bubble">Đã thêm. Tổng: <b>200.000 ₫</b> sau ưu đãi 50K. Trả thế nào ạ?</div>
+              </div>
+              <div class="zoa-row zr-bot">
+                <div class="zoa-m" style="visibility:hidden"></div>
+                <div class="zoa-ord">
+                  <div class="zo-h">
+                    <div class="zo-h-ico">W</div>
+                    <div>
+                      <div class="zo-h-t">Đơn hàng · WXP-2026-0509-A</div>
+                      <div class="zo-h-s">WinMart Q.1 · Pickup hoặc giao 30 phút</div>
+                    </div>
+                  </div>
+                  <div class="zo-bd">
+                    <div class="zo-line"><span class="zol-n">Combo cơm gia đình 4N</span><span class="zol-p">182.000 ₫</span></div>
+                    <div class="zo-line"><span class="zol-n">Mì Omachi × 6</span><span class="zol-p">51.000 ₫</span></div>
+                    <div class="zo-line"><span class="zol-n">Sữa Vinamilk 1L × 2</span><span class="zol-p">62.000 ₫</span></div>
+                    <div class="zo-line" style="color:#00BB7C"><span class="zol-n">Ưu đãi MCH × WinXPay</span><span class="zol-p" style="color:#00BB7C">−95.000 ₫</span></div>
+                  </div>
+                  <div class="zo-tot"><span>Tổng thanh toán</span><span>200.000 ₫</span></div>
+                  <div class="zo-pay">
+                    <button class="zo-pay-now" onclick="document.getElementById('wxp-app-2').scrollIntoView({behavior:'smooth',block:'center'})">⚡ Trả ngay 200K</button>
+                    <button class="zo-pay-bnpl" onclick="document.getElementById('wxp-app-2').scrollIntoView({behavior:'smooth',block:'center'})">📅 4 × 50K (TCB)</button>
+                  </div>
+                </div>
+              </div>
+              <div class="zoa-row zr-u">
+                <div class="zoa-bubble">Trả 4×50K nha</div>
+              </div>
+              <div class="zoa-row zr-bot">
+                <div class="zoa-m">W+</div>
+                <div class="zoa-bubble">Đang mở WinXPay để xác nhận BNPL với TCB... ⚡</div>
+              </div>
+            </div>
+            <div class="zoa-input">
+              <span style="font-size:14px">😊</span>
+              <div class="zi-bx">Nhắn cho WinMart...</div>
+              <span style="font-size:14px">📎</span>
+              <span style="font-size:14px">🎤</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- RIGHT PHONE: WINXPAY SHOWING BNPL APPROVAL -->
+      <div class="phone phone-lift">
+        <div class="phone-notch"></div>
+        <div class="phone-screen">
+          <div class="phone-status">
+            <span>9:41</span>
+            <span class="ps-r">●●● <span class="ps-bat"><span></span></span></span>
+          </div>
+          <div class="wxp-app" id="wxp-app-2">
+            <div class="wxp-hdr">
+              <div>
+                <div class="wxp-greet">Xác nhận thanh toán</div>
+                <div class="wxp-name">Pay-in-4 · TCB</div>
+              </div>
+              <div class="wxp-ava">M</div>
+            </div>
+
+            <!-- TCB APPROVAL CARD -->
+            <div style="margin:8px 14px 14px;padding:18px;border-radius:18px;background:linear-gradient(135deg,rgba(237,28,36,.18),rgba(124,45,255,.12));border:1px solid rgba(237,28,36,.35);position:relative;z-index:2;overflow:hidden">
+              <div style="position:absolute;inset:0;background:radial-gradient(circle at 80% 20%,rgba(237,28,36,.25),transparent 50%);pointer-events:none"></div>
+              <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px;position:relative;z-index:1">
+                <div style="width:30px;height:30px;border-radius:8px;background:#ED1C24;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:13px;color:#fff;box-shadow:0 4px 12px rgba(237,28,36,.4)">T</div>
+                <div>
+                  <div style="font-size:11px;font-weight:700;color:#fff;letter-spacing:-.1px">Techcombank BNPL</div>
+                  <div style="font-size:9px;color:rgba(255,255,255,.6);margin-top:1px">Quyết định: <b style="color:#00D9C0">Đồng ý</b> · 1.6s</div>
+                </div>
+                <div style="margin-left:auto;display:inline-flex;align-items:center;gap:5px;padding:4px 9px;border-radius:14px;background:rgba(0,217,192,.15);border:1px solid rgba(0,217,192,.35);font-size:9px;font-weight:800;color:#00D9C0;letter-spacing:.3px">
+                  <span style="width:5px;height:5px;border-radius:50%;background:#00D9C0;box-shadow:0 0 6px #00D9C0"></span>APPROVED
+                </div>
+              </div>
+              <div style="font-size:30px;font-weight:900;color:#fff;letter-spacing:-1.5px;line-height:1;position:relative;z-index:1;font-variant-numeric:tabular-nums">200.000 ₫</div>
+              <div style="font-size:10px;color:rgba(255,255,255,.6);margin-top:4px;position:relative;z-index:1">Tạp Hóa Cô Lan · WinMart Q.1 · 12 Lê Lợi</div>
+              <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-top:14px;position:relative;z-index:1">
+                <div style="background:rgba(255,46,99,.18);border:1px solid rgba(255,46,99,.35);border-radius:8px;padding:6px 4px;text-align:center">
+                  <div style="font-size:10px;font-weight:900;color:#fff;font-variant-numeric:tabular-nums">50K</div>
+                  <div style="font-size:7px;color:rgba(255,255,255,.65);font-weight:700;margin-top:1px">HÔM NAY</div>
+                </div>
+                <div style="background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);border-radius:8px;padding:6px 4px;text-align:center">
+                  <div style="font-size:10px;font-weight:800;color:rgba(255,255,255,.9);font-variant-numeric:tabular-nums">50K</div>
+                  <div style="font-size:7px;color:rgba(255,255,255,.5);font-weight:600;margin-top:1px">15/05</div>
+                </div>
+                <div style="background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);border-radius:8px;padding:6px 4px;text-align:center">
+                  <div style="font-size:10px;font-weight:800;color:rgba(255,255,255,.9);font-variant-numeric:tabular-nums">50K</div>
+                  <div style="font-size:7px;color:rgba(255,255,255,.5);font-weight:600;margin-top:1px">22/05</div>
+                </div>
+                <div style="background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);border-radius:8px;padding:6px 4px;text-align:center">
+                  <div style="font-size:10px;font-weight:800;color:rgba(255,255,255,.9);font-variant-numeric:tabular-nums">50K</div>
+                  <div style="font-size:7px;color:rgba(255,255,255,.5);font-weight:600;margin-top:1px">29/05</div>
+                </div>
+              </div>
+              <div style="font-size:9px;color:rgba(255,255,255,.55);margin-top:10px;line-height:1.5;position:relative;z-index:1">
+                <b style="color:#fff">0% lãi suất</b> · TCB book receivable · Auto-debit từ tài khoản TCB của bạn
+              </div>
+            </div>
+
+            <!-- DECISION TRACE -->
+            <div style="margin:0 14px 12px;padding:14px;border-radius:14px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.08);position:relative;z-index:2">
+              <div style="font-size:10px;font-weight:800;color:#fff;letter-spacing:.3px;text-transform:uppercase;margin-bottom:10px">Decisioning trace</div>
+              <div style="display:flex;align-items:center;gap:8px;padding:5px 0;font-size:10.5px;color:rgba(255,255,255,.85)">
+                <span style="width:6px;height:6px;border-radius:50%;background:#00D9C0;box-shadow:0 0 6px #00D9C0;flex-shrink:0"></span>
+                <span style="flex:1">WinXPay internal score · dual SI+SO ledger</span>
+                <span style="font-family:monospace;font-size:10px;color:#00D9C0;font-weight:800">782/850</span>
+              </div>
+              <div style="display:flex;align-items:center;gap:8px;padding:5px 0;font-size:10.5px;color:rgba(255,255,255,.85)">
+                <span style="width:6px;height:6px;border-radius:50%;background:#00D9C0;box-shadow:0 0 6px #00D9C0;flex-shrink:0"></span>
+                <span style="flex:1">CIC bureau hit · Tier B+</span>
+                <span style="font-family:monospace;font-size:10px;color:#00D9C0;font-weight:800">PASS</span>
+              </div>
+              <div style="display:flex;align-items:center;gap:8px;padding:5px 0;font-size:10.5px;color:rgba(255,255,255,.85)">
+                <span style="width:6px;height:6px;border-radius:50%;background:#00D9C0;box-shadow:0 0 6px #00D9C0;flex-shrink:0"></span>
+                <span style="flex:1">Basket-level data · 5 SKUs FMCG</span>
+                <span style="font-family:monospace;font-size:10px;color:#00D9C0;font-weight:800">OK</span>
+              </div>
+              <div style="display:flex;align-items:center;gap:8px;padding:5px 0;font-size:10.5px;color:rgba(255,255,255,.85)">
+                <span style="width:6px;height:6px;border-radius:50%;background:#FFB020;box-shadow:0 0 6px #FFB020;flex-shrink:0"></span>
+                <span style="flex:1">TCB capital cost + NIM</span>
+                <span style="font-family:monospace;font-size:10px;color:#FFB020;font-weight:800">1.5%</span>
+              </div>
+              <div style="display:flex;align-items:center;gap:8px;padding:5px 0;font-size:10.5px;color:rgba(255,255,255,.85)">
+                <span style="width:6px;height:6px;border-radius:50%;background:#FF2E63;box-shadow:0 0 6px #FF2E63;flex-shrink:0"></span>
+                <span style="flex:1">WinXPay take · origination + servicing</span>
+                <span style="font-family:monospace;font-size:10px;color:#FF2E63;font-weight:800">3.0%</span>
+              </div>
+            </div>
+
+            <div style="flex:1"></div>
+
+            <!-- CTA -->
+            <div style="padding:0 14px 14px;position:relative;z-index:2">
+              <button style="width:100%;padding:14px;border-radius:14px;background:var(--wxp-grad);color:#fff;font-size:14px;font-weight:900;border:none;cursor:pointer;letter-spacing:-.2px;box-shadow:0 10px 28px rgba(255,46,99,.4),inset 0 1px 0 rgba(255,255,255,.25)">
+                Xác nhận · Chi 50K hôm nay
+              </button>
+              <div style="text-align:center;font-size:9px;color:rgba(255,255,255,.45);margin-top:8px;line-height:1.5">
+                Bằng việc xác nhận, bạn đồng ý điều khoản BNPL của Techcombank<br/>
+                Mã GD: <span class="font-mono">WXP-2026-0509-001247</span>
+              </div>
+            </div>
+
+            <!-- TAB BAR -->
+            <div class="wxp-tab">
+              <button><div class="tab-ico">🏠</div>Trang chủ</button>
+              <button><div class="tab-ico">📊</div>Lịch sử</button>
+              <button class="act"><div class="tab-ico tab-pay">📱</div>Quét</button>
+              <button><div class="tab-ico">🎁</div>Quà</button>
+              <button><div class="tab-ico">👤</div>Tôi</button>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+      <div></div>
+    </div>
+
+    <!-- AI ANNOTATIONS BELOW -->
+    <div class="reveal" style="margin-top:48px;display:grid;grid-template-columns:repeat(3,1fr);gap:18px">
+      <div class="glass-2" style="padding:22px">
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px">
+          <div style="width:28px;height:28px;border-radius:8px;background:linear-gradient(135deg,#FF6B00,#FF8C33);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:900;color:#fff">W+</div>
+          <div style="font-size:13px;font-weight:800;color:#fff">Discovery in Zalo OA</div>
+        </div>
+        <div style="font-size:13px;color:var(--t2);line-height:1.6">AI agent reads <b style="color:#fff">12.6M-strong WinX shopper graph</b> + MCH first-party brand budgets. Recommends a basket the brand has already pre-funded. Conversion = chat reply, not click-through.</div>
+      </div>
+      <div class="glass-2" style="padding:22px">
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px">
+          <div style="width:28px;height:28px;border-radius:8px;background:var(--wxp-grad);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:900;color:#fff">W</div>
+          <div style="font-size:13px;font-weight:800;color:#fff">Settlement in WinXPay</div>
+        </div>
+        <div style="font-size:13px;color:var(--t2);line-height:1.6"><b style="color:#fff">QR generated, decision in 1.6s</b>. TCB books receivable; merchant settled instantly. Same flow as the at-till — only the surface changes. Same TCB rail, same MDR economics.</div>
+      </div>
+      <div class="glass-2" style="padding:22px">
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px">
+          <div style="width:28px;height:28px;border-radius:8px;background:#ED1C24;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:900;color:#fff">T</div>
+          <div style="font-size:13px;font-weight:800;color:#fff">Underwriting at Techcombank</div>
+        </div>
+        <div style="font-size:13px;color:var(--t2);line-height:1.6">Receivable on <b style="color:#fff">TCB balance sheet</b>, not ours. Zero NPL reserves on WinXPay P&amp;L. <span style="color:#FFB020;font-weight:700">10–12% NIM</span> on BNPL paper vs 3–4% on TCB's standard loan book — they pay for the data layer.</div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<div class="divider-h"></div>
+
+<!-- ======================== SECTION 3: MERCHANT API ======================== -->
+<section id="sec-api" class="sec">
+  <div class="sec-inner">
+    <div class="reveal">
+      <div class="sec-eyebrow"><span class="se-num">03</span>Merchant integration · the seamless POS layer</div>
+      <h2 class="sec-h2">One drop-in widget. <span class="gtext em">1.4M tạp hóa eligible.</span></h2>
+      <p class="sec-sub">
+        Merchants already on the WinX Tạp Hóa POS get WinXPay automatically — it's a payment method in their existing checkout. For everyone else, integration is a single embed: a button, an API call, or a webhook. Same MDR, same brand-funded discount engine, same TCB BNPL leg. No bespoke contracts; no card-terminal estate.
+      </p>
+    </div>
+
+    <div class="merch-grid reveal" style="margin-top:28px">
+      <!-- LEFT: features -->
+      <div>
+        <div class="merch-feat">
+          <div class="merch-feat-ico">⚡</div>
+          <div class="merch-feat-bd">
+            <div class="mf-t">Drop-in checkout button</div>
+            <div class="mf-d">One HTML attribute or one SDK call. Renders the WinXPay QR + Pay-in-4 selector inside any web, app, or POS surface. <b>Median integration time: 2 hours</b>.</div>
+          </div>
+        </div>
+        <div class="merch-feat">
+          <div class="merch-feat-ico">🔁</div>
+          <div class="merch-feat-bd">
+            <div class="mf-t">Webhook-driven settlement</div>
+            <div class="mf-d">Real-time <span class="font-mono" style="color:#fff">payment.captured</span> + <span class="font-mono" style="color:#fff">bnpl.approved</span> events. T+0 settlement to merchant's WintelPay wallet.</div>
+          </div>
+        </div>
+        <div class="merch-feat">
+          <div class="merch-feat-ico">🧾</div>
+          <div class="merch-feat-bd">
+            <div class="mf-t">E-invoice baked in (NĐ 70/2025)</div>
+            <div class="mf-d">HĐĐT-MTT issued automatically with every settled transaction. Compliance-ready for GDT submission. Tạp hóa never touches a tax form.</div>
+          </div>
+        </div>
+        <div class="merch-feat">
+          <div class="merch-feat-ico">🏦</div>
+          <div class="merch-feat-bd">
+            <div class="mf-t">Capital + decisioning, abstracted</div>
+            <div class="mf-d">Merchant sees one MDR. Behind it: <b>Masan brand budget</b> (CAC), <b>Techcombank capital</b> (BNPL), <b>WinXPay</b> (decisioning + servicing). The merchant takes <span class="em" style="color:#FF2E63;font-weight:700">none of the credit risk</span>.</div>
+          </div>
+        </div>
+        <div class="merch-feat">
+          <div class="merch-feat-ico">📈</div>
+          <div class="merch-feat-bd">
+            <div class="mf-t">AOV uplift, not just acceptance</div>
+            <div class="mf-d">Klarna mature-market data: <b>30–50% AOV lift</b> on BNPL-eligible transactions. Affirm reports similar. The 4.5% MDR is paid for by the basket the consumer wouldn't otherwise have built.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- RIGHT: code -->
+      <div>
+        <div class="code-blk">
+          <div class="code-hdr">
+            <div class="ch-dots"><span></span><span></span><span></span></div>
+            <span>checkout.html · drop-in widget</span>
+          </div>
+          <div class="code-body"><span class="c">&lt;!-- Add the WinXPay button to any HTML page --&gt;</span>
+<span class="k">&lt;script</span> <span class="v">src</span>=<span class="s">"https://js.winxpay.vn/v1/sdk.js"</span><span class="k">&gt;&lt;/script&gt;</span>
+
+<span class="k">&lt;button</span>
+  <span class="v">data-winxpay</span>=<span class="s">"checkout"</span>
+  <span class="v">data-amount</span>=<span class="s">"200000"</span>
+  <span class="v">data-currency</span>=<span class="s">"VND"</span>
+  <span class="v">data-merchant</span>=<span class="s">"MS001247"</span>
+  <span class="v">data-bnpl</span>=<span class="s">"true"</span>
+  <span class="v">data-discount-id</span>=<span class="s">"MCH-2026-FMCG-Q2"</span><span class="k">&gt;</span>
+  Trả 200K hoặc 4 × 50K
+<span class="k">&lt;/button&gt;</span></div>
+        </div>
+
+        <div class="code-blk" style="margin-top:18px">
+          <div class="code-hdr">
+            <div class="ch-dots"><span></span><span></span><span></span></div>
+            <span>server.ts · capture + webhook</span>
+          </div>
+          <div class="code-body"><span class="k">import</span> { <span class="t">WinXPay</span> } <span class="k">from</span> <span class="s">'@winxpay/sdk'</span>;
+
+<span class="k">const</span> <span class="v">wxp</span> = <span class="k">new</span> <span class="t">WinXPay</span>({ <span class="v">apiKey</span>: <span class="v">process</span>.<span class="v">env</span>.<span class="v">WXP_KEY</span> });
+
+<span class="c">// Create a checkout — receive QR + paymentId</span>
+<span class="k">const</span> <span class="v">checkout</span> = <span class="k">await</span> <span class="v">wxp</span>.<span class="t">checkouts</span>.<span class="t">create</span>({
+  <span class="v">amount</span>: <span class="n">200_000</span>,
+  <span class="v">basket</span>: <span class="v">cart</span>.<span class="v">items</span>,
+  <span class="v">bnpl</span>: <span class="s">'auto'</span>,        <span class="c">// auto-decide via TCB</span>
+  <span class="v">brandFundedDiscount</span>: <span class="k">true</span>,  <span class="c">// pulls MCH budget</span>
+  <span class="v">callbackUrl</span>: <span class="s">'https://store.vn/wxp'</span>
+});
+
+<span class="c">// Webhook handler — fires when consumer scans + TCB approves</span>
+<span class="v">app</span>.<span class="t">post</span>(<span class="s">'/wxp'</span>, (<span class="v">req</span>) =&gt; {
+  <span class="k">if</span> (<span class="v">req</span>.<span class="v">body</span>.<span class="v">event</span> === <span class="s">'payment.captured'</span>) {
+    <span class="v">orders</span>.<span class="t">markPaid</span>(<span class="v">req</span>.<span class="v">body</span>.<span class="v">merchantRef</span>);
+    <span class="c">// VND 200K instant in WintelPay merchant wallet (less 4.5% MDR)</span>
+  }
+});</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<div class="divider-h"></div>
+
+<!-- ======================== SECTION 4: MOAT ======================== -->
+<section id="sec-moat" class="sec">
+  <div class="sec-inner">
+    <div class="reveal">
+      <div class="sec-eyebrow"><span class="se-num">04</span>The four-pillar moat</div>
+      <h2 class="sec-h2">Wallet · Rail · Brands · Bank.<br/><span class="gtext em">All four, in one stack.</span></h2>
+      <p class="sec-sub">
+        No Vietnamese competitor has the combination. Replicating it requires a sequence of acquisitions not visible on any competitor strategy today. Below: same matrix as WinXPay Memo §9, against the only six firms with credible distribution.
+      </p>
+    </div>
+
+    <div class="pillar-grid reveal" style="margin-top:36px">
+      <div class="pillar">
+        <div class="pillar-num">PILLAR 01</div>
+        <div class="pillar-h">Identified shopper graph</div>
+        <div class="pillar-d">12.6M WinX members · 40%+ MAU · 200K Win+ Zalo OA followers. The only Vietnamese consumer wallet shipping with a base.</div>
+        <div class="pillar-v"><b>12.6M</b> identified · <b>40%+</b> MAU</div>
+      </div>
+      <div class="pillar">
+        <div class="pillar-num">PILLAR 02</div>
+        <div class="pillar-h">Closed-loop merchant rail</div>
+        <div class="pillar-d">WinX Tạp Hóa POS — free for tạp hóa. 50K → 500K outlets FY27 → FY34. WCM owned-stores layer on top. No competitor's POS sees both SI and SO.</div>
+        <div class="pillar-v"><b>50K → 500K</b> outlets · <b>1.4M</b> tạp hóa eligible</div>
+      </div>
+      <div class="pillar">
+        <div class="pillar-num">PILLAR 03</div>
+        <div class="pillar-h">First-party brand budgets</div>
+        <div class="pillar-d">MCH 16 brands fund the at-till discount. Unilever, P&amp;G, Nestlé join the bid. CAC is brand-recovered first re-use cycle, not balance-sheet-funded.</div>
+        <div class="pillar-v"><b>~$0.32</b> net CAC · <b>$8–20</b> for MoMo</div>
+      </div>
+      <div class="pillar">
+        <div class="pillar-num">PILLAR 04</div>
+        <div class="pillar-h">Bank partnership for BNPL</div>
+        <div class="pillar-d">Techcombank as channeling bank. 19.7% Masan economic interest. Klarna–Cross River pattern, transposed. Zero credit on WinXPay's balance sheet.</div>
+        <div class="pillar-v"><b>19.7%</b> TCB stake · <b>10–12%</b> NIM to TCB</div>
+      </div>
+    </div>
+
+    <!-- COMPETITIVE TABLE -->
+    <div class="moat-tbl reveal" style="margin-top:36px">
+      <table>
+        <thead>
+          <tr>
+            <th style="width:24%">Asset</th>
+            <th class="h-masan" style="width:13%">Masan</th>
+            <th>VinShop</th>
+            <th>KiotViet</th>
+            <th>MISA</th>
+            <th>TikTok Shop</th>
+            <th>BHX</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Modern-Trade anchor</td>
+            <td class="t-y h-masan-cell"><span class="y-mark">✓</span>4,592 stores</td>
+            <td class="t-n"><span class="n-mark">✗</span>—</td>
+            <td class="t-n"><span class="n-mark">✗</span>—</td>
+            <td class="t-n"><span class="n-mark">✗</span>—</td>
+            <td class="t-n"><span class="n-mark">✗</span>—</td>
+            <td class="t-p"><span class="p-mark">~</span>≈2,000</td>
+          </tr>
+          <tr>
+            <td>GT sell-in rail</td>
+            <td class="t-y h-masan-cell"><span class="y-mark">✓</span>420K outlets</td>
+            <td class="t-p"><span class="p-mark">~</span>partial</td>
+            <td class="t-p"><span class="p-mark">~</span>partial</td>
+            <td class="t-n"><span class="n-mark">✗</span>—</td>
+            <td class="t-n"><span class="n-mark">✗</span>—</td>
+            <td class="t-n"><span class="n-mark">✗</span>—</td>
+          </tr>
+          <tr>
+            <td>First-party FMCG brands</td>
+            <td class="t-y h-masan-cell"><span class="y-mark">✓</span>MCH 16</td>
+            <td class="t-n"><span class="n-mark">✗</span>—</td>
+            <td class="t-n"><span class="n-mark">✗</span>—</td>
+            <td class="t-n"><span class="n-mark">✗</span>—</td>
+            <td class="t-n"><span class="n-mark">✗</span>—</td>
+            <td class="t-p"><span class="p-mark">~</span>private label</td>
+          </tr>
+          <tr>
+            <td>Identified shopper graph</td>
+            <td class="t-y h-masan-cell"><span class="y-mark">✓</span>12.6M</td>
+            <td class="t-p"><span class="p-mark">~</span>VinID separate</td>
+            <td class="t-n"><span class="n-mark">✗</span>—</td>
+            <td class="t-n"><span class="n-mark">✗</span>—</td>
+            <td class="t-p"><span class="p-mark">~</span>clicks only</td>
+            <td class="t-p"><span class="p-mark">~</span>nascent</td>
+          </tr>
+          <tr>
+            <td>Closed-loop POS</td>
+            <td class="t-y h-masan-cell"><span class="y-mark">✓</span>SI + SO</td>
+            <td class="t-n"><span class="n-mark">✗</span>—</td>
+            <td class="t-p"><span class="p-mark">~</span>sell-out only</td>
+            <td class="t-p"><span class="p-mark">~</span>sell-out</td>
+            <td class="t-n"><span class="n-mark">✗</span>—</td>
+            <td class="t-p"><span class="p-mark">~</span>sell-out · attribution only</td>
+          </tr>
+          <tr>
+            <td>Bank partnership for BNPL</td>
+            <td class="t-y h-masan-cell"><span class="y-mark">✓</span>TCB · 19.7%</td>
+            <td class="t-n"><span class="n-mark">✗</span>—</td>
+            <td class="t-n"><span class="n-mark">✗</span>—</td>
+            <td class="t-p"><span class="p-mark">~</span>partner-bank</td>
+            <td class="t-n"><span class="n-mark">✗</span>—</td>
+            <td class="t-n"><span class="n-mark">✗</span>—</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="reveal" style="margin-top:18px;font-size:11px;color:var(--t3);font-weight:600;text-align:right">
+      Source: WinXPay Memo §9 · WinX IC Memo v22 · 29 April 2026
+    </div>
+
+  </div>
+</section>
+
+<div class="divider-h"></div>
+
+<!-- ======================== SECTION 5: ECONOMICS ======================== -->
+<section id="sec-econ" class="sec">
+  <div class="sec-inner">
+    <div class="reveal">
+      <div class="sec-eyebrow"><span class="se-num">05</span>The economics</div>
+      <h2 class="sec-h2">$50m → $8bn GPV · <span class="gtext em">two merchant-paid revenue lines</span></h2>
+      <p class="sec-sub">
+        Built bottom-up from the merchant base. Active merchants × annual GPV per active merchant gives total GPV. BNPL share applied to GPV gives the two revenue lines. CAC is structurally one-tenth of MoMo's incumbent cost because brand budgets — not our balance sheet — pay for it.
+      </p>
+    </div>
+
+    <!-- GPV CHART -->
+    <div class="reveal" style="margin-top:48px">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px">
+        <div style="font-size:13px;font-weight:800;color:#fff">Total GPV trajectory · USD m</div>
+        <div style="display:flex;gap:18px;font-size:11px;color:var(--t3);font-weight:600">
+          <span style="display:inline-flex;align-items:center;gap:5px"><span style="width:10px;height:10px;border-radius:3px;background:linear-gradient(180deg,#FF2E63,#7C2DFF)"></span>Total GPV</span>
+          <span style="display:inline-flex;align-items:center;gap:5px;color:#FF7090">Total revenue =1% MDR + 3% net BNPL</span>
+        </div>
+      </div>
+      <div class="gpv-chart">
+        <div class="gpv-bar-wrap"><div class="gpv-bar-v">$50m</div><div class="gpv-bar-rev">$0.55m rev</div><div class="gpv-bar" style="height:1.2%"></div><div class="gpv-bar-yr">FY27</div></div>
+        <div class="gpv-bar-wrap"><div class="gpv-bar-v">$200m</div><div class="gpv-bar-rev">$2.2m rev</div><div class="gpv-bar" style="height:4%"></div><div class="gpv-bar-yr">FY28</div></div>
+        <div class="gpv-bar-wrap"><div class="gpv-bar-v">$1.6bn</div><div class="gpv-bar-rev">$19.9m rev</div><div class="gpv-bar" style="height:24%"></div><div class="gpv-bar-yr">FY30</div></div>
+        <div class="gpv-bar-wrap"><div class="gpv-bar-v">$4.3bn</div><div class="gpv-bar-rev">$58.5m rev</div><div class="gpv-bar" style="height:60%"></div><div class="gpv-bar-yr">FY32</div></div>
+        <div class="gpv-bar-wrap"><div class="gpv-bar-v">$8.0bn</div><div class="gpv-bar-rev">$120m rev</div><div class="gpv-bar" style="height:100%"></div><div class="gpv-bar-yr">FY34E</div></div>
+      </div>
+    </div>
+
+    <!-- BUILD TABLE -->
+    <div class="reveal" style="margin-top:60px;display:grid;grid-template-columns:1fr 1fr;gap:36px">
+      <div>
+        <div style="font-size:13px;font-weight:800;color:#fff;margin-bottom:14px">CAC compression · gross at-till discount net of brand recovery</div>
+        <div style="background:rgba(255,255,255,.02);border:1px solid var(--line);border-radius:14px;padding:6px 18px">
+          <div class="cac-grid">
+            <div class="cac-l"><span class="cac-d" style="background:#A50064"></span>MoMo · 2018-22 growth</div>
+            <div class="cac-bar"><div class="cac-bar-f" style="width:90%;background:linear-gradient(90deg,#A50064,#FF2E63)">200–500K VND</div></div>
+            <div class="cac-amt">$8–20</div>
+          </div>
+          <div class="cac-grid">
+            <div class="cac-l"><span class="cac-d" style="background:#0068FF"></span>ZaloPay</div>
+            <div class="cac-bar"><div class="cac-bar-f" style="width:75%;background:#0068FF">150–400K VND</div></div>
+            <div class="cac-amt">$6–16</div>
+          </div>
+          <div class="cac-grid">
+            <div class="cac-l"><span class="cac-d" style="background:#EE4D2D"></span>ShopeePay</div>
+            <div class="cac-bar"><div class="cac-bar-f" style="width:55%;background:#EE4D2D">100–300K VND</div></div>
+            <div class="cac-amt">$4–12</div>
+          </div>
+          <div class="cac-grid">
+            <div class="cac-l"><span class="cac-d" style="background:#888"></span>Moca <span style="font-size:9px;color:var(--t4);font-weight:600">(exited Jul-2024)</span></div>
+            <div class="cac-bar"><div class="cac-bar-f" style="width:45%;background:#666">200K+ VND</div></div>
+            <div class="cac-amt">$8+</div>
+          </div>
+          <div class="cac-grid">
+            <div class="cac-l"><span class="cac-d" style="background:#FFB020"></span>WinXPay · gross</div>
+            <div class="cac-bar"><div class="cac-bar-f" style="width:14%;background:linear-gradient(90deg,#FFB020,#FF7E1B)">30–50K</div></div>
+            <div class="cac-amt">$1.20–2.00</div>
+          </div>
+          <div class="cac-grid">
+            <div class="cac-l"><span class="cac-d" style="background:#00D9C0"></span><b style="color:#fff">WinXPay · net of brand recovery</b></div>
+            <div class="cac-bar"><div class="cac-bar-f" style="width:3%;background:linear-gradient(90deg,#00D9C0,#0099B0)">~8K</div></div>
+            <div class="cac-amt cac-em">~$0.32</div>
+          </div>
+        </div>
+        <div style="font-size:11px;color:var(--t3);margin-top:14px;line-height:1.6">
+          Incumbents fund 100% of CAC out of their own balance sheets. WinXPay's CAC is brand-funded via WinX Ads at the till, recovered within first re-use cycle from MCH first-party brand budgets that already exist. <span class="pdf-cite">Memo §10</span>
+        </div>
+      </div>
+
+      <div>
+        <div style="font-size:13px;font-weight:800;color:#fff;margin-bottom:14px">Revenue mix · two merchant-paid lines</div>
+        <div style="display:flex;flex-direction:column;gap:14px">
+          <div style="background:linear-gradient(135deg,rgba(255,46,99,.12),rgba(124,45,255,.06));border:1px solid rgba(255,46,99,.25);border-radius:14px;padding:18px">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+              <div style="font-size:14px;font-weight:800;color:#fff">Payment processing</div>
+              <div style="font-size:18px;font-weight:900;color:#FF2E63;font-variant-numeric:tabular-nums;letter-spacing:-.5px">1.0%</div>
+            </div>
+            <div style="font-size:12px;color:var(--t2);line-height:1.55">MDR on non-BNPL volume. Pure rail economics, no credit. Scales linearly with GPV.</div>
+            <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin-top:14px">
+              <div style="text-align:center;padding:6px;background:rgba(255,255,255,.03);border-radius:7px"><div style="font-size:11px;color:#fff;font-weight:800;font-variant-numeric:tabular-nums">$0.5m</div><div style="font-size:8px;color:var(--t4);font-weight:600;margin-top:1px">FY27</div></div>
+              <div style="text-align:center;padding:6px;background:rgba(255,255,255,.03);border-radius:7px"><div style="font-size:11px;color:#fff;font-weight:800;font-variant-numeric:tabular-nums">$1.9m</div><div style="font-size:8px;color:var(--t4);font-weight:600;margin-top:1px">FY28</div></div>
+              <div style="text-align:center;padding:6px;background:rgba(255,255,255,.03);border-radius:7px"><div style="font-size:11px;color:#fff;font-weight:800;font-variant-numeric:tabular-nums">$14m</div><div style="font-size:8px;color:var(--t4);font-weight:600;margin-top:1px">FY30</div></div>
+              <div style="text-align:center;padding:6px;background:rgba(255,255,255,.03);border-radius:7px"><div style="font-size:11px;color:#fff;font-weight:800;font-variant-numeric:tabular-nums">$35m</div><div style="font-size:8px;color:var(--t4);font-weight:600;margin-top:1px">FY32</div></div>
+              <div style="text-align:center;padding:6px;background:rgba(255,46,99,.18);border:1px solid rgba(255,46,99,.4);border-radius:7px"><div style="font-size:11px;color:#fff;font-weight:800;font-variant-numeric:tabular-nums">$60m</div><div style="font-size:8px;color:var(--wxp);font-weight:700;margin-top:1px">FY34E</div></div>
+            </div>
+          </div>
+          <div style="background:linear-gradient(135deg,rgba(255,176,32,.12),rgba(255,46,99,.06));border:1px solid rgba(255,176,32,.3);border-radius:14px;padding:18px">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+              <div style="font-size:14px;font-weight:800;color:#fff">BNPL fee · net of TCB</div>
+              <div style="font-size:18px;font-weight:900;color:#FFB020;font-variant-numeric:tabular-nums;letter-spacing:-.5px">3.0%</div>
+            </div>
+            <div style="font-size:12px;color:var(--t2);line-height:1.55">After 1.5% to TCB. Scales with BNPL share of GPV (3% FY27 → 25% FY34E). Zero credit on our balance sheet.</div>
+            <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin-top:14px">
+              <div style="text-align:center;padding:6px;background:rgba(255,255,255,.03);border-radius:7px"><div style="font-size:11px;color:#fff;font-weight:800;font-variant-numeric:tabular-nums">$0.05m</div><div style="font-size:8px;color:var(--t4);font-weight:600;margin-top:1px">FY27</div></div>
+              <div style="text-align:center;padding:6px;background:rgba(255,255,255,.03);border-radius:7px"><div style="font-size:11px;color:#fff;font-weight:800;font-variant-numeric:tabular-nums">$0.3m</div><div style="font-size:8px;color:var(--t4);font-weight:600;margin-top:1px">FY28</div></div>
+              <div style="text-align:center;padding:6px;background:rgba(255,255,255,.03);border-radius:7px"><div style="font-size:11px;color:#fff;font-weight:800;font-variant-numeric:tabular-nums">$5.8m</div><div style="font-size:8px;color:var(--t4);font-weight:600;margin-top:1px">FY30</div></div>
+              <div style="text-align:center;padding:6px;background:rgba(255,255,255,.03);border-radius:7px"><div style="font-size:11px;color:#fff;font-weight:800;font-variant-numeric:tabular-nums">$23m</div><div style="font-size:8px;color:var(--t4);font-weight:600;margin-top:1px">FY32</div></div>
+              <div style="text-align:center;padding:6px;background:rgba(255,176,32,.18);border:1px solid rgba(255,176,32,.4);border-radius:7px"><div style="font-size:11px;color:#fff;font-weight:800;font-variant-numeric:tabular-nums">$60m</div><div style="font-size:8px;color:#FFB020;font-weight:700;margin-top:1px">FY34E</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ======================== FOOTER / THE ASK ======================== -->
+<footer class="foot">
+  <div class="foot-inner">
+    <div class="foot-grid reveal">
+      <div>
+        <div class="sec-eyebrow" style="color:var(--wxp)"><span class="se-num">06</span>The ask</div>
+        <h2 class="foot-h">Phase 0 capital allocation: <span class="em">USD 4–6m</span> over 12 months. Closed pilot Q2 2027 · HCMC, Hà Nội, Đà Nẵng.</h2>
+        <p style="font-size:13px;color:var(--t2);margin-top:18px;line-height:1.6;max-width:480px">
+          Activation gate: 200K active users on WinX Tạp Hóa POS clearing 50K outlets, sustained over 60 working days. Window vs MoMo / ZaloPay / TCB-direct moves: <b style="color:#fff">18–36 months</b> per regulatory and POS-rail timing.
+        </p>
+      </div>
+      <div>
+        <div class="foot-asks">
+          <div class="foot-ask">
+            <div class="foot-ask-num">1</div>
+            <div class="foot-ask-bd">
+              <div class="fa-t">IC clearance</div>
+              <div class="fa-d">pre-Q3 2026</div>
+            </div>
+          </div>
+          <div class="foot-ask">
+            <div class="foot-ask-num">2</div>
+            <div class="foot-ask-bd">
+              <div class="fa-t">TCB MSA executed</div>
+              <div class="fa-d">by Q2 2026</div>
+            </div>
+          </div>
+          <div class="foot-ask">
+            <div class="foot-ask-num">3</div>
+            <div class="foot-ask-bd">
+              <div class="fa-t">POS rail to 50K outlets</div>
+              <div class="fa-d">by Q4 2026</div>
+            </div>
+          </div>
+          <div class="foot-ask">
+            <div class="foot-ask-num">4</div>
+            <div class="foot-ask-bd">
+              <div class="fa-t">Closed pilot launch</div>
+              <div class="fa-d">Q2 2027 · HCMC · Hà Nội · Đà Nẵng</div>
+            </div>
+          </div>
+          <div class="foot-ask">
+            <div class="foot-ask-num">5</div>
+            <div class="foot-ask-bd">
+              <div class="fa-t">Activation gate</div>
+              <div class="fa-d">200K users · 50K outlets · 60 working days</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="foot-meta">
+      <div class="fm-l">WinXPay · Memo for Danny Le · S&amp;D · pre-decisional · May 2026</div>
+      <div class="fm-r">
+        <span>Memo source: <b style="color:var(--t1)">WinXPay Narrative v2</b></span>
+        <span>WinX IC Memo v22 · 29 Apr 2026</span>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- ======================== JS ======================== -->
+<script>
+// ============= QR GENERATION =============
+function genQR(){
+  const cfg = {
+    size:280,
+    foreground:'#0A0612',
+    background:'#fff',
+    level:'H',
+    padding:0
+  };
+  const vietQRPayload = '00020101021238600010A00000072701300006970407010600012470208QRIBFTTA53037045405200000.005802VN6304ABCD';
+
+  if(document.getElementById('pos-qr')){
+    new QRious({...cfg, element:document.getElementById('pos-qr'), value:vietQRPayload, foreground:'#0A0612'});
+  }
+  if(document.getElementById('wxp-qr')){
+    new QRious({...cfg, element:document.getElementById('wxp-qr'), value:vietQRPayload, foreground:'#0A0612'});
+  }
+}
+document.addEventListener('DOMContentLoaded',genQR);
+
+// ============= QR OVERLAY =============
+function openQR(){
+  document.getElementById('wxp-qr-overlay').classList.remove('hidden');
+}
+function closeQR(){
+  document.getElementById('wxp-qr-overlay').classList.add('hidden');
+}
+
+// ============= TIMELINE STEP CYCLE =============
+let tlStep = 1;
+function cycleTL(){
+  document.querySelectorAll('.tl-step').forEach(s=>s.classList.remove('act'));
+  const el = document.getElementById('tl-'+tlStep);
+  if(el) el.classList.add('act');
+  tlStep = tlStep>=5 ? 1 : tlStep+1;
+}
+setInterval(cycleTL, 1800);
+
+// ============= SCROLL REVEAL =============
+const io = new IntersectionObserver((entries)=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){
+      e.target.classList.add('in');
+      io.unobserve(e.target);
+    }
+  });
+},{threshold:0.12});
+document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+
+// ============= NAV SCROLL EFFECT =============
+window.addEventListener('scroll',()=>{
+  const nav = document.querySelector('.nav');
+  if(window.scrollY > 20) nav.style.background = 'rgba(8,12,22,.85)';
+  else nav.style.background = 'rgba(8,12,22,.65)';
+});
+</script>
+
+<!-- ============= WEBGL HERO BG ============= -->
+<script type="module">
+import * as THREE from 'three';
+
+const canvas = document.getElementById('bgcanvas');
+const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+const isMobile = window.matchMedia('(max-width: 768px)').matches;
+
+if(!reduceMotion && canvas){
+  try {
+    const renderer = new THREE.WebGLRenderer({canvas, alpha:true, antialias:!isMobile});
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, isMobile ? 1.25 : 1.5));
+    renderer.setSize(window.innerWidth, window.innerHeight, false);
+
+    const scene = new THREE.Scene();
+    const camera = new THREE.OrthographicCamera(-1,1,1,-1,0,1);
+
+    // ============ MESH GRADIENT (Stripe-style) ============
+    const gradMat = new THREE.ShaderMaterial({
+      uniforms:{
+        uTime:{value:0},
+        uRes:{value:new THREE.Vector2(window.innerWidth, window.innerHeight)},
+        uMouse:{value:new THREE.Vector2(0.5,0.5)}
+      },
+      vertexShader:`
+        varying vec2 vUv;
+        void main(){
+          vUv = uv;
+          gl_Position = vec4(position,1.0);
+        }
+      `,
+      fragmentShader:`
+        precision highp float;
+        uniform float uTime;
+        uniform vec2 uRes;
+        uniform vec2 uMouse;
+        varying vec2 vUv;
+
+        // Simplex 2D noise (Ashima)
+        vec3 permute(vec3 x){return mod(((x*34.0)+1.0)*x,289.0);}
+        float snoise(vec2 v){
+          const vec4 C = vec4(0.211324865405187,0.366025403784439,-0.577350269189626,0.024390243902439);
+          vec2 i = floor(v + dot(v,C.yy));
+          vec2 x0 = v - i + dot(i,C.xx);
+          vec2 i1 = (x0.x > x0.y) ? vec2(1.0,0.0) : vec2(0.0,1.0);
+          vec4 x12 = x0.xyxy + C.xxzz;
+          x12.xy -= i1;
+          i = mod(i,289.0);
+          vec3 p = permute(permute(i.y + vec3(0.0,i1.y,1.0)) + i.x + vec3(0.0,i1.x,1.0));
+          vec3 m = max(0.5 - vec3(dot(x0,x0), dot(x12.xy,x12.xy), dot(x12.zw,x12.zw)),0.0);
+          m = m*m; m = m*m;
+          vec3 x = 2.0 * fract(p * C.www) - 1.0;
+          vec3 h = abs(x) - 0.5;
+          vec3 ox = floor(x + 0.5);
+          vec3 a0 = x - ox;
+          m *= 1.79284291400159 - 0.85373472095314 * (a0*a0 + h*h);
+          vec3 g;
+          g.x = a0.x * x0.x + h.x * x0.y;
+          g.yz = a0.yz * x12.xz + h.yz * x12.yw;
+          return 130.0 * dot(m,g);
+        }
+
+        void main(){
+          vec2 uv = vUv;
+          vec2 p = uv * 2.0 - 1.0;
+          p.x *= uRes.x / uRes.y;
+
+          float t = uTime * 0.045;
+          float n1 = snoise(p * 1.4 + vec2(t, t*0.7));
+          float n2 = snoise(p * 0.8 + vec2(-t*1.2, t*0.5));
+          float n3 = snoise(p * 2.2 + vec2(t*0.4, -t*0.9));
+
+          // brand colors
+          vec3 cInk     = vec3(0.031, 0.047, 0.086);  // #080C16
+          vec3 cWxp     = vec3(1.0, 0.180, 0.388);    // #FF2E63
+          vec3 cWxp2    = vec3(0.486, 0.176, 1.0);    // #7C2DFF
+          vec3 cWxp3    = vec3(0.0, 0.851, 0.753);    // #00D9C0
+
+          float m1 = smoothstep(-0.6, 0.6, n1);
+          float m2 = smoothstep(-0.5, 0.7, n2);
+          float m3 = smoothstep(-0.7, 0.5, n3);
+
+          vec3 col = cInk;
+          col = mix(col, cWxp,  m1 * 0.18);
+          col = mix(col, cWxp2, m2 * 0.20);
+          col = mix(col, cWxp3, m3 * 0.10);
+
+          // vignette
+          float vig = smoothstep(1.4, 0.5, length(p));
+          col *= (0.6 + vig * 0.4);
+
+          // ambient brightness boost
+          col = pow(col, vec3(0.92));
+
+          // grain
+          float g = fract(sin(dot(uv*1000.0, vec2(12.9898,78.233))) * 43758.5453);
+          col += (g - 0.5) * 0.012;
+
+          gl_FragColor = vec4(col, 1.0);
+        }
+      `
+    });
+    const gradMesh = new THREE.Mesh(new THREE.PlaneGeometry(2,2), gradMat);
+    scene.add(gradMesh);
+
+    // ============ ANIMATE ============
+    let lastTime = 0;
+    function tick(t){
+      const dt = (t - lastTime) / 1000;
+      lastTime = t;
+      gradMat.uniforms.uTime.value = t / 1000;
+      renderer.render(scene, camera);
+      requestAnimationFrame(tick);
+    }
+    requestAnimationFrame(tick);
+
+    // ============ RESIZE ============
+    window.addEventListener('resize', ()=>{
+      renderer.setSize(window.innerWidth, window.innerHeight, false);
+      gradMat.uniforms.uRes.value.set(window.innerWidth, window.innerHeight);
+    });
+
+    // ============ MOUSE PARALLAX ============
+    window.addEventListener('mousemove', (e)=>{
+      gradMat.uniforms.uMouse.value.set(e.clientX/window.innerWidth, 1.0 - e.clientY/window.innerHeight);
+    });
+
+    console.log('[WinXPay] WebGL hero gradient initialized · three r170');
+  } catch(err){
+    console.warn('[WinXPay] WebGL init failed, falling back to CSS:', err);
+    canvas.style.display = 'none';
+    document.body.style.background = 'radial-gradient(ellipse at top,#1A0A35,#080C16 60%)';
+  }
+} else {
+  // reduced motion / no canvas — static fallback
+  if(canvas) canvas.style.display = 'none';
+  document.body.style.background = 'radial-gradient(ellipse at top,#1A0A35 0%,#080C16 60%)';
+}
+</script>
+
+</body>
+</html>
