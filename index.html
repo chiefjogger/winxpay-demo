@@ -541,6 +541,151 @@ body{font-family:var(--font-body);background:var(--paper);color:var(--ink);overf
 /* SMALL HELPERS */
 .tabnum{font-variant-numeric:tabular-nums}
 
+/* ============================================================
+   INTERACTIVE STATES (Section 01: POS ↔ Wallet · at-till)
+   ============================================================ */
+
+/* IDLE: pulse the wallet "Quét trả" + outline the recommended POS option */
+[data-f1="idle"] .pos-qr-show{opacity:.30;pointer-events:none;transform:scale(.98);transition:opacity .3s,transform .3s}
+[data-f1="idle"] #f1-pos-status{display:none}
+[data-f1="idle"] .wxp-qa-b[data-act="f1-scan"]{position:relative}
+[data-f1="idle"] .wxp-qa-b[data-act="f1-scan"]::after{content:'';position:absolute;inset:-3px;border-radius:14px;border:2px solid rgba(192,24,92,0.55);animation:f1pulse 2s ease-in-out infinite;pointer-events:none}
+@keyframes f1pulse{0%,100%{transform:scale(1);opacity:.85}50%{transform:scale(1.06);opacity:0.25}}
+[data-f1="idle"] .pos-pay-opt.wxp-rec{box-shadow:0 0 0 3px rgba(192,24,92,0.18);transition:box-shadow .3s}
+
+/* POS-AWAITING-SCAN: pos QR active + wallet camera viewfinder appears */
+[data-f1="posAwaitingScan"] .pos-qr-show{opacity:1;cursor:pointer;transform:scale(1)}
+[data-f1="posAwaitingScan"] .pos-qr-show::before{content:'';position:absolute;inset:0;border-radius:14px;border:2px solid #A5135C;animation:f1pulse 1.6s ease-in-out infinite;pointer-events:none}
+[data-f1="posAwaitingScan"] .pos-pay-opt:not(.wxp-rec){opacity:.35;pointer-events:none}
+
+/* WALLET-SCANNING: shimmer on POS QR */
+[data-f1="walletScanning"] .pos-qr-show .pqs-box::after{content:'';position:absolute;inset:-1px;border-radius:14px;background:linear-gradient(90deg,transparent 0%,rgba(192,24,92,0.65) 50%,transparent 100%);background-size:200% 100%;animation:f1shimmer 1.2s linear infinite;mix-blend-mode:screen}
+@keyframes f1shimmer{0%{background-position:-100% 0}100%{background-position:200% 0}}
+
+/* WALLET-CONFIRM: pos QR dims, wallet shows confirm sheet */
+[data-f1="walletConfirm"] .pos-qr-show{opacity:.55}
+
+/* TCB-APPROVING / APPROVED: status card visible on both */
+.f1-status{display:none;position:absolute;left:14px;right:14px;top:50%;transform:translateY(-50%);background:rgba(255,255,255,.96);backdrop-filter:blur(14px);border-radius:12px;padding:18px 16px;text-align:center;z-index:30;border:1px solid rgba(0,0,0,0.06);box-shadow:0 16px 36px -12px rgba(10,37,64,0.30)}
+[data-f1="tcbApproving"] .f1-status,
+[data-f1="tcbApproved"] .f1-status,
+[data-f1="bothPaid"] .f1-status{display:block;animation:f1fade .3s ease}
+@keyframes f1fade{from{opacity:0;transform:translate(0,calc(-50% + 8px))}to{opacity:1;transform:translateY(-50%)}}
+.f1-status .f1s-spinner{width:32px;height:32px;border-radius:50%;border:2px solid rgba(192,24,92,0.18);border-top-color:#A5135C;animation:f1spin .8s linear infinite;margin:0 auto 12px}
+.f1-status .f1s-tick{width:36px;height:36px;border-radius:50%;background:#0F8F5E;display:none;align-items:center;justify-content:center;margin:0 auto 12px;color:#fff;font-size:20px;font-weight:600;animation:f1pop .4s cubic-bezier(.34,1.56,.64,1)}
+@keyframes f1spin{to{transform:rotate(360deg)}}
+@keyframes f1pop{from{transform:scale(0);opacity:0}to{transform:scale(1);opacity:1}}
+.f1-status .f1s-t{font-family:var(--font-display);font-size:18px;font-style:italic;color:#0A2540;letter-spacing:-0.02em;line-height:1.2;margin-bottom:5px}
+.f1-status .f1s-s{font-family:var(--font-body);font-size:11.5px;color:#6B7280;line-height:1.5}
+.f1-status .f1s-tcb{display:inline-flex;align-items:center;gap:5px;margin-top:10px;padding:3px 9px;border-radius:99px;background:rgba(237,28,36,0.08);border:1px solid rgba(237,28,36,0.20);font-size:10px;font-weight:500;color:#ED1C24;font-family:var(--font-mono);letter-spacing:0.05em;text-transform:uppercase}
+.f1-status .f1s-tcb::before{content:'T';font-family:var(--font-display);font-style:italic;font-weight:600}
+[data-f1="tcbApproved"] .f1s-spinner,
+[data-f1="bothPaid"] .f1s-spinner{display:none}
+[data-f1="tcbApproved"] .f1s-tick,
+[data-f1="bothPaid"] .f1s-tick{display:flex}
+[data-f1="tcbApproved"] .f1s-progress,
+[data-f1="bothPaid"] .f1s-progress{display:none}
+
+/* BOTH PAID: receipt slides into wallet tx list (handled in JS), POS shows success */
+[data-f1="bothPaid"] .pos-qr-show .pqs-status{background:#ECFDF5;border-color:#86EFAC;color:#065F46}
+[data-f1="bothPaid"] .pos-qr-show .pqs-status .pqs-d{background:#065F46;animation:none}
+
+/* REPLAY OVERLAY */
+.f1-replay{display:none;position:absolute;inset:0;background:rgba(255,255,255,0.78);backdrop-filter:blur(8px);z-index:40;align-items:center;justify-content:center;border-radius:35px}
+[data-f1="replay"] .f1-replay{display:flex;animation:f1fade .35s ease}
+.f1-replay-btn{padding:14px 26px;border-radius:99px;background:#A5135C;color:#fff;font-family:var(--font-body);font-size:13px;font-weight:600;border:none;cursor:pointer;letter-spacing:-.005em;box-shadow:0 12px 32px -10px rgba(165,19,92,0.55);transition:transform .15s}
+.f1-replay-btn:hover{transform:translateY(-1px)}
+
+/* WALLET PAYMENT REQUEST SHEET (rebuilt overlay) */
+.wxp-qr-overlay.f1-sheet{background:rgba(8,12,22,0.94);padding:24px 18px}
+.f1-sheet-title{font-family:var(--font-mono);font-size:10px;color:rgba(255,255,255,0.55);letter-spacing:0.16em;text-transform:uppercase;margin-bottom:8px;text-align:center}
+.f1-sheet-merchant{font-family:var(--font-display);font-size:14px;font-style:italic;color:#fff;letter-spacing:-0.01em;margin-bottom:4px;text-align:center}
+.f1-sheet-amount{font-family:var(--font-display);font-size:46px;font-weight:400;color:#fff;letter-spacing:-1.5px;margin-bottom:18px;text-align:center;font-variant-numeric:tabular-nums;line-height:1}
+.f1-sheet-options{display:flex;flex-direction:column;gap:8px;margin-bottom:14px}
+.f1-sheet-opt{padding:14px 16px;border-radius:11px;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.10);cursor:pointer;text-align:left;transition:all .18s;color:#fff}
+.f1-sheet-opt:hover{background:rgba(255,255,255,0.10);border-color:rgba(255,255,255,0.20)}
+.f1-sheet-opt.f1-sheet-opt-rec{background:#A5135C;border-color:#A5135C;box-shadow:0 8px 20px -8px rgba(165,19,92,0.55)}
+.f1-sheet-opt.f1-sheet-opt-rec:hover{background:#8E1248;border-color:#8E1248}
+.f1-sheet-opt-t{font-family:var(--font-body);font-size:13.5px;font-weight:600;color:#fff;display:flex;justify-content:space-between;align-items:center}
+.f1-sheet-opt-s{font-family:var(--font-body);font-size:10.5px;color:rgba(255,255,255,0.62);margin-top:3px;line-height:1.4}
+.f1-sheet-opt.f1-sheet-opt-rec .f1-sheet-opt-s{color:rgba(255,255,255,0.80)}
+.f1-sheet-foot{font-family:var(--font-body);font-size:9.5px;color:rgba(255,255,255,0.42);text-align:center;line-height:1.55}
+.f1-sheet-foot b{color:#fff;font-weight:500}
+
+/* ============================================================
+   INTERACTIVE STATES (Section 02: Zalo OA chat ↔ Wallet)
+   ============================================================ */
+
+/* Hide all chat steps initially, reveal as state advances */
+.zoa-row[data-f2-step]{display:none}
+[data-f2-step="1"] .zoa-row[data-f2-step="1"]{display:flex}
+[data-f2-step="2"] .zoa-row[data-f2-step]:where([data-f2-step="1"],[data-f2-step="2"]){display:flex}
+[data-f2-step="3"] .zoa-row[data-f2-step]:where([data-f2-step="1"],[data-f2-step="2"],[data-f2-step="3"]){display:flex}
+[data-f2-step="4"] .zoa-row[data-f2-step]:where([data-f2-step="1"],[data-f2-step="2"],[data-f2-step="3"],[data-f2-step="4"]){display:flex}
+[data-f2-step="5"] .zoa-row[data-f2-step]:where([data-f2-step="1"],[data-f2-step="2"],[data-f2-step="3"],[data-f2-step="4"],[data-f2-step="5"]){display:flex}
+[data-f2-step="6"] .zoa-row[data-f2-step]{display:flex}
+
+/* Chat reply chips below the chat */
+.f2-chips{padding:8px 10px 4px;border-top:1px solid #D6E4F0;background:#fff;display:flex;flex-wrap:wrap;gap:6px}
+.f2-chips button{background:#fff;border:1px solid #A5135C;color:#A5135C;padding:6px 12px;border-radius:99px;font-size:10.5px;font-weight:500;cursor:pointer;transition:all .15s;font-family:var(--font-body);letter-spacing:-0.005em;line-height:1.2}
+.f2-chips button:hover{background:#A5135C;color:#fff}
+.f2-chips button.used{opacity:.35;pointer-events:none;text-decoration:line-through}
+
+/* Wallet right side dims when not yet active */
+[data-f2-active="false"] #f2-wallet{opacity:.50;transition:opacity .4s}
+[data-f2-active="true"] #f2-wallet{opacity:1}
+
+/* Wallet payment-request sheet overlay (Section 02) */
+.f2-sheet{position:absolute;left:0;right:0;bottom:0;top:30%;background:linear-gradient(180deg,#15192A 0%,#0A0E1A 100%);border-radius:24px 24px 35px 35px;border-top:1px solid rgba(255,255,255,0.10);padding:20px 18px 16px;color:#fff;z-index:25;display:none;flex-direction:column;animation:f2sheetUp .35s cubic-bezier(.2,.7,.2,1)}
+@keyframes f2sheetUp{from{transform:translateY(60%);opacity:0}to{transform:translateY(0);opacity:1}}
+[data-f2-step="5"] .f2-sheet,[data-f2-step="6"] .f2-sheet{display:flex}
+.f2-sheet-grip{width:36px;height:3px;border-radius:2px;background:rgba(255,255,255,0.18);margin:0 auto 12px}
+.f2-sheet-eyebrow{font-family:var(--font-mono);font-size:9.5px;color:rgba(255,255,255,0.55);letter-spacing:0.14em;text-transform:uppercase;margin-bottom:6px;text-align:center}
+.f2-sheet-amt{font-family:var(--font-display);font-size:38px;font-weight:400;color:#fff;letter-spacing:-1.2px;line-height:1;text-align:center;font-variant-numeric:tabular-nums;margin-bottom:4px}
+.f2-sheet-merch{font-family:var(--font-display);font-size:13px;font-style:italic;color:rgba(255,255,255,0.72);text-align:center;margin-bottom:14px}
+.f2-sched{background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:10px;padding:10px 12px;margin-bottom:12px}
+.f2-sched-r{display:flex;justify-content:space-between;padding:4px 0;font-size:11px;color:rgba(255,255,255,0.85);font-family:var(--font-body)}
+.f2-sched-r:not(:last-child){border-bottom:1px dashed rgba(255,255,255,0.08)}
+.f2-sched-r .f2-sr-d{font-family:var(--font-mono);font-size:10.5px;color:rgba(255,255,255,0.62);letter-spacing:0.04em}
+.f2-sched-r .f2-sr-a{font-family:var(--font-mono);font-variant-numeric:tabular-nums;color:#fff;font-weight:500}
+.f2-sched-foot{font-family:var(--font-body);font-size:9.5px;color:rgba(255,255,255,0.50);margin-top:6px;line-height:1.5}
+.f2-sched-foot b{color:#fff;font-style:italic;font-family:var(--font-display);font-weight:400}
+
+.f2-tcb-card{background:rgba(237,28,36,0.10);border:1px solid rgba(237,28,36,0.28);border-radius:10px;padding:12px 14px;margin-bottom:10px;display:flex;align-items:center;gap:10px}
+.f2-tcb-card .f2-tcb-ico{width:32px;height:32px;border-radius:7px;background:#ED1C24;color:#fff;display:flex;align-items:center;justify-content:center;font-family:var(--font-display);font-style:italic;font-weight:500;font-size:14px;flex-shrink:0}
+.f2-tcb-card .f2-tcb-bd{flex:1;min-width:0}
+.f2-tcb-card .f2-tcb-t{font-size:11.5px;font-weight:600;color:#fff;letter-spacing:-0.005em}
+.f2-tcb-card .f2-tcb-s{font-size:10px;color:rgba(255,255,255,0.62);margin-top:2px;display:flex;align-items:center;gap:6px}
+.f2-tcb-card .f2-tcb-spinner{width:14px;height:14px;border-radius:50%;border:1.5px solid rgba(255,255,255,0.18);border-top-color:#fff;animation:f1spin .8s linear infinite;display:inline-block}
+.f2-tcb-card .f2-tcb-tick{display:none;width:16px;height:16px;border-radius:50%;background:#0F8F5E;color:#fff;font-size:10px;align-items:center;justify-content:center;font-weight:600}
+.f2-tcb-card.f2-approved .f2-tcb-spinner{display:none}
+.f2-tcb-card.f2-approved .f2-tcb-tick{display:inline-flex}
+.f2-tcb-card.f2-approved{background:rgba(15,143,94,0.10);border-color:rgba(15,143,94,0.30)}
+
+.f2-confirm-btn{width:100%;padding:14px;border-radius:99px;background:#fff;color:#0A2540;font-family:var(--font-body);font-size:13.5px;font-weight:600;border:none;cursor:pointer;letter-spacing:-.005em;margin-top:auto;transition:all .15s}
+.f2-confirm-btn:disabled{opacity:.40;cursor:not-allowed}
+.f2-confirm-btn:not(:disabled):hover{transform:translateY(-1px)}
+
+/* Wallet success state */
+.f2-success{display:none;flex-direction:column;align-items:center;justify-content:center;padding:40px 24px;text-align:center;color:#fff;flex:1}
+[data-f2-step="6"] .f2-success{display:flex;animation:f1fade .35s ease}
+[data-f2-step="6"] .f2-sheet-grip,
+[data-f2-step="6"] .f2-sheet-eyebrow,
+[data-f2-step="6"] .f2-sheet-amt,
+[data-f2-step="6"] .f2-sheet-merch,
+[data-f2-step="6"] .f2-sched,
+[data-f2-step="6"] .f2-tcb-card,
+[data-f2-step="6"] .f2-confirm-btn{display:none}
+.f2-success-tick{width:64px;height:64px;border-radius:50%;background:#0F8F5E;display:flex;align-items:center;justify-content:center;color:#fff;font-size:32px;font-weight:600;margin-bottom:18px;animation:f1pop .4s cubic-bezier(.34,1.56,.64,1)}
+.f2-success-t{font-family:var(--font-display);font-size:24px;font-style:italic;color:#fff;margin-bottom:8px;letter-spacing:-0.022em}
+.f2-success-s{font-family:var(--font-body);font-size:12px;color:rgba(255,255,255,0.62);line-height:1.55;margin-bottom:6px}
+.f2-success-mono{font-family:var(--font-mono);font-size:11px;color:rgba(255,255,255,0.50);margin-top:4px;letter-spacing:0.03em}
+
+/* RESET LINK */
+.f-reset{margin-top:36px;text-align:center}
+.f-reset button{background:transparent;border:none;font-family:var(--font-display);font-style:italic;font-size:14px;color:var(--ink-3);cursor:pointer;text-decoration:underline;text-decoration-style:dotted;text-underline-offset:4px;transition:color .15s}
+.f-reset button:hover{color:var(--accent)}
+
 </style>
 </head>
 <body>
@@ -614,7 +759,7 @@ body{font-family:var(--font-body);background:var(--paper);color:var(--ink);overf
 </div>
 
 <!-- ======================== SECTION 1: AT-THE-TILL FLOW ======================== -->
-<section id="sec-flow" class="sec">
+<section id="sec-flow" class="sec" data-f1="idle">
   <div class="sec-inner">
     <div class="reveal">
       <div class="sec-eyebrow"><span class="se-num">01</span>Tại quầy thu ngân</div>
@@ -766,7 +911,7 @@ body{font-family:var(--font-body);background:var(--paper);color:var(--ink);overf
 
               <div class="pos-pay-h">Hình thức thanh toán</div>
 
-              <div class="pos-pay-opt wxp-rec">
+              <div class="pos-pay-opt wxp-rec" data-act="f1-select-wxp">
                 <div class="pos-pay-opt-row">
                   <div class="pos-pay-opt-ico wxp-i">W</div>
                   <div class="pos-pay-opt-info">
@@ -800,17 +945,26 @@ body{font-family:var(--font-body);background:var(--paper);color:var(--ink);overf
               </div>
 
               <!-- POS QR (revealed when WinXPay tapped) -->
-              <div class="pos-qr-show" style="margin-top:12px">
+              <div class="pos-qr-show" style="margin-top:12px;position:relative" data-act="f1-scan-qr">
                 <div class="pqs-h">Khách quét bằng ví WinXPay</div>
                 <div class="pqs-amt">200.000 ₫</div>
                 <div class="pqs-disc">−50.000 ₫ ưu đãi · do thương hiệu tài trợ</div>
-                <div class="pqs-box">
+                <div class="pqs-box" style="position:relative">
                   <span class="pqs-vqr">VietQR</span>
                   <canvas id="pos-qr"></canvas>
                   <span class="pqs-tcb">TCB</span>
                 </div>
                 <div class="pqs-meta"><b>Cô Lan · 12 Lê Lợi · Q.1</b><br/>Mã GD: <span class="font-mono">WXP-2026-0509-001247</span></div>
-                <div class="pqs-status"><span class="pqs-d"></span>Đang chờ khách quét…</div>
+                <div class="pqs-status" id="f1-pos-status"><span class="pqs-d"></span>Đang chờ khách quét…</div>
+              </div>
+
+              <!-- f1 status overlay (TCB approving) — sits on top of POS body -->
+              <div class="f1-status" id="f1-status-pos">
+                <div class="f1s-spinner"></div>
+                <div class="f1s-tick">✓</div>
+                <div class="f1s-t" id="f1-status-pos-t">Đang xác nhận với Techcombank…</div>
+                <div class="f1s-s" id="f1-status-pos-s">Khách đang chờ duyệt Trả 4 lần</div>
+                <div class="f1s-tcb">Techcombank · 1,6 giây</div>
               </div>
             </div>
           </div>
@@ -858,7 +1012,7 @@ body{font-family:var(--font-body);background:var(--paper);color:var(--ink);overf
 
             <!-- QUICK ACTIONS -->
             <div class="wxp-qa">
-              <div class="wxp-qa-b" onclick="openQR()">
+              <div class="wxp-qa-b" data-act="f1-scan">
                 <div class="qa-ico qa-pay">📱</div>
                 <div class="qa-l">Quét trả</div>
               </div>
@@ -935,21 +1089,33 @@ body{font-family:var(--font-body);background:var(--paper);color:var(--ink);overf
               <button><div class="tab-ico">👤</div>Tôi</button>
             </div>
 
-            <!-- QR OVERLAY (hidden by default) -->
-            <div class="wxp-qr-overlay hidden" id="wxp-qr-overlay">
-              <div class="wxp-qr-h">Quét để thanh toán</div>
-              <div class="wxp-qr-amt">200.000 ₫</div>
-              <div class="wxp-qr-merchant">Tạp Hoá Cô Lan · 12 Lê Lợi, Q.1</div>
-              <div class="wxp-qr-box"><canvas id="wxp-qr"></canvas></div>
-              <div class="wxp-qr-foot">
-                <div class="qf-l">Thanh toán qua</div>
-                <div class="qf-banks">
-                  <div class="qf-b">VietQR</div>
-                  <div class="qf-b">TCB</div>
-                  <div class="qf-b">NAPAS 247</div>
-                </div>
+            <!-- f1 status overlay on wallet (TCB approving / approved) -->
+            <div class="f1-status" id="f1-status-wallet">
+              <div class="f1s-spinner"></div>
+              <div class="f1s-tick">✓</div>
+              <div class="f1s-t" id="f1-status-wallet-t">Đang duyệt Trả 4 lần…</div>
+              <div class="f1s-s" id="f1-status-wallet-s">Đang xác nhận với Techcombank</div>
+              <div class="f1s-tcb">Techcombank · 1,6 giây</div>
+            </div>
+
+            <!-- f1 PAYMENT REQUEST SHEET (slides up on Quét trả) -->
+            <div class="wxp-qr-overlay f1-sheet hidden" id="wxp-qr-overlay">
+              <div class="f1-sheet-title">Yêu cầu thanh toán từ Tạp Hoá Cô Lan</div>
+              <div class="f1-sheet-merchant">12 Lê Lợi, Q.1 · WXP-001247</div>
+              <div class="f1-sheet-amount">200.000 ₫</div>
+              <div class="f1-sheet-options">
+                <button class="f1-sheet-opt f1-sheet-opt-rec" data-act="f1-pay-4">
+                  <div class="f1-sheet-opt-t">Chia 4 kỳ <span style="font-family:var(--font-mono);font-size:12px;font-weight:500;opacity:.85">−50.000 ₫</span></div>
+                  <div class="f1-sheet-opt-s">4 × 50.000 ₫ · 0% lãi · tự động trừ qua TCB · ưu đãi do thương hiệu tài trợ</div>
+                </button>
+                <button class="f1-sheet-opt" data-act="f1-pay-now">
+                  <div class="f1-sheet-opt-t">Trả ngay <span style="font-family:var(--font-mono);font-size:12px;font-weight:500;opacity:.85">200.000 ₫</span></div>
+                  <div class="f1-sheet-opt-s">Trừ trực tiếp từ số dư ví · không có ưu đãi</div>
+                </button>
               </div>
-              <button class="btn-prim" style="margin-top:18px;padding:10px 22px;font-size:12px" onclick="closeQR()">Trả 4 × 50K →</button>
+              <div class="f1-sheet-foot">
+                Bằng cách xác nhận, bạn đồng ý điều khoản của <b>Techcombank</b> · VietQR · NAPAS 247
+              </div>
             </div>
 
           </div>
@@ -988,8 +1154,10 @@ body{font-family:var(--font-body);background:var(--paper);color:var(--ink);overf
       <div class="legend-it"><span class="ld" style="background:#0068FF"></span>WinXPay cho Người bán (Mini-App Zalo)</div>
       <div class="legend-it"><span class="ld" style="background:#ED1C24"></span>Techcombank · thẩm định Trả 4 lần</div>
       <div class="legend-it"><span class="ld" style="background:#A50064"></span>VietQR / NAPAS 247 · thanh toán</div>
-      <div class="legend-it" style="margin-left:auto"><b>Chạm vào điện thoại để xem chi tiết →</b></div>
+      <div class="legend-it" style="margin-left:auto"><b>Demo tương tác · chạm vào điện thoại</b></div>
     </div>
+
+    <div class="f-reset"><button data-act="f1-reset">Bắt đầu lại</button></div>
   </div>
 </section>
 
@@ -1050,76 +1218,93 @@ body{font-family:var(--font-body);background:var(--paper);color:var(--ink);overf
               <div class="zh-act"><span>📞</span><span>📹</span></div>
             </div>
             <div class="zoa-chat" id="zoa-chat">
-              <div class="zoa-row zr-bot">
+              <!-- STEP 1 — bot greeting -->
+              <div class="zoa-row zr-bot" data-f2-step="1">
                 <div class="zoa-m">W+</div>
-                <div class="zoa-bubble">Chào anh Minh! Hôm nay ăn gì ạ? 🍜<br/>Em gợi ý 1 mâm cơm gia đình 4 người, dưới 200K nhé?</div>
+                <div class="zoa-bubble">Chào anh Minh, em là trợ lý WinMart. Hôm nay anh cần em hỗ trợ gì ạ? 🍜</div>
               </div>
-              <div class="zoa-row zr-u">
-                <div class="zoa-bubble">Ok thử xem</div>
+
+              <!-- STEP 2 — user picked meal, bot suggests combo -->
+              <div class="zoa-row zr-u" data-f2-step="2">
+                <div class="zoa-bubble">Cơm gia đình 4 người</div>
               </div>
-              <div class="zoa-row zr-bot">
+              <div class="zoa-row zr-bot" data-f2-step="2">
                 <div class="zoa-m">W+</div>
-                <div class="zoa-bubble" style="max-width:88%">Em đề xuất menu <b>thịt kho trứng + canh rau</b> 👇</div>
+                <div class="zoa-bubble" style="max-width:88%">Dạ em gợi ý <b>mâm cơm 4 người</b>, đủ chất đạm + rau + canh, tổng <b>200.000 ₫</b> 👇</div>
               </div>
-              <div class="zoa-row zr-bot">
+              <div class="zoa-row zr-bot" data-f2-step="2">
                 <div class="zoa-m" style="visibility:hidden"></div>
                 <div class="zoa-reco">
-                  <div class="zr-img">🍳<span class="zr-tag">Tài trợ bởi thương hiệu</span></div>
+                  <div class="zr-img">🍳<span class="zr-tag">Tài trợ bởi Vinamilk</span></div>
                   <div class="zr-bd">
-                    <div class="zr-t">Mâm cơm 4 người · Combo Masan</div>
-                    <div class="zr-s">Thịt kho · trứng · Chinsu nước mắm · Omachi · Wake-Up tráng miệng</div>
+                    <div class="zr-t">Mâm cơm 4 người · Combo</div>
+                    <div class="zr-s">Thịt kho trứng · canh rau · Omachi · Vinamilk 1L × 2</div>
                     <div class="zr-pri">
-                      <div><span class="zr-p">182.000 ₫</span><span class="zr-old">232.000 ₫</span></div>
-                      <div style="font-size:9px;color:#00BB7C;font-weight:800">−50K WinXPay</div>
+                      <div><span class="zr-p">200.000 ₫</span><span class="zr-old">250.000 ₫</span></div>
+                      <div style="font-size:9.5px;color:#0F8F5E;font-weight:600;font-family:var(--font-display);font-style:italic">−50K thương hiệu</div>
                     </div>
                   </div>
-                  <button class="zr-cta">Thêm vào giỏ →</button>
                 </div>
               </div>
-              <div class="zoa-row zr-u">
-                <div class="zoa-bubble">Thêm 6 mì Omachi nữa, 2 sữa Vinamilk</div>
+
+              <!-- STEP 3 — voucher applied -->
+              <div class="zoa-row zr-u" data-f2-step="3">
+                <div class="zoa-bubble">Áp voucher Vinamilk</div>
               </div>
-              <div class="zoa-row zr-bot">
+              <div class="zoa-row zr-bot" data-f2-step="3">
                 <div class="zoa-m">W+</div>
-                <div class="zoa-bubble">Đã thêm. Tổng: <b>200.000 ₫</b> sau ưu đãi 50K. Trả thế nào ạ?</div>
+                <div class="zoa-bubble">Đã áp <b>voucher Vinamilk −25.000 ₫</b> (tài trợ bởi thương hiệu). Tổng còn <b>175.000 ₫</b>.</div>
               </div>
-              <div class="zoa-row zr-bot">
+              <div class="zoa-row zr-bot" data-f2-step="3">
+                <div class="zoa-m">W+</div>
+                <div class="zoa-bubble">Anh thanh toán kiểu nào ạ? Trả ngay hay <b>chia 4 kỳ · 0% lãi</b>?</div>
+              </div>
+
+              <!-- STEP 4 — user picks Trả 4 lần, wallet sheet opens -->
+              <div class="zoa-row zr-u" data-f2-step="4">
+                <div class="zoa-bubble">Trả 4 lần · 50K/kỳ</div>
+              </div>
+              <div class="zoa-row zr-bot" data-f2-step="4">
+                <div class="zoa-m">W+</div>
+                <div class="zoa-bubble">Em đã gửi yêu cầu sang ví WinXPay của anh — anh xác nhận giúp em ở ví bên phải nhé. 🪪</div>
+              </div>
+
+              <!-- STEP 5 — wallet sheet shown, TCB approving -->
+              <div class="zoa-row zr-bot" data-f2-step="5">
+                <div class="zoa-m">W+</div>
+                <div class="zoa-bubble">Đang xác nhận với Techcombank… ⚡</div>
+              </div>
+
+              <!-- STEP 6 — receipt back to chat -->
+              <div class="zoa-row zr-bot" data-f2-step="6">
+                <div class="zoa-m">W+</div>
+                <div class="zoa-bubble">Cảm ơn anh Minh, đơn đã thanh toán thành công ✨</div>
+              </div>
+              <div class="zoa-row zr-bot" data-f2-step="6">
                 <div class="zoa-m" style="visibility:hidden"></div>
                 <div class="zoa-ord">
                   <div class="zo-h">
                     <div class="zo-h-ico">W</div>
                     <div>
-                      <div class="zo-h-t">Đơn hàng · WXP-2026-0509-A</div>
-                      <div class="zo-h-s">WinMart Q.1 · Pickup hoặc giao 30 phút</div>
+                      <div class="zo-h-t">Hoá đơn · WXP-2026-0509-A</div>
+                      <div class="zo-h-s">WinMart Q.1 · Đã thanh toán</div>
                     </div>
                   </div>
                   <div class="zo-bd">
-                    <div class="zo-line"><span class="zol-n">Combo cơm gia đình 4N</span><span class="zol-p">182.000 ₫</span></div>
-                    <div class="zo-line"><span class="zol-n">Mì Omachi × 6</span><span class="zol-p">51.000 ₫</span></div>
-                    <div class="zo-line"><span class="zol-n">Sữa Vinamilk 1L × 2</span><span class="zol-p">62.000 ₫</span></div>
-                    <div class="zo-line" style="color:#00BB7C"><span class="zol-n">Ưu đãi thương hiệu × WinXPay</span><span class="zol-p" style="color:#00BB7C">−95.000 ₫</span></div>
+                    <div class="zo-line"><span class="zol-n">Combo cơm gia đình 4N</span><span class="zol-p">200.000 ₫</span></div>
+                    <div class="zo-line" style="color:#0F8F5E"><span class="zol-n">Voucher Vinamilk</span><span class="zol-p" style="color:#0F8F5E">−25.000 ₫</span></div>
                   </div>
-                  <div class="zo-tot"><span>Tổng thanh toán</span><span>200.000 ₫</span></div>
-                  <div class="zo-pay">
-                    <button class="zo-pay-now" onclick="document.getElementById('wxp-app-2').scrollIntoView({behavior:'smooth',block:'center'})">⚡ Trả ngay 200K</button>
-                    <button class="zo-pay-bnpl" onclick="document.getElementById('wxp-app-2').scrollIntoView({behavior:'smooth',block:'center'})">📅 4 × 50K (TCB)</button>
+                  <div class="zo-tot"><span>Đã thanh toán</span><span>175.000 ₫</span></div>
+                  <div style="padding:8px 12px;background:#FAFBFC;border-top:1px solid #E5E7EB;font-size:10px;color:#6B7280;font-family:var(--font-body)">
+                    Trả 4 lần · Kỳ 1/4 hôm nay <b style="color:#A5135C">43.750 ₫</b> · Tự động trừ qua TCB<br/>
+                    Giao trong <b style="color:#0A2540">2 giờ</b> · Vinhomes Ocean Park
                   </div>
                 </div>
               </div>
-              <div class="zoa-row zr-u">
-                <div class="zoa-bubble">Trả 4×50K nha</div>
-              </div>
-              <div class="zoa-row zr-bot">
-                <div class="zoa-m">W+</div>
-                <div class="zoa-bubble">Đang mở WinXPay để xác nhận Trả 4 lần với Techcombank… ⚡</div>
-              </div>
             </div>
-            <div class="zoa-input">
-              <span style="font-size:14px">😊</span>
-              <div class="zi-bx">Nhắn cho WinMart...</div>
-              <span style="font-size:14px">📎</span>
-              <span style="font-size:14px">🎤</span>
-            </div>
+
+            <!-- Reply chips (replaces input bar) -->
+            <div class="f2-chips" id="f2-chips"></div>
           </div>
         </div>
       </div>
@@ -1132,102 +1317,86 @@ body{font-family:var(--font-body);background:var(--paper);color:var(--ink);overf
             <span>9:41</span>
             <span class="ps-r">●●● <span class="ps-bat"><span></span></span></span>
           </div>
-          <div class="wxp-app" id="wxp-app-2">
+          <div class="wxp-app" id="f2-wallet">
             <div class="wxp-hdr">
               <div>
-                <div class="wxp-greet">Xác nhận thanh toán</div>
-                <div class="wxp-name">Trả 4 lần · TCB</div>
+                <div class="wxp-greet">Xin chào</div>
+                <div class="wxp-name">Anh Minh 👋</div>
               </div>
               <div class="wxp-ava">M</div>
             </div>
 
-            <!-- TCB APPROVAL CARD -->
-            <div style="margin:8px 14px 14px;padding:18px;border-radius:14px;background:rgba(237,28,36,0.10);border:1px solid rgba(237,28,36,0.28);position:relative;z-index:2;overflow:hidden">
-              <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;position:relative;z-index:1">
-                <div style="width:32px;height:32px;border-radius:7px;background:#ED1C24;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:14px;color:#fff;font-family:var(--font-display);font-style:italic">T</div>
+            <!-- HOME — Wallet card (visible until f2-sheet shows) -->
+            <div class="wxp-card" style="margin-top:12px">
+              <div class="wxp-card-top">
                 <div>
-                  <div style="font-size:11.5px;font-weight:600;color:#fff;letter-spacing:-.1px">Techcombank · Trả 4 lần</div>
-                  <div style="font-size:9.5px;color:rgba(255,255,255,.62);margin-top:2px">Phản hồi trong 1,6 giây</div>
+                  <div class="wxp-brand">WinXPay</div>
+                  <div class="wxp-id">cho Người dùng</div>
                 </div>
-                <div style="margin-left:auto;display:inline-flex;align-items:center;gap:5px;padding:4px 10px;border-radius:99px;background:rgba(94,234,212,0.12);border:1px solid rgba(94,234,212,0.32);font-size:9px;font-weight:600;color:#5EEAD4;letter-spacing:.06em;text-transform:uppercase;font-family:var(--font-mono)">
-                  <span style="width:5px;height:5px;border-radius:50%;background:#5EEAD4"></span>Đã duyệt
-                </div>
+                <div class="wxp-card-tcb"><span class="tcb-d"></span>TCB</div>
               </div>
-              <div style="font-size:32px;font-weight:400;color:#fff;letter-spacing:-1.2px;line-height:1;position:relative;z-index:1;font-variant-numeric:tabular-nums;font-family:var(--font-display)">200.000 ₫</div>
-              <div style="font-size:11px;color:rgba(255,255,255,.62);margin-top:6px;position:relative;z-index:1">Tạp Hoá Cô Lan · 12 Lê Lợi, Q.1</div>
-              <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-top:14px;position:relative;z-index:1">
-                <div style="background:rgba(165,19,92,0.22);border:1px solid rgba(165,19,92,0.40);border-radius:6px;padding:8px 4px;text-align:center">
-                  <div style="font-size:11px;font-weight:600;color:#fff;font-variant-numeric:tabular-nums;font-family:var(--font-mono)">50K</div>
-                  <div style="font-size:7.5px;color:rgba(255,255,255,.78);font-weight:600;margin-top:2px;letter-spacing:0.06em;text-transform:uppercase">Hôm nay</div>
-                </div>
-                <div style="background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.10);border-radius:6px;padding:8px 4px;text-align:center">
-                  <div style="font-size:11px;font-weight:500;color:rgba(255,255,255,.85);font-variant-numeric:tabular-nums;font-family:var(--font-mono)">50K</div>
-                  <div style="font-size:7.5px;color:rgba(255,255,255,.50);font-weight:500;margin-top:2px;font-family:var(--font-mono)">15/05</div>
-                </div>
-                <div style="background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.10);border-radius:6px;padding:8px 4px;text-align:center">
-                  <div style="font-size:11px;font-weight:500;color:rgba(255,255,255,.85);font-variant-numeric:tabular-nums;font-family:var(--font-mono)">50K</div>
-                  <div style="font-size:7.5px;color:rgba(255,255,255,.50);font-weight:500;margin-top:2px;font-family:var(--font-mono)">22/05</div>
-                </div>
-                <div style="background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.10);border-radius:6px;padding:8px 4px;text-align:center">
-                  <div style="font-size:11px;font-weight:500;color:rgba(255,255,255,.85);font-variant-numeric:tabular-nums;font-family:var(--font-mono)">50K</div>
-                  <div style="font-size:7.5px;color:rgba(255,255,255,.50);font-weight:500;margin-top:2px;font-family:var(--font-mono)">29/05</div>
-                </div>
+              <div class="wxp-card-bal">
+                <div class="wcb-l">Số dư ví</div>
+                <div class="wcb-v">2.847.500 <sup>₫</sup></div>
               </div>
-              <div style="font-size:10px;color:rgba(255,255,255,.62);margin-top:12px;line-height:1.55;position:relative;z-index:1">
-                <b style="color:#fff;font-weight:600">Lãi suất 0%</b> · TCB ghi nhận khoản phải thu · Tự động trừ từ tài khoản TCB của bạn
+              <div class="wxp-card-bot">
+                <div class="wcb-credit">
+                  <div class="wcc-l">ID thanh toán</div>
+                  <div class="wcc-v">@anhminh</div>
+                </div>
+                <div class="wcb-vqr"><span class="v-d"></span>VietQR · NAPAS</div>
               </div>
             </div>
 
-            <!-- WHAT JUST HAPPENED -->
-            <div style="margin:0 14px 14px;padding:16px 16px 12px;border-radius:12px;background:rgba(255,255,255,.025);border:1px solid rgba(255,255,255,.08);position:relative;z-index:2">
-              <div style="font-family:var(--font-mono);font-size:10px;font-weight:500;color:rgba(255,255,255,.55);letter-spacing:0.14em;text-transform:uppercase;margin-bottom:12px">— Vừa được xác nhận</div>
-              <div style="display:flex;align-items:center;gap:10px;padding:5px 0;font-size:11.5px;color:rgba(255,255,255,.88);font-family:var(--font-body)">
-                <span style="width:5px;height:5px;border-radius:50%;background:#5EEAD4;flex-shrink:0"></span>
-                <span style="flex:1">Định danh VNeID · liên kết tài khoản TCB</span>
-                <span style="font-family:var(--font-mono);font-size:10px;color:#5EEAD4;font-weight:500">OK</span>
-              </div>
-              <div style="display:flex;align-items:center;gap:10px;padding:5px 0;font-size:11.5px;color:rgba(255,255,255,.88);font-family:var(--font-body)">
-                <span style="width:5px;height:5px;border-radius:50%;background:#5EEAD4;flex-shrink:0"></span>
-                <span style="flex:1">Hạn mức Trả 4 lần khả dụng</span>
-                <span style="font-family:var(--font-mono);font-size:10px;color:#5EEAD4;font-weight:500">CÓ</span>
-              </div>
-              <div style="display:flex;align-items:center;gap:10px;padding:5px 0;font-size:11.5px;color:rgba(255,255,255,.88);font-family:var(--font-body)">
-                <span style="width:5px;height:5px;border-radius:50%;background:#5EEAD4;flex-shrink:0"></span>
-                <span style="flex:1">Giỏ hàng đủ điều kiện ưu đãi tại quầy</span>
-                <span style="font-family:var(--font-mono);font-size:10px;color:#5EEAD4;font-weight:500">−50K</span>
-              </div>
-              <div style="display:flex;align-items:center;gap:10px;padding:5px 0;font-size:11.5px;color:rgba(255,255,255,.88);font-family:var(--font-body)">
-                <span style="width:5px;height:5px;border-radius:50%;background:#7DD3FC;flex-shrink:0"></span>
-                <span style="flex:1">Hoá đơn điện tử (NĐ 70/2025) sẵn sàng</span>
-                <span style="font-family:var(--font-mono);font-size:10px;color:#7DD3FC;font-weight:500">READY</span>
-              </div>
-              <div style="display:flex;align-items:center;gap:10px;padding:5px 0;font-size:11.5px;color:rgba(255,255,255,.88);font-family:var(--font-body)">
-                <span style="width:5px;height:5px;border-radius:50%;background:#F472B6;flex-shrink:0"></span>
-                <span style="flex:1">Lịch trừ tự động · 4 tuần</span>
-                <span style="font-family:var(--font-mono);font-size:10px;color:#F472B6;font-weight:500">SET</span>
-              </div>
+            <!-- HOME — instructional copy when no payment pending -->
+            <div style="padding:18px 18px;text-align:center;color:rgba(255,255,255,.55);font-size:12px;font-family:var(--font-body);line-height:1.55;position:relative;z-index:2">
+              Chọn <em style="font-family:var(--font-display);font-style:italic;color:#fff">"Trả 4 lần · 50K/kỳ"</em> trong khung chat bên trái — yêu cầu thanh toán sẽ hiện ở đây.
             </div>
 
             <div style="flex:1"></div>
 
-            <!-- CTA -->
-            <div style="padding:0 14px 14px;position:relative;z-index:2">
-              <button style="width:100%;padding:14px;border-radius:99px;background:#fff;color:#0A2540;font-size:13.5px;font-weight:600;border:none;cursor:pointer;letter-spacing:-.2px;font-family:var(--font-body)">
-                Xác nhận · Trả 50.000 ₫ hôm nay
-              </button>
-              <div style="text-align:center;font-size:9.5px;color:rgba(255,255,255,.45);margin-top:10px;line-height:1.55;font-family:var(--font-body)">
-                Bằng việc xác nhận, bạn đồng ý điều khoản Trả 4 lần của Techcombank<br/>
-                Mã GD <span class="font-mono">WXP-2026-0509-001247</span>
-              </div>
-            </div>
-
             <!-- TAB BAR -->
             <div class="wxp-tab">
-              <button><div class="tab-ico">🏠</div>Trang chủ</button>
+              <button class="act"><div class="tab-ico">🏠</div>Trang chủ</button>
               <button><div class="tab-ico">📊</div>Lịch sử</button>
-              <button class="act"><div class="tab-ico tab-pay">📱</div>Quét</button>
+              <button><div class="tab-ico tab-pay">📱</div>Quét</button>
               <button><div class="tab-ico">🎁</div>Quà</button>
               <button><div class="tab-ico">👤</div>Tôi</button>
+            </div>
+
+            <!-- F2 PAYMENT REQUEST SHEET -->
+            <div class="f2-sheet">
+              <div class="f2-sheet-grip"></div>
+              <div class="f2-sheet-eyebrow">Yêu cầu thanh toán từ WinMart</div>
+              <div class="f2-sheet-amt">175.000 ₫</div>
+              <div class="f2-sheet-merch">WinMart Q.1 · Combo cơm gia đình 4N</div>
+
+              <div class="f2-sched">
+                <div class="f2-sched-r"><span class="f2-sr-d">Hôm nay · kỳ 1/4</span><span class="f2-sr-a">43.750 ₫</span></div>
+                <div class="f2-sched-r"><span class="f2-sr-d">15/05 · kỳ 2/4</span><span class="f2-sr-a">43.750 ₫</span></div>
+                <div class="f2-sched-r"><span class="f2-sr-d">22/05 · kỳ 3/4</span><span class="f2-sr-a">43.750 ₫</span></div>
+                <div class="f2-sched-r"><span class="f2-sr-d">29/05 · kỳ 4/4</span><span class="f2-sr-a">43.750 ₫</span></div>
+                <div class="f2-sched-foot"><b>Tài trợ bởi Vinamilk</b> — không phí, không lãi · tự động trừ qua Techcombank</div>
+              </div>
+
+              <div class="f2-tcb-card">
+                <div class="f2-tcb-ico">T</div>
+                <div class="f2-tcb-bd">
+                  <div class="f2-tcb-t">Techcombank · Trả 4 lần</div>
+                  <div class="f2-tcb-s"><span class="f2-tcb-spinner"></span><span class="f2-tcb-tick">✓</span> Đang kiểm tra hạn mức…</div>
+                </div>
+              </div>
+
+              <button class="f2-confirm-btn" data-act="f2-confirm" disabled>Xác nhận · Trả 43.750 ₫ hôm nay</button>
+            </div>
+
+            <!-- F2 SUCCESS STATE -->
+            <div class="f2-success">
+              <div class="f2-success-tick">✓</div>
+              <div class="f2-success-t">Thanh toán thành công</div>
+              <div class="f2-success-s">Kỳ 1/4 · 43.750 ₫ đã trừ qua Techcombank</div>
+              <div class="f2-success-s">Hoá đơn điện tử đã gửi vào ví và chat</div>
+              <div class="f2-success-mono">WXP-2026-0509-A · NĐ 70/2025</div>
             </div>
 
           </div>
@@ -1258,6 +1427,8 @@ body{font-family:var(--font-body);background:var(--paper);color:var(--ink);overf
         </div>
       </div>
     </div>
+
+    <div class="f-reset"><button data-act="f2-reset">Bắt đầu lại cuộc trò chuyện</button></div>
 
     <!-- AI ANNOTATIONS BELOW -->
     <div class="reveal" style="margin-top:48px;display:grid;grid-template-columns:repeat(3,1fr);gap:0;border-top:1px solid var(--ink);border-left:1px solid var(--ink)">
@@ -1495,14 +1666,6 @@ function genQR(){
 }
 document.addEventListener('DOMContentLoaded',genQR);
 
-// ============= QR OVERLAY =============
-function openQR(){
-  document.getElementById('wxp-qr-overlay').classList.remove('hidden');
-}
-function closeQR(){
-  document.getElementById('wxp-qr-overlay').classList.add('hidden');
-}
-
 // ============= TIMELINE STEP CYCLE =============
 let tlStep = 1;
 function cycleTL(){
@@ -1512,6 +1675,222 @@ function cycleTL(){
   tlStep = tlStep>=5 ? 1 : tlStep+1;
 }
 setInterval(cycleTL, 1800);
+
+// ============================================================
+// FLOW 1 — At-till (POS ↔ Wallet) state machine
+// ============================================================
+const F1 = {
+  section: document.getElementById('sec-flow'),
+  current: 'idle',
+  timers: [],
+  setState(name){
+    this.timers.forEach(clearTimeout); this.timers = [];
+    this.current = name;
+    this.section.dataset.f1 = name;
+
+    const sheet = document.getElementById('wxp-qr-overlay');
+    const posStatus = document.getElementById('f1-pos-status');
+    const wStatusT = document.getElementById('f1-status-wallet-t');
+    const wStatusS = document.getElementById('f1-status-wallet-s');
+    const pStatusT = document.getElementById('f1-status-pos-t');
+    const pStatusS = document.getElementById('f1-status-pos-s');
+
+    switch(name){
+      case 'idle':
+        sheet.classList.add('hidden');
+        if(posStatus){ posStatus.innerHTML = '<span class="pqs-d"></span>Chọn phương thức để hiện QR'; }
+        // restore wallet card content if previously mutated
+        this._restoreWallet();
+        break;
+
+      case 'posAwaitingScan':
+        sheet.classList.add('hidden');
+        if(posStatus){ posStatus.innerHTML = '<span class="pqs-d"></span>Đang chờ khách quét…'; }
+        break;
+
+      case 'walletScanning':
+        if(posStatus){ posStatus.innerHTML = '<span class="pqs-d"></span>Đang đọc mã…'; }
+        sheet.classList.add('hidden');
+        this.timers.push(setTimeout(()=>this.setState('walletConfirm'), 700));
+        break;
+
+      case 'walletConfirm':
+        sheet.classList.remove('hidden');
+        if(posStatus){ posStatus.innerHTML = '<span class="pqs-d"></span>Khách đang xác nhận…'; }
+        break;
+
+      case 'tcbApproving':
+        sheet.classList.add('hidden');
+        if(pStatusT) pStatusT.textContent = 'Đang xác nhận với Techcombank…';
+        if(pStatusS) pStatusS.textContent = 'Khách đang chờ duyệt Trả 4 lần';
+        if(wStatusT) wStatusT.textContent = 'Đang duyệt Trả 4 lần…';
+        if(wStatusS) wStatusS.textContent = 'Đang xác nhận với Techcombank';
+        this.timers.push(setTimeout(()=>this.setState('tcbApproved'), 1600));
+        break;
+
+      case 'tcbApproved':
+        if(pStatusT) pStatusT.innerHTML = '<em style="font-family:var(--font-display);font-style:italic;color:#0F8F5E">Đã duyệt</em>';
+        if(pStatusS) pStatusS.textContent = 'Hôm nay khách trả 50.000 ₫';
+        if(wStatusT) wStatusT.innerHTML = '<em style="font-family:var(--font-display);font-style:italic;color:#0F8F5E">Đã duyệt</em>';
+        if(wStatusS) wStatusS.textContent = '4 kỳ × 50.000 ₫ · mỗi tuần · 0% lãi';
+        this.timers.push(setTimeout(()=>this.setState('bothPaid'), 1100));
+        break;
+
+      case 'bothPaid':
+        // Insert new transaction row at top of wallet activity list
+        this._addPaidTx();
+        // Update Pay-in-4 row
+        this._updateP4Row();
+        if(posStatus){ posStatus.innerHTML = '<span class="pqs-d"></span>Đã thanh toán · 200.000 ₫'; }
+        if(wStatusT) wStatusT.innerHTML = '<em style="font-family:var(--font-display);font-style:italic;color:#0F8F5E">Thành công</em>';
+        if(wStatusS) wStatusS.textContent = 'Hoá đơn điện tử đã gửi vào ví';
+        this.timers.push(setTimeout(()=>this.setState('replay'), 2400));
+        break;
+
+      case 'replay':
+        // Show replay overlay (handled by data-f1 CSS)
+        break;
+    }
+  },
+  _addPaidTx(){
+    const list = document.querySelector('#wxp-app .wxp-sec');
+    if(!list || list.dataset.f1Mutated) return;
+    list.dataset.f1Mutated = '1';
+    const txWrap = list.querySelector('.wxp-tx');
+    if(!txWrap) return;
+    const newRow = document.createElement('div');
+    newRow.className = 'wxp-tx';
+    newRow.style.background = 'rgba(165,19,92,0.10)';
+    newRow.style.borderRadius = '8px';
+    newRow.style.padding = '8px 10px';
+    newRow.style.margin = '0 -10px 4px';
+    newRow.style.animation = 'f1fade .5s ease';
+    newRow.innerHTML = '<div class="wtx-i" style="background:#A5135C;color:#fff;font-size:11px;font-weight:600">✓</div><div class="wtx-info"><div class="wtx-n">Tạp Hoá Cô Lan · vừa xong</div><div class="wtx-m">Hôm nay · 09:42 · Kỳ 1/4 đã trả</div></div><div class="wtx-amt"><div class="wta-v neg">−50.000 ₫</div><div class="wta-tag">Trả 4 lần</div></div>';
+    list.insertBefore(newRow, txWrap);
+  },
+  _updateP4Row(){
+    const bn = document.querySelector('#wxp-app .wxp-bnpl');
+    if(!bn || bn.dataset.f1Mutated) return;
+    bn.dataset.f1Mutated = '1';
+    bn.style.background = 'rgba(15,143,94,0.08)';
+    bn.style.borderColor = 'rgba(15,143,94,0.30)';
+    const h = bn.querySelector('.bn-h');
+    if(h) h.innerHTML = '<span style="color:#0F8F5E">✓</span> Vừa kích hoạt · Trả 4 lần';
+  },
+  _restoreWallet(){
+    const list = document.querySelector('#wxp-app .wxp-sec');
+    if(list && list.dataset.f1Mutated){
+      const inserted = list.querySelector('.wxp-tx[style*="rgba(165,19,92,0.10)"]');
+      if(inserted) inserted.remove();
+      delete list.dataset.f1Mutated;
+    }
+    const bn = document.querySelector('#wxp-app .wxp-bnpl');
+    if(bn && bn.dataset.f1Mutated){
+      bn.style.background = '';
+      bn.style.borderColor = '';
+      const h = bn.querySelector('.bn-h');
+      if(h) h.innerHTML = '⚡ Trả 4 lần đang hoạt động';
+      delete bn.dataset.f1Mutated;
+    }
+  },
+  init(){
+    document.body.addEventListener('click', (e)=>{
+      const t = e.target.closest('[data-act]');
+      if(!t) return;
+      const act = t.dataset.act;
+      const c = this.current;
+      if(act === 'f1-select-wxp' && c === 'idle') this.setState('posAwaitingScan');
+      else if(act === 'f1-scan' && (c === 'idle' || c === 'posAwaitingScan')) this.setState(c==='idle'?'posAwaitingScan':'walletScanning');
+      else if(act === 'f1-scan-qr' && c === 'posAwaitingScan') this.setState('walletScanning');
+      else if(act === 'f1-pay-4' && c === 'walletConfirm') this.setState('tcbApproving');
+      else if(act === 'f1-pay-now' && c === 'walletConfirm') this.setState('tcbApproving');
+      else if(act === 'f1-reset') this.setState('idle');
+    });
+    this.setState('idle');
+  }
+};
+
+// ============================================================
+// FLOW 2 — Zalo OA chat ↔ WinXPay (in-chat checkout) state machine
+// ============================================================
+const F2 = {
+  current: 1,
+  walletActive: false,
+  timers: [],
+  section: document.getElementById('sec-ai'),
+  setStep(n){
+    this.timers.forEach(clearTimeout); this.timers = [];
+    this.current = n;
+    this.section.dataset.f2Step = n;
+    this.section.dataset.f2Active = (n >= 5) ? 'true' : 'false';
+
+    // Update chips based on current step
+    this._renderChips();
+
+    // Auto-scroll chat to bottom
+    const chat = this.section.querySelector('.zoa-chat');
+    if(chat) requestAnimationFrame(()=>{ chat.scrollTop = chat.scrollHeight; });
+
+    // Step 5 transitions
+    if(n === 5){
+      // Spinner runs ~1s then approve
+      this.timers.push(setTimeout(()=>{
+        const card = this.section.querySelector('.f2-tcb-card');
+        const btn = this.section.querySelector('.f2-confirm-btn');
+        if(card) card.classList.add('f2-approved');
+        if(card) card.querySelector('.f2-tcb-s').textContent = 'Hạn mức 6.500.000 ₫ · đã duyệt';
+        if(btn) btn.disabled = false;
+      }, 900));
+    }
+  },
+  _renderChips(){
+    const chipRow = this.section.querySelector('.f2-chips');
+    if(!chipRow) return;
+    const chipsByStep = {
+      1: [['Cơm gia đình 4 người', 2], ['Combo BBQ cuối tuần', 2], ['Đồ ăn sáng nhanh', 2]],
+      2: [['Áp voucher Vinamilk', 3], ['Bỏ qua, chốt đơn', 3]],
+      3: [['Trả 4 lần · 50K/kỳ', 4], ['Trả ngay 200K', 4]],
+      4: [],
+      5: [],
+      6: [['Đặt lại đơn khác', 1], ['Cảm ơn em', 6]]
+    };
+    const chips = chipsByStep[this.current] || [];
+    chipRow.innerHTML = chips.map(([label, target])=>
+      `<button data-act="f2-chip" data-target="${target}">${label}</button>`
+    ).join('');
+  },
+  init(){
+    document.body.addEventListener('click', (e)=>{
+      const t = e.target.closest('[data-act]');
+      if(!t) return;
+      const act = t.dataset.act;
+      if(act === 'f2-chip'){
+        const next = parseInt(t.dataset.target, 10);
+        // mark used
+        t.classList.add('used');
+        this.setStep(next);
+      } else if(act === 'f2-confirm'){
+        this.setStep(6);
+      } else if(act === 'f2-reset'){
+        this.setStep(1);
+        // reset wallet sheet state
+        const card = this.section.querySelector('.f2-tcb-card');
+        const btn = this.section.querySelector('.f2-confirm-btn');
+        if(card){ card.classList.remove('f2-approved'); card.querySelector('.f2-tcb-s').innerHTML='<span class="f2-tcb-spinner"></span><span class="f2-tcb-tick">✓</span> Đang kiểm tra hạn mức…'; }
+        if(btn){ btn.disabled = true; }
+      }
+    });
+    this.setStep(1);
+  }
+};
+
+// Init both flows on DOM ready
+function initFlows(){
+  if(document.getElementById('sec-flow')) F1.init();
+  if(document.getElementById('sec-ai')) F2.init();
+}
+if(document.readyState === 'loading') document.addEventListener('DOMContentLoaded', initFlows);
+else initFlows();
 
 // ============= SCROLL REVEAL =============
 const io = new IntersectionObserver((entries)=>{
