@@ -4,8 +4,8 @@
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"/>
 <meta name="theme-color" content="#080C16"/>
-<title>WinXPay — At-till consumer wallet · Masan × Techcombank</title>
-<meta name="description" content="WinXPay is the Vietnamese consumer wallet acquired at the till through brand-funded discount, with BNPL underwritten by Techcombank. A demo for Danny Le, May 2026."/>
+<title>WinXPay — Vietnamese consumer wallet</title>
+<meta name="description" content="WinXPay is a Vietnamese consumer wallet that pays at the till. QR scan, Pay-in-4, brand-funded discount. Built on Techcombank rails."/>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800;900&family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap"/>
@@ -309,41 +309,7 @@ body{font-family:'Inter','Be Vietnam Pro',system-ui,sans-serif;background:var(--
 /* CALLOUT FROM PDF */
 .pdf-cite{display:inline-flex;align-items:center;gap:5px;padding:3px 8px;border-radius:6px;background:rgba(255,46,99,.08);border:1px solid rgba(255,46,99,.2);font-size:9px;font-weight:700;color:#FF7090;letter-spacing:.3px;text-transform:uppercase;font-family:'JetBrains Mono',monospace}
 
-/* MOAT TABLE */
-.moat-tbl{background:rgba(255,255,255,.02);border:1px solid var(--line);border-radius:18px;overflow:hidden}
-.moat-tbl table{width:100%;border-collapse:collapse;font-size:13px}
-.moat-tbl th,.moat-tbl td{text-align:left;padding:14px 18px;border-bottom:1px solid var(--line)}
-.moat-tbl th{font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.6px;color:var(--t3);background:rgba(255,255,255,.02)}
-.moat-tbl th.h-masan{color:var(--wxp);background:rgba(255,46,99,.05)}
-.moat-tbl td:first-child{font-weight:700;color:var(--t1);width:30%}
-.moat-tbl td.t-y{color:#00D9C0;font-weight:800}
-.moat-tbl td.t-y .y-mark{display:inline-flex;align-items:center;justify-content:center;width:18px;height:18px;border-radius:50%;background:rgba(0,217,192,.18);color:#00D9C0;font-size:10px;font-weight:900;margin-right:6px}
-.moat-tbl td.t-n{color:var(--t4);font-weight:600}
-.moat-tbl td.t-n .n-mark{display:inline-flex;align-items:center;justify-content:center;width:18px;height:18px;border-radius:50%;background:rgba(255,255,255,.04);color:var(--t4);font-size:11px;font-weight:900;margin-right:6px}
-.moat-tbl td.t-p{color:#FFB020;font-weight:700}
-.moat-tbl td.t-p .p-mark{display:inline-flex;align-items:center;justify-content:center;width:18px;height:18px;border-radius:50%;background:rgba(255,176,32,.15);color:#FFB020;font-size:10px;font-weight:900;margin-right:6px}
-.moat-tbl tr:last-child td{border-bottom:none}
-.moat-tbl tr:hover td{background:rgba(255,255,255,.02)}
-.moat-tbl td.h-masan-cell{background:rgba(255,46,99,.03)}
-
-/* CAC BARS */
-.cac-grid{display:grid;grid-template-columns:160px 1fr 90px;gap:14px;align-items:center;padding:11px 0;border-bottom:1px solid var(--line);font-size:13px}
-.cac-grid:last-child{border-bottom:none}
-.cac-grid .cac-l{font-weight:700;color:var(--t1);font-size:13px;display:flex;align-items:center;gap:8px}
-.cac-grid .cac-l .cac-d{width:8px;height:8px;border-radius:50%;flex-shrink:0}
-.cac-grid .cac-bar{height:14px;background:rgba(255,255,255,.04);border-radius:8px;overflow:hidden;position:relative}
-.cac-grid .cac-bar-f{height:100%;border-radius:8px;display:flex;align-items:center;padding:0 9px;font-size:9.5px;font-weight:800;color:#fff;white-space:nowrap;letter-spacing:-.1px;font-family:'JetBrains Mono',monospace}
-.cac-grid .cac-amt{font-size:13px;font-weight:800;color:#fff;text-align:right;font-family:'JetBrains Mono',monospace;letter-spacing:-.3px}
-.cac-grid .cac-amt.cac-em{color:#00D9C0}
-
-/* GPV CHART */
-.gpv-chart{display:grid;grid-template-columns:repeat(5,1fr);gap:14px;padding:30px 0 12px;height:300px;align-items:end;position:relative}
-.gpv-bar-wrap{display:flex;flex-direction:column;align-items:center;gap:9px;height:100%;justify-content:flex-end;position:relative}
-.gpv-bar-v{font-size:18px;font-weight:900;color:#fff;letter-spacing:-.5px;font-family:'JetBrains Mono',monospace}
-.gpv-bar-rev{font-size:10px;color:var(--wxp);font-weight:700;margin-top:-4px}
-.gpv-bar{width:100%;background:linear-gradient(180deg,#FF2E63,#7C2DFF);border-radius:10px 10px 0 0;position:relative;box-shadow:0 -8px 30px rgba(124,45,255,.3),inset 0 1px 0 rgba(255,255,255,.2);transition:height 1s cubic-bezier(.4,0,.2,1);min-height:14px}
-.gpv-bar::after{content:'';position:absolute;inset:0;border-radius:10px 10px 0 0;background:linear-gradient(180deg,rgba(255,255,255,.15),transparent 30%)}
-.gpv-bar-yr{font-size:11px;color:var(--t3);font-weight:700;margin-top:4px;font-family:'JetBrains Mono',monospace}
+/* (sections removed in v2 — keeping selectors clean) */
 
 /* CODE BLOCK */
 .code-blk{background:#0A0E1A;border:1px solid var(--line-2);border-radius:14px;font-family:'JetBrains Mono',monospace;font-size:12.5px;color:var(--t1);overflow:hidden}
@@ -436,19 +402,11 @@ body{font-family:'Inter','Be Vietnam Pro',system-ui,sans-serif;background:var(--
 .merch-feat-bd .mf-d b{color:#fff}
 
 /* FOOTER */
-.foot{position:relative;z-index:2;padding:60px 32px 80px;border-top:1px solid var(--line);background:linear-gradient(180deg,transparent,rgba(8,12,22,.6))}
+.foot{position:relative;z-index:2;padding:48px 32px;border-top:1px solid var(--line);background:linear-gradient(180deg,transparent,rgba(8,12,22,.6))}
 .foot-inner{max-width:1440px;margin:0 auto}
-.foot-grid{display:grid;grid-template-columns:1fr 1fr;gap:60px;margin-bottom:48px}
-.foot-h{font-size:32px;font-weight:900;letter-spacing:-.025em;color:#fff;line-height:1.05;max-width:480px}
-.foot-h .em{color:var(--wxp);font-style:italic}
-.foot-asks{display:flex;flex-direction:column;gap:10px}
-.foot-ask{display:flex;align-items:center;gap:10px;padding:11px 14px;background:rgba(255,255,255,.02);border:1px solid var(--line);border-radius:11px}
-.foot-ask-num{width:24px;height:24px;border-radius:7px;background:var(--wxp-grad);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:900;color:#fff;flex-shrink:0;font-family:'JetBrains Mono',monospace}
-.foot-ask-bd .fa-t{font-size:12px;font-weight:700;color:#fff;letter-spacing:-.1px}
-.foot-ask-bd .fa-d{font-size:11px;color:var(--t3);font-weight:600;font-family:'JetBrains Mono',monospace;margin-top:1px}
-.foot-meta{display:flex;justify-content:space-between;align-items:center;padding-top:24px;border-top:1px solid var(--line);font-size:11px;color:var(--t3)}
+.foot-meta{display:flex;justify-content:space-between;align-items:center;font-size:11px;color:var(--t3);flex-wrap:wrap;gap:14px}
 .foot-meta .fm-l{font-weight:600}
-.foot-meta .fm-r{display:flex;gap:18px}
+.foot-meta .fm-r{display:flex;gap:18px;flex-wrap:wrap}
 
 /* RESPONSIVE */
 @media (max-width:1100px){
@@ -534,12 +492,11 @@ body{font-family:'Inter','Be Vietnam Pro',system-ui,sans-serif;background:var(--
       </div>
     </a>
     <div class="flex-1"></div>
-    <a class="nav-link" onclick="document.getElementById('sec-flow').scrollIntoView({behavior:'smooth'})">At-the-till flow</a>
-    <a class="nav-link" onclick="document.getElementById('sec-ai').scrollIntoView({behavior:'smooth'})">AI checkout</a>
-    <a class="nav-link" onclick="document.getElementById('sec-api').scrollIntoView({behavior:'smooth'})">Merchant API</a>
-    <a class="nav-link" onclick="document.getElementById('sec-moat').scrollIntoView({behavior:'smooth'})">Moat</a>
-    <a class="nav-link" onclick="document.getElementById('sec-econ').scrollIntoView({behavior:'smooth'})">Economics</a>
-    <div class="nav-pill"><span class="dot"></span>LIVE DEMO · MAY 2026</div>
+    <a class="nav-link" onclick="document.getElementById('sec-flow').scrollIntoView({behavior:'smooth'})">At-the-till</a>
+    <a class="nav-link" onclick="document.getElementById('sec-ai').scrollIntoView({behavior:'smooth'})">In-chat checkout</a>
+    <a class="nav-link" onclick="document.getElementById('sec-api').scrollIntoView({behavior:'smooth'})">For merchants</a>
+    <a class="nav-link" onclick="document.getElementById('sec-arch').scrollIntoView({behavior:'smooth'})">How it works</a>
+    <div class="nav-pill"><span class="dot"></span>INTERACTIVE DEMO</div>
   </div>
 </nav>
 
@@ -548,38 +505,19 @@ body{font-family:'Inter','Be Vietnam Pro',system-ui,sans-serif;background:var(--
   <canvas id="cardCanvas"></canvas>
   <div class="hero-inner reveal" style="position:relative;z-index:2">
     <div class="hero-eyebrow">
-      <span class="e-ico">M</span>
-      Memo for Danny Le · Strategy &amp; Development · Pre-decisional
+      <span class="e-ico">W</span>
+      Vietnamese consumer wallet · powered by Techcombank
     </div>
     <h1 class="hero-h1">
-      The Vietnamese consumer wallet,<br/>
-      <span class="gtext em">born at the till.</span>
+      The wallet that meets you<br/>
+      <span class="gtext em">at the till.</span>
     </h1>
     <p class="hero-sub">
-      WinXPay is a consumer payment wallet acquired at the till through brand-funded discount, with BNPL underwritten by Techcombank as channeling bank. Zero credit on our balance sheet. Open ground vs MoMo, ZaloPay, ShopeePay because Masan owns the consumer wallet, the merchant rail, the brand budgets, and the bank — in one stack.
+      WinXPay is a consumer payment app for Vietnam. Scan a VietQR at the till, pay now or split into four, get a brand-funded discount instantly. The merchant settles the same way they always have — only it's faster, cheaper, and printed on paper if they want.
     </p>
     <div class="hero-cta">
-      <button class="btn-prim" onclick="document.getElementById('sec-flow').scrollIntoView({behavior:'smooth'})">Watch the at-till flow →</button>
-      <button class="btn-sec" onclick="document.getElementById('sec-econ').scrollIntoView({behavior:'smooth'})">See the economics</button>
-    </div>
-
-    <div class="hero-stats">
-      <div class="hs-stat">
-        <div class="hs-v gtext">$50m → $8bn</div>
-        <div class="hs-l">GPV trajectory · FY27 → FY34E</div>
-      </div>
-      <div class="hs-stat">
-        <div class="hs-v">200K → 20M</div>
-        <div class="hs-l">Active consumers · pilot → FY34E</div>
-      </div>
-      <div class="hs-stat">
-        <div class="hs-v">~$0.32</div>
-        <div class="hs-l">Net CAC · vs MoMo $8–20</div>
-      </div>
-      <div class="hs-stat">
-        <div class="hs-v">$4–6m</div>
-        <div class="hs-l">Phase 0 build · 12 months</div>
-      </div>
+      <button class="btn-prim" onclick="document.getElementById('sec-flow').scrollIntoView({behavior:'smooth'})">Watch a payment →</button>
+      <button class="btn-sec" onclick="document.getElementById('sec-api').scrollIntoView({behavior:'smooth'})">For merchants</button>
     </div>
   </div>
 </section>
@@ -587,25 +525,25 @@ body{font-family:'Inter','Be Vietnam Pro',system-ui,sans-serif;background:var(--
 <!-- TICKER -->
 <div class="ticker">
   <div class="ticker-track">
-    <div class="ticker-item"><span class="ti-d"></span><b>1.0% MDR</b> on non-BNPL volume</div>
-    <div class="ticker-item"><span class="ti-d"></span><b>3.0% net</b> BNPL fee · after 1.5% to TCB</div>
-    <div class="ticker-item"><span class="ti-d"></span><b>1.5–2 sec</b> TCB underwriting decision</div>
-    <div class="ticker-item"><span class="ti-d"></span><b>4 × VND 50K</b> Pay in 4 weeks</div>
-    <div class="ticker-item"><span class="ti-d"></span><b>VND 50K</b> instant at-till discount</div>
-    <div class="ticker-item"><span class="ti-d"></span><b>50K → 500K outlets</b> WinX Tạp Hóa POS rail</div>
-    <div class="ticker-item"><span class="ti-d"></span><span class="em">Klarna–Cross River</span> pattern, transposed</div>
-    <div class="ticker-item"><span class="ti-d"></span><b>19.7%</b> Masan economic interest in TCB</div>
-    <div class="ticker-item"><span class="ti-d"></span><b>4-pillar moat</b> · wallet · rail · brands · bank</div>
+    <div class="ticker-item"><span class="ti-d"></span><b>VietQR</b> · works at any merchant</div>
+    <div class="ticker-item"><span class="ti-d"></span><b>NAPAS 247</b> · same rail as your bank</div>
+    <div class="ticker-item"><span class="ti-d"></span><b>Pay in 4</b> · 0% interest · auto-debit</div>
+    <div class="ticker-item"><span class="ti-d"></span><b>TCB-linked</b> · one wallet, one bank</div>
+    <div class="ticker-item"><span class="ti-d"></span><b>Brand-funded discount</b> at the till</div>
+    <div class="ticker-item"><span class="ti-d"></span><b>Zalo Mini-App POS</b> · runs on tạp hóa's phone</div>
+    <div class="ticker-item"><span class="ti-d"></span><b>E-invoice</b> baked in · NĐ 70/2025 ready</div>
+    <div class="ticker-item"><span class="ti-d"></span><b>One QR</b> · in-store, in-chat, in-app</div>
+    <div class="ticker-item"><span class="ti-d"></span><span class="em">No new POS hardware</span> needed</div>
     <!-- duplicate for seamless loop -->
-    <div class="ticker-item"><span class="ti-d"></span><b>1.0% MDR</b> on non-BNPL volume</div>
-    <div class="ticker-item"><span class="ti-d"></span><b>3.0% net</b> BNPL fee · after 1.5% to TCB</div>
-    <div class="ticker-item"><span class="ti-d"></span><b>1.5–2 sec</b> TCB underwriting decision</div>
-    <div class="ticker-item"><span class="ti-d"></span><b>4 × VND 50K</b> Pay in 4 weeks</div>
-    <div class="ticker-item"><span class="ti-d"></span><b>VND 50K</b> instant at-till discount</div>
-    <div class="ticker-item"><span class="ti-d"></span><b>50K → 500K outlets</b> WinX Tạp Hóa POS rail</div>
-    <div class="ticker-item"><span class="ti-d"></span><span class="em">Klarna–Cross River</span> pattern, transposed</div>
-    <div class="ticker-item"><span class="ti-d"></span><b>19.7%</b> Masan economic interest in TCB</div>
-    <div class="ticker-item"><span class="ti-d"></span><b>4-pillar moat</b> · wallet · rail · brands · bank</div>
+    <div class="ticker-item"><span class="ti-d"></span><b>VietQR</b> · works at any merchant</div>
+    <div class="ticker-item"><span class="ti-d"></span><b>NAPAS 247</b> · same rail as your bank</div>
+    <div class="ticker-item"><span class="ti-d"></span><b>Pay in 4</b> · 0% interest · auto-debit</div>
+    <div class="ticker-item"><span class="ti-d"></span><b>TCB-linked</b> · one wallet, one bank</div>
+    <div class="ticker-item"><span class="ti-d"></span><b>Brand-funded discount</b> at the till</div>
+    <div class="ticker-item"><span class="ti-d"></span><b>Zalo Mini-App POS</b> · runs on tạp hóa's phone</div>
+    <div class="ticker-item"><span class="ti-d"></span><b>E-invoice</b> baked in · NĐ 70/2025 ready</div>
+    <div class="ticker-item"><span class="ti-d"></span><b>One QR</b> · in-store, in-chat, in-app</div>
+    <div class="ticker-item"><span class="ti-d"></span><span class="em">No new POS hardware</span> needed</div>
   </div>
 </div>
 
@@ -613,47 +551,40 @@ body{font-family:'Inter','Be Vietnam Pro',system-ui,sans-serif;background:var(--
 <section id="sec-flow" class="sec">
   <div class="sec-inner">
     <div class="reveal">
-      <div class="sec-eyebrow"><span class="se-num">01</span>The at-till flow</div>
-      <h2 class="sec-h2">A consumer with VND 200K of groceries.<br/>A tạp hóa with our POS. <span class="gtext em">Five seconds to settled cash.</span></h2>
+      <div class="sec-eyebrow"><span class="se-num">01</span>At the till</div>
+      <h2 class="sec-h2">Walk into a tạp hóa. Open the app.<br/><span class="gtext em">Pay in five seconds.</span></h2>
       <p class="sec-sub">
-        On the left: the WinX Tạp Hóa POS, our Zalo Mini-App that already runs on the GT rail. On the right: the new WinXPay consumer wallet. The two surfaces sync over our merchant rail; the BNPL leg is underwritten by Techcombank in real time. Zero credit on our balance sheet.
+        On the left, the WinX Tạp Hóa POS — a Zalo Mini-App that runs on Cô Lan's phone. On the right, the WinXPay consumer wallet on the shopper's phone. The two talk to each other over a single VietQR. The Pay-in-4 leg is underwritten by Techcombank in the background.
       </p>
-      <div class="dpb-h">
-        <div class="dpb">Source <b>· WinXPay Memo §4</b></div>
-        <div class="dpb">Decision time <b>· 1.5–2 sec</b></div>
-        <div class="dpb">MDR <b>· 4.5% on BNPL</b></div>
-        <div class="dpb">TCB take <b>· 1.5%</b></div>
-        <div class="dpb">WinXPay take <b>· 3.0%</b></div>
-      </div>
     </div>
 
     <!-- TIMELINE STEPS -->
     <div class="tl-grid reveal">
       <div class="tl-step act" id="tl-1">
         <div class="tl-step-num">1</div>
-        <div class="tl-step-h">Scan at till</div>
-        <div class="tl-step-d">Consumer opens WinXPay; merchant POS shows <b>VND 200K basket</b>. <span class="em">"Pay now or 4 × 50K with 50K instant discount"</span>.</div>
+        <div class="tl-step-h">Scan</div>
+        <div class="tl-step-d">Cashier rings up the basket. POS shows a single QR — <span class="em">"Pay now"</span> or <span class="em">"Pay in 4"</span>.</div>
       </div>
       <div class="tl-step" id="tl-2">
         <div class="tl-step-num">2</div>
-        <div class="tl-step-h">TCB BNPL call</div>
-        <div class="tl-step-d">Decisioning engine calls TCB API with WinXPay <b>internal score</b>, CIC bureau hit, basket data. Approve / decline.</div>
-        <div class="tl-step-time">≤ 2.0 s</div>
+        <div class="tl-step-h">Underwrite</div>
+        <div class="tl-step-d">If the shopper picks Pay-in-4, WinXPay asks Techcombank to approve. Decision arrives in seconds.</div>
+        <div class="tl-step-time">~1.6 s</div>
       </div>
       <div class="tl-step" id="tl-3">
         <div class="tl-step-num">3</div>
-        <div class="tl-step-h">Merchant settled</div>
-        <div class="tl-step-d">TCB books receivable. Merchant gets <b>VND 200K instant</b> into WintelPay wallet, less <b>4.5% MDR</b>.</div>
+        <div class="tl-step-h">Settle</div>
+        <div class="tl-step-d">Merchant gets paid <b>instantly</b> into their wallet. Same as a normal QR transfer — no waiting, no T+2.</div>
       </div>
       <div class="tl-step" id="tl-4">
         <div class="tl-step-num">4</div>
-        <div class="tl-step-h">Auto-debit, 4 weeks</div>
-        <div class="tl-step-d">Consumer pays TCB <b>4 × VND 50K</b> via auto-debit. WinXPay services collections, dunning, fraud, support.</div>
+        <div class="tl-step-h">Auto-debit</div>
+        <div class="tl-step-d">Shopper pays back over four weekly installments via auto-debit from their TCB account. <b>Zero interest</b>.</div>
       </div>
       <div class="tl-step" id="tl-5">
         <div class="tl-step-num">5</div>
-        <div class="tl-step-h">Economics flow</div>
-        <div class="tl-step-d">4.5% split: TCB <b>1.5%</b> · WinXPay <b>3.0%</b>. Masan's <b>19.7% TCB stake</b> recycles ~20% of TCB BNPL P&amp;L back through equity.</div>
+        <div class="tl-step-h">Receipt</div>
+        <div class="tl-step-d">E-invoice issued automatically (NĐ 70/2025 compliant). Receipt lands in the wallet, in chat, on paper — wherever you want.</div>
       </div>
     </div>
 
@@ -664,22 +595,22 @@ body{font-family:'Inter','Be Vietnam Pro',system-ui,sans-serif;background:var(--
         <div class="ann ann-r" style="top:64px;right:14px;max-width:230px">
           <div class="ann-num">A</div>
           <div class="ann-body">
-            <div class="ann-t">Existing rail · live today</div>
-            <div class="ann-s">Free Zalo Mini-App POS already deployed in the GT digitalization pilot. <b>Cô Lan</b> sees one button: <span class="em-r">"−50K"</span>. She doesn't have to learn anything new.</div>
+            <div class="ann-t">Runs on a phone</div>
+            <div class="ann-s">No new POS terminal. The shopkeeper opens our <b>Zalo Mini-App</b> and rings up the basket. Same phone they already have.</div>
           </div>
         </div>
         <div class="ann ann-r" style="top:284px;right:14px;max-width:230px">
           <div class="ann-num">B</div>
           <div class="ann-body">
-            <div class="ann-t">Brand-funded discount</div>
-            <div class="ann-s">The 50K is paid by <b>MCH 16 / Unilever / P&amp;G</b> at the till — not WinXPay's balance sheet. This is the <span class="em-y">CAC compression</span> that breaks the MoMo cost model.</div>
+            <div class="ann-t">Discount at the till</div>
+            <div class="ann-s">When the shopper pays with WinXPay, eligible items get a <span class="em-r">discount funded by the brand</span>, not the shop. The cashier just sees a lower total.</div>
           </div>
         </div>
         <div class="ann ann-r" style="bottom:20px;right:14px;max-width:230px">
           <div class="ann-num">C</div>
           <div class="ann-body">
-            <div class="ann-t">VietQR · NAPAS 247 rail</div>
-            <div class="ann-s">Same standard MoMo and ZaloPay accept. Issuer is <b>TCB</b>. Settlement to merchant: <span class="em-g">T+0</span>, less 4.5% MDR.</div>
+            <div class="ann-t">A real VietQR</div>
+            <div class="ann-s">The QR uses <b>NAPAS 247</b> — the same national rail every Vietnamese bank speaks. Settlement to the merchant's wallet is <span class="em-g">instant</span>.</div>
           </div>
         </div>
       </div>
@@ -795,8 +726,8 @@ body{font-family:'Inter','Be Vietnam Pro',system-ui,sans-serif;background:var(--
                 <div class="pos-pay-opt-row">
                   <div class="pos-pay-opt-ico qr-i">📱</div>
                   <div class="pos-pay-opt-info">
-                    <div class="ppo-t">VietQR / MoMo / ZaloPay</div>
-                    <div class="ppo-s">Quét mã, thanh toán tài khoản · không có ưu đãi</div>
+                    <div class="ppo-t">Bank transfer / Other QR</div>
+                    <div class="ppo-s">Quét mã ngân hàng · không có ưu đãi</div>
                   </div>
                   <div class="pos-pay-opt-arr">›</div>
                 </div>
@@ -806,7 +737,7 @@ body{font-family:'Inter','Be Vietnam Pro',system-ui,sans-serif;background:var(--
               <div class="pos-qr-show" style="margin-top:12px">
                 <div class="pqs-h">Quét bằng app WinXPay</div>
                 <div class="pqs-amt">200.000 ₫</div>
-                <div class="pqs-disc">−50.000 ₫ ưu đãi · do MCH tài trợ</div>
+                <div class="pqs-disc">−50.000 ₫ ưu đãi · do thương hiệu tài trợ</div>
                 <div class="pqs-box">
                   <span class="pqs-vqr">VietQR</span>
                   <canvas id="pos-qr"></canvas>
@@ -912,7 +843,7 @@ body{font-family:'Inter','Be Vietnam Pro',system-ui,sans-serif;background:var(--
               <div class="wxp-tx">
                 <div class="wtx-i">🎁</div>
                 <div class="wtx-info">
-                  <div class="wtx-n">MCH × WinX cashback</div>
+                  <div class="wtx-n">Hoàn tiền thương hiệu</div>
                   <div class="wtx-m">Hôm nay · 09:41 · 5 SKUs</div>
                 </div>
                 <div class="wtx-amt"><div class="wta-v pos">+50.000 ₫</div><div class="wta-tag">Brand-funded</div></div>
@@ -964,22 +895,22 @@ body{font-family:'Inter','Be Vietnam Pro',system-ui,sans-serif;background:var(--
         <div class="ann ann-l" style="top:24px;left:14px;max-width:230px">
           <div class="ann-num">D</div>
           <div class="ann-body">
-            <div class="ann-t">Wallet card = TCB-linked</div>
-            <div class="ann-s">Every wallet maps 1:1 to a <b>Techcombank account</b>. No KYC duplication. Auto-debit via TCB rails. Masan owns the surface, TCB owns the rail. <span class="em-y">19.7%</span> economic interest closes the loop.</div>
+            <div class="ann-t">Linked to a real bank</div>
+            <div class="ann-s">Each wallet is tied to a <b>Techcombank account</b>. KYC happens once. Top-ups, auto-debits, and refunds all flow through the same rail.</div>
           </div>
         </div>
         <div class="ann ann-l" style="top:240px;left:14px;max-width:230px">
           <div class="ann-num">E</div>
           <div class="ann-body">
-            <div class="ann-t">Pay-in-4, live</div>
-            <div class="ann-s">First 50K paid today. <b>3 × 50K</b> remain — auto-debit weekly. Receivable on TCB's books. <span class="em-r">Zero credit on WinXPay's P&amp;L</span>.</div>
+            <div class="ann-t">Pay-in-4, in plain view</div>
+            <div class="ann-s">The wallet shows the active installment — what's been paid, what's coming, when. <span class="em-g">Zero interest</span>. Auto-debit weekly. No surprises.</div>
           </div>
         </div>
         <div class="ann ann-l" style="bottom:80px;left:14px;max-width:230px">
           <div class="ann-num">F</div>
           <div class="ann-body">
-            <div class="ann-t">The dual ledger</div>
-            <div class="ann-s">Every transaction feeds <b>SI</b> (Retail Supreme inflows) <b>+ SO</b> (WinX Tạp Hóa POS outflows) into TCB underwriting in real time. <span class="em-g">No Vietnamese bank has this</span>.</div>
+            <div class="ann-t">One QR, every surface</div>
+            <div class="ann-s">The same Quick-Pay action works at the till, in chat, and inside the app. <span class="em-y">Tap "Quét trả"</span> — wallet generates the QR, cashier scans, done.</div>
           </div>
         </div>
       </div>
@@ -991,7 +922,7 @@ body{font-family:'Inter','Be Vietnam Pro',system-ui,sans-serif;background:var(--
       <div class="legend-it"><span class="ld" style="background:#0068FF"></span>Zalo Mini App POS (merchant)</div>
       <div class="legend-it"><span class="ld" style="background:#ED1C24"></span>Techcombank rail (BNPL underwriting)</div>
       <div class="legend-it"><span class="ld" style="background:#A50064"></span>VietQR / NAPAS 247 (settlement)</div>
-      <div class="legend-it" style="margin-left:auto"><b style="color:#fff">Annotated for Danny Le, May 2026</b></div>
+      <div class="legend-it" style="margin-left:auto"><b style="color:#fff">Tap any phone to explore the flow →</b></div>
     </div>
   </div>
 </section>
@@ -1002,17 +933,11 @@ body{font-family:'Inter','Be Vietnam Pro',system-ui,sans-serif;background:var(--
 <section id="sec-ai" class="sec">
   <div class="sec-inner">
     <div class="reveal">
-      <div class="sec-eyebrow"><span class="se-num">02</span>AI Checkout · Zalo Official Account</div>
+      <div class="sec-eyebrow"><span class="se-num">02</span>In-chat checkout · Zalo OA</div>
       <h2 class="sec-h2">"Hôm nay ăn gì?" → basket → <span class="gtext em">paid in 4 taps.</span></h2>
       <p class="sec-sub">
-        WinMart's Zalo OA already serves <b>200K followers</b>. Our AI agent recommends the basket; WinXPay closes the loop. The user never leaves the chat — payment, BNPL approval, e-invoice, and receipt all settle inside Zalo via VietQR. Same rail, same TCB underwriting, same brand-funded discount.
+        Most Vietnamese shoppers already chat with their favourite store on Zalo. WinXPay turns that chat into a checkout. The agent suggests a basket, the shopper picks "Pay in 4", and the wallet handles the rest — without leaving the conversation.
       </p>
-      <div class="dpb-h">
-        <div class="dpb">Source <b>· WinXPay Memo §3</b></div>
-        <div class="dpb">WinX MAU <b>· 40%+ on 12.6M</b></div>
-        <div class="dpb">Win+ Zalo OA <b>· 200K followers</b></div>
-        <div class="dpb">No app switch <b>· in-Zalo settlement</b></div>
-      </div>
     </div>
 
     <div class="flow-grid reveal" style="margin-top:32px">
@@ -1020,22 +945,22 @@ body{font-family:'Inter','Be Vietnam Pro',system-ui,sans-serif;background:var(--
         <div class="ann ann-r" style="top:50px;right:14px;max-width:230px">
           <div class="ann-num">G</div>
           <div class="ann-body">
-            <div class="ann-t">Win+ Zalo OA · 200K followers</div>
-            <div class="ann-s">The bot already exists. Adding WinXPay turns it from a <b>recommendation channel</b> into a <span class="em-g">closed-loop commerce surface</span>. Same 12.6M graph, paid intent.</div>
+            <div class="ann-t">Discovery in chat</div>
+            <div class="ann-s">The agent reads what the shopper asks for in plain Vietnamese — <span class="em-y">"thịt kho trứng cho 4 người"</span> — and replies with a basket they can buy as one bundle.</div>
           </div>
         </div>
         <div class="ann ann-r" style="top:300px;right:14px;max-width:230px">
           <div class="ann-num">H</div>
           <div class="ann-body">
-            <div class="ann-t">"Tài trợ bởi MCH"</div>
-            <div class="ann-s">Brands bid for the basket recommendation slot. <b>Unilever, P&amp;G, Nestlé</b> compete next to MCH 16. The discount is the auction outcome — not a Masan subsidy.</div>
+            <div class="ann-t">A sponsored bundle</div>
+            <div class="ann-s">When a brand co-funds a recommendation, you see a small <b>"Tài trợ"</b> tag and a lower price. The shopper saves money; the brand reaches an actual basket.</div>
           </div>
         </div>
         <div class="ann ann-r" style="bottom:24px;right:14px;max-width:230px">
           <div class="ann-num">I</div>
           <div class="ann-body">
-            <div class="ann-t">No app switch</div>
-            <div class="ann-s">Pay button opens WinXPay <b>inside Zalo</b>. Consumer never leaves the chat. Settlement, e-invoice, receipt all return to the same conversation.</div>
+            <div class="ann-t">Stay in the conversation</div>
+            <div class="ann-s">Tapping <b>"Trả ngay"</b> or <b>"4 × 50K"</b> opens WinXPay inside Zalo. Receipt, e-invoice, delivery time all come back to the same chat.</div>
           </div>
         </div>
       </div>
@@ -1073,7 +998,7 @@ body{font-family:'Inter','Be Vietnam Pro',system-ui,sans-serif;background:var(--
               <div class="zoa-row zr-bot">
                 <div class="zoa-m" style="visibility:hidden"></div>
                 <div class="zoa-reco">
-                  <div class="zr-img">🍳<span class="zr-tag">Tài trợ bởi MCH</span></div>
+                  <div class="zr-img">🍳<span class="zr-tag">Tài trợ bởi thương hiệu</span></div>
                   <div class="zr-bd">
                     <div class="zr-t">Mâm cơm 4 người · Combo Masan</div>
                     <div class="zr-s">Thịt kho · trứng · Chinsu nước mắm · Omachi · Wake-Up tráng miệng</div>
@@ -1106,7 +1031,7 @@ body{font-family:'Inter','Be Vietnam Pro',system-ui,sans-serif;background:var(--
                     <div class="zo-line"><span class="zol-n">Combo cơm gia đình 4N</span><span class="zol-p">182.000 ₫</span></div>
                     <div class="zo-line"><span class="zol-n">Mì Omachi × 6</span><span class="zol-p">51.000 ₫</span></div>
                     <div class="zo-line"><span class="zol-n">Sữa Vinamilk 1L × 2</span><span class="zol-p">62.000 ₫</span></div>
-                    <div class="zo-line" style="color:#00BB7C"><span class="zol-n">Ưu đãi MCH × WinXPay</span><span class="zol-p" style="color:#00BB7C">−95.000 ₫</span></div>
+                    <div class="zo-line" style="color:#00BB7C"><span class="zol-n">Ưu đãi thương hiệu × WinXPay</span><span class="zol-p" style="color:#00BB7C">−95.000 ₫</span></div>
                   </div>
                   <div class="zo-tot"><span>Tổng thanh toán</span><span>200.000 ₫</span></div>
                   <div class="zo-pay">
@@ -1188,33 +1113,33 @@ body{font-family:'Inter','Be Vietnam Pro',system-ui,sans-serif;background:var(--
               </div>
             </div>
 
-            <!-- DECISION TRACE -->
+            <!-- WHAT JUST HAPPENED -->
             <div style="margin:0 14px 12px;padding:14px;border-radius:14px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.08);position:relative;z-index:2">
-              <div style="font-size:10px;font-weight:800;color:#fff;letter-spacing:.3px;text-transform:uppercase;margin-bottom:10px">Decisioning trace</div>
+              <div style="font-size:10px;font-weight:800;color:#fff;letter-spacing:.3px;text-transform:uppercase;margin-bottom:10px">What just happened</div>
               <div style="display:flex;align-items:center;gap:8px;padding:5px 0;font-size:10.5px;color:rgba(255,255,255,.85)">
                 <span style="width:6px;height:6px;border-radius:50%;background:#00D9C0;box-shadow:0 0 6px #00D9C0;flex-shrink:0"></span>
-                <span style="flex:1">WinXPay internal score · dual SI+SO ledger</span>
-                <span style="font-family:monospace;font-size:10px;color:#00D9C0;font-weight:800">782/850</span>
-              </div>
-              <div style="display:flex;align-items:center;gap:8px;padding:5px 0;font-size:10.5px;color:rgba(255,255,255,.85)">
-                <span style="width:6px;height:6px;border-radius:50%;background:#00D9C0;box-shadow:0 0 6px #00D9C0;flex-shrink:0"></span>
-                <span style="flex:1">CIC bureau hit · Tier B+</span>
-                <span style="font-family:monospace;font-size:10px;color:#00D9C0;font-weight:800">PASS</span>
-              </div>
-              <div style="display:flex;align-items:center;gap:8px;padding:5px 0;font-size:10.5px;color:rgba(255,255,255,.85)">
-                <span style="width:6px;height:6px;border-radius:50%;background:#00D9C0;box-shadow:0 0 6px #00D9C0;flex-shrink:0"></span>
-                <span style="flex:1">Basket-level data · 5 SKUs FMCG</span>
+                <span style="flex:1">Identity verified · TCB account linked</span>
                 <span style="font-family:monospace;font-size:10px;color:#00D9C0;font-weight:800">OK</span>
               </div>
               <div style="display:flex;align-items:center;gap:8px;padding:5px 0;font-size:10.5px;color:rgba(255,255,255,.85)">
-                <span style="width:6px;height:6px;border-radius:50%;background:#FFB020;box-shadow:0 0 6px #FFB020;flex-shrink:0"></span>
-                <span style="flex:1">TCB capital cost + NIM</span>
-                <span style="font-family:monospace;font-size:10px;color:#FFB020;font-weight:800">1.5%</span>
+                <span style="width:6px;height:6px;border-radius:50%;background:#00D9C0;box-shadow:0 0 6px #00D9C0;flex-shrink:0"></span>
+                <span style="flex:1">Pay-in-4 limit available</span>
+                <span style="font-family:monospace;font-size:10px;color:#00D9C0;font-weight:800">YES</span>
+              </div>
+              <div style="display:flex;align-items:center;gap:8px;padding:5px 0;font-size:10.5px;color:rgba(255,255,255,.85)">
+                <span style="width:6px;height:6px;border-radius:50%;background:#00D9C0;box-shadow:0 0 6px #00D9C0;flex-shrink:0"></span>
+                <span style="flex:1">Basket eligible for instant discount</span>
+                <span style="font-family:monospace;font-size:10px;color:#00D9C0;font-weight:800">−50K</span>
+              </div>
+              <div style="display:flex;align-items:center;gap:8px;padding:5px 0;font-size:10.5px;color:rgba(255,255,255,.85)">
+                <span style="width:6px;height:6px;border-radius:50%;background:#0EA5E9;box-shadow:0 0 6px #0EA5E9;flex-shrink:0"></span>
+                <span style="flex:1">E-invoice queued · NĐ 70/2025</span>
+                <span style="font-family:monospace;font-size:10px;color:#0EA5E9;font-weight:800">READY</span>
               </div>
               <div style="display:flex;align-items:center;gap:8px;padding:5px 0;font-size:10.5px;color:rgba(255,255,255,.85)">
                 <span style="width:6px;height:6px;border-radius:50%;background:#FF2E63;box-shadow:0 0 6px #FF2E63;flex-shrink:0"></span>
-                <span style="flex:1">WinXPay take · origination + servicing</span>
-                <span style="font-family:monospace;font-size:10px;color:#FF2E63;font-weight:800">3.0%</span>
+                <span style="flex:1">Auto-debit scheduled · 4 weeks</span>
+                <span style="font-family:monospace;font-size:10px;color:#FF2E63;font-weight:800">SET</span>
               </div>
             </div>
 
@@ -1248,22 +1173,22 @@ body{font-family:'Inter','Be Vietnam Pro',system-ui,sans-serif;background:var(--
         <div class="ann ann-l" style="top:30px;left:14px;max-width:230px">
           <div class="ann-num">J</div>
           <div class="ann-body">
-            <div class="ann-t">TCB approves in 1.6s</div>
-            <div class="ann-s">Decisioning engine pulls <b>WinXPay score</b>, <b>CIC bureau</b>, <b>basket data</b>. Target <span class="em-y">decline rate 15-20%</span> on Tier B+. Underwriting by TCB; servicing by us.</div>
+            <div class="ann-t">Approved in seconds</div>
+            <div class="ann-s">Techcombank reads the shopper's profile and the basket, decides Yes / No <span class="em-g">in about 1.6 seconds</span>, then books the receivable on its own balance sheet.</div>
           </div>
         </div>
         <div class="ann ann-l" style="top:240px;left:14px;max-width:230px">
           <div class="ann-num">K</div>
           <div class="ann-body">
-            <div class="ann-t">4.5% MDR split</div>
-            <div class="ann-s"><b>1.5% to TCB</b> (capital + credit losses + NIM)<br/><b>3.0% to WinXPay</b> (origination + servicing)<br/>Klarna mature-market data: <span class="em-g">30–50% AOV uplift</span> on BNPL-eligible txns.</div>
+            <div class="ann-t">Four equal payments</div>
+            <div class="ann-s">The total splits into <b>4 weekly installments</b>. The first comes off today, the next three on the same day each week. <span class="em-g">Always 0% interest</span>.</div>
           </div>
         </div>
         <div class="ann ann-l" style="bottom:30px;left:14px;max-width:230px">
           <div class="ann-num">L</div>
           <div class="ann-body">
-            <div class="ann-t">Equity loop closes</div>
-            <div class="ann-s">TCB earns <b>10–12% NIM</b> on BNPL (vs 3–4% on standard book). Masan's <span class="em-y">19.7%</span> economic interest recycles ~20% of TCB's BNPL P&amp;L back through equity.</div>
+            <div class="ann-t">Auto-debit, set and forget</div>
+            <div class="ann-s">Payments come straight from the shopper's TCB account. <span class="em-y">Push notification 24h before</span> each debit. Pause or pay early any time.</div>
           </div>
         </div>
       </div>
@@ -1274,23 +1199,23 @@ body{font-family:'Inter','Be Vietnam Pro',system-ui,sans-serif;background:var(--
       <div class="glass-2" style="padding:22px">
         <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px">
           <div style="width:28px;height:28px;border-radius:8px;background:linear-gradient(135deg,#FF6B00,#FF8C33);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:900;color:#fff">W+</div>
-          <div style="font-size:13px;font-weight:800;color:#fff">Discovery in Zalo OA</div>
+          <div style="font-size:13px;font-weight:800;color:#fff">Recommend in chat</div>
         </div>
-        <div style="font-size:13px;color:var(--t2);line-height:1.6">AI agent reads <b style="color:#fff">12.6M-strong WinX shopper graph</b> + MCH first-party brand budgets. Recommends a basket the brand has already pre-funded. Conversion = chat reply, not click-through.</div>
+        <div style="font-size:13px;color:var(--t2);line-height:1.6">The agent suggests a basket from natural-language requests. Tap a card and it's added to the order — no menu trees, no app switch.</div>
       </div>
       <div class="glass-2" style="padding:22px">
         <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px">
           <div style="width:28px;height:28px;border-radius:8px;background:var(--wxp-grad);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:900;color:#fff">W</div>
-          <div style="font-size:13px;font-weight:800;color:#fff">Settlement in WinXPay</div>
+          <div style="font-size:13px;font-weight:800;color:#fff">Pay without leaving</div>
         </div>
-        <div style="font-size:13px;color:var(--t2);line-height:1.6"><b style="color:#fff">QR generated, decision in 1.6s</b>. TCB books receivable; merchant settled instantly. Same flow as the at-till — only the surface changes. Same TCB rail, same MDR economics.</div>
+        <div style="font-size:13px;color:var(--t2);line-height:1.6">Trả ngay or 4 × 50K — both open WinXPay <b style="color:#fff">inside Zalo</b>. The QR is generated server-side and confirmed in seconds.</div>
       </div>
       <div class="glass-2" style="padding:22px">
         <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px">
-          <div style="width:28px;height:28px;border-radius:8px;background:#ED1C24;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:900;color:#fff">T</div>
-          <div style="font-size:13px;font-weight:800;color:#fff">Underwriting at Techcombank</div>
+          <div style="width:28px;height:28px;border-radius:8px;background:#0EA5E9;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:900;color:#fff">📄</div>
+          <div style="font-size:13px;font-weight:800;color:#fff">Receipt + e-invoice</div>
         </div>
-        <div style="font-size:13px;color:var(--t2);line-height:1.6">Receivable on <b style="color:#fff">TCB balance sheet</b>, not ours. Zero NPL reserves on WinXPay P&amp;L. <span style="color:#FFB020;font-weight:700">10–12% NIM</span> on BNPL paper vs 3–4% on TCB's standard loan book — they pay for the data layer.</div>
+        <div style="font-size:13px;color:var(--t2);line-height:1.6">A receipt comes back to the chat. A compliant <b style="color:#fff">e-invoice</b> goes to the shopper's email — same one the cashier would print at the till.</div>
       </div>
     </div>
 
@@ -1303,10 +1228,10 @@ body{font-family:'Inter','Be Vietnam Pro',system-ui,sans-serif;background:var(--
 <section id="sec-api" class="sec">
   <div class="sec-inner">
     <div class="reveal">
-      <div class="sec-eyebrow"><span class="se-num">03</span>Merchant integration · the seamless POS layer</div>
-      <h2 class="sec-h2">One drop-in widget. <span class="gtext em">1.4M tạp hóa eligible.</span></h2>
+      <div class="sec-eyebrow"><span class="se-num">03</span>For merchants</div>
+      <h2 class="sec-h2">One line of code.<br/><span class="gtext em">QR + Pay-in-4, dropped into any checkout.</span></h2>
       <p class="sec-sub">
-        Merchants already on the WinX Tạp Hóa POS get WinXPay automatically — it's a payment method in their existing checkout. For everyone else, integration is a single embed: a button, an API call, or a webhook. Same MDR, same brand-funded discount engine, same TCB BNPL leg. No bespoke contracts; no card-terminal estate.
+        Merchants on the Zalo Mini-App POS get WinXPay automatically — it's just another payment button. For everyone else, integration is a single embed: a button on the page, an API call from the server, or a webhook. No bespoke contracts. No new POS hardware.
       </p>
     </div>
 
@@ -1317,35 +1242,35 @@ body{font-family:'Inter','Be Vietnam Pro',system-ui,sans-serif;background:var(--
           <div class="merch-feat-ico">⚡</div>
           <div class="merch-feat-bd">
             <div class="mf-t">Drop-in checkout button</div>
-            <div class="mf-d">One HTML attribute or one SDK call. Renders the WinXPay QR + Pay-in-4 selector inside any web, app, or POS surface. <b>Median integration time: 2 hours</b>.</div>
+            <div class="mf-d">One HTML attribute, or one SDK call from your server. Renders the WinXPay QR plus the <b>Pay-in-4</b> option in any web page, app, or POS surface.</div>
           </div>
         </div>
         <div class="merch-feat">
           <div class="merch-feat-ico">🔁</div>
           <div class="merch-feat-bd">
             <div class="mf-t">Webhook-driven settlement</div>
-            <div class="mf-d">Real-time <span class="font-mono" style="color:#fff">payment.captured</span> + <span class="font-mono" style="color:#fff">bnpl.approved</span> events. T+0 settlement to merchant's WintelPay wallet.</div>
+            <div class="mf-d">Real-time <span class="font-mono" style="color:#fff">payment.captured</span> and <span class="font-mono" style="color:#fff">bnpl.approved</span> events fire as soon as the shopper confirms. Money lands in the merchant wallet <b>instantly</b>.</div>
           </div>
         </div>
         <div class="merch-feat">
           <div class="merch-feat-ico">🧾</div>
           <div class="merch-feat-bd">
             <div class="mf-t">E-invoice baked in (NĐ 70/2025)</div>
-            <div class="mf-d">HĐĐT-MTT issued automatically with every settled transaction. Compliance-ready for GDT submission. Tạp hóa never touches a tax form.</div>
+            <div class="mf-d">A compliant <b>HĐĐT-MTT</b> is issued for every settled transaction. The shopkeeper never touches a tax form. Customer can email it, print it, or scan a QR receipt.</div>
           </div>
         </div>
         <div class="merch-feat">
           <div class="merch-feat-ico">🏦</div>
           <div class="merch-feat-bd">
-            <div class="mf-t">Capital + decisioning, abstracted</div>
-            <div class="mf-d">Merchant sees one MDR. Behind it: <b>Masan brand budget</b> (CAC), <b>Techcombank capital</b> (BNPL), <b>WinXPay</b> (decisioning + servicing). The merchant takes <span class="em" style="color:#FF2E63;font-weight:700">none of the credit risk</span>.</div>
+            <div class="mf-t">No credit risk for the merchant</div>
+            <div class="mf-d">Pay-in-4 is underwritten by Techcombank — <b>not</b> by the shop. The merchant always sees the full amount, settled today, regardless of how the shopper chose to pay.</div>
           </div>
         </div>
         <div class="merch-feat">
-          <div class="merch-feat-ico">📈</div>
+          <div class="merch-feat-ico">🪪</div>
           <div class="merch-feat-bd">
-            <div class="mf-t">AOV uplift, not just acceptance</div>
-            <div class="mf-d">Klarna mature-market data: <b>30–50% AOV lift</b> on BNPL-eligible transactions. Affirm reports similar. The 4.5% MDR is paid for by the basket the consumer wouldn't otherwise have built.</div>
+            <div class="mf-t">No new hardware</div>
+            <div class="mf-d">Works on a phone, on a counter tablet, or printed as a static QR. If the merchant can show a QR, they can accept WinXPay.</div>
           </div>
         </div>
       </div>
@@ -1366,7 +1291,7 @@ body{font-family:'Inter','Be Vietnam Pro',system-ui,sans-serif;background:var(--
   <span class="v">data-currency</span>=<span class="s">"VND"</span>
   <span class="v">data-merchant</span>=<span class="s">"MS001247"</span>
   <span class="v">data-bnpl</span>=<span class="s">"true"</span>
-  <span class="v">data-discount-id</span>=<span class="s">"MCH-2026-FMCG-Q2"</span><span class="k">&gt;</span>
+  <span class="v">data-discount-id</span>=<span class="s">"WXP-DISC-Q2"</span><span class="k">&gt;</span>
   Trả 200K hoặc 4 × 50K
 <span class="k">&lt;/button&gt;</span></div>
         </div>
@@ -1385,7 +1310,7 @@ body{font-family:'Inter','Be Vietnam Pro',system-ui,sans-serif;background:var(--
   <span class="v">amount</span>: <span class="n">200_000</span>,
   <span class="v">basket</span>: <span class="v">cart</span>.<span class="v">items</span>,
   <span class="v">bnpl</span>: <span class="s">'auto'</span>,        <span class="c">// auto-decide via TCB</span>
-  <span class="v">brandFundedDiscount</span>: <span class="k">true</span>,  <span class="c">// pulls MCH budget</span>
+  <span class="v">brandFundedDiscount</span>: <span class="k">true</span>,  <span class="c">// pulls eligible brand budget</span>
   <span class="v">callbackUrl</span>: <span class="s">'https://store.vn/wxp'</span>
 });
 
@@ -1393,7 +1318,7 @@ body{font-family:'Inter','Be Vietnam Pro',system-ui,sans-serif;background:var(--
 <span class="v">app</span>.<span class="t">post</span>(<span class="s">'/wxp'</span>, (<span class="v">req</span>) =&gt; {
   <span class="k">if</span> (<span class="v">req</span>.<span class="v">body</span>.<span class="v">event</span> === <span class="s">'payment.captured'</span>) {
     <span class="v">orders</span>.<span class="t">markPaid</span>(<span class="v">req</span>.<span class="v">body</span>.<span class="v">merchantRef</span>);
-    <span class="c">// VND 200K instant in WintelPay merchant wallet (less 4.5% MDR)</span>
+    <span class="c">// money lands in the merchant wallet, instant</span>
   }
 });</div>
         </div>
@@ -1405,291 +1330,79 @@ body{font-family:'Inter','Be Vietnam Pro',system-ui,sans-serif;background:var(--
 
 <div class="divider-h"></div>
 
-<!-- ======================== SECTION 4: MOAT ======================== -->
-<section id="sec-moat" class="sec">
+<!-- ======================== SECTION 4: HOW IT WORKS ======================== -->
+<section id="sec-arch" class="sec">
   <div class="sec-inner">
     <div class="reveal">
-      <div class="sec-eyebrow"><span class="se-num">04</span>The four-pillar moat</div>
-      <h2 class="sec-h2">Wallet · Rail · Brands · Bank.<br/><span class="gtext em">All four, in one stack.</span></h2>
+      <div class="sec-eyebrow"><span class="se-num">04</span>How it works</div>
+      <h2 class="sec-h2">Four surfaces.<br/><span class="gtext em">One quiet rail underneath.</span></h2>
       <p class="sec-sub">
-        No Vietnamese competitor has the combination. Replicating it requires a sequence of acquisitions not visible on any competitor strategy today. Below: same matrix as WinXPay Memo §9, against the only six firms with credible distribution.
+        WinXPay is a single product that shows up in four places. Whichever surface you start from — your wallet, the shopkeeper's till, a chat with your favourite store, or a brand promo — the underlying QR, settlement, and Pay-in-4 logic is the same.
       </p>
     </div>
 
     <div class="pillar-grid reveal" style="margin-top:36px">
       <div class="pillar">
-        <div class="pillar-num">PILLAR 01</div>
-        <div class="pillar-h">Identified shopper graph</div>
-        <div class="pillar-d">12.6M WinX members · 40%+ MAU · 200K Win+ Zalo OA followers. The only Vietnamese consumer wallet shipping with a base.</div>
-        <div class="pillar-v"><b>12.6M</b> identified · <b>40%+</b> MAU</div>
+        <div class="pillar-num">SURFACE 01</div>
+        <div class="pillar-h">Consumer wallet</div>
+        <div class="pillar-d">A standalone iOS &amp; Android app, plus a Mini-App inside Zalo. Top-up, scan, pay, split, get receipts. Pay-in-4 is a button, not a separate product.</div>
+        <div class="pillar-v">Quét trả · Pay in 4 · Lịch sử · Quà</div>
       </div>
       <div class="pillar">
-        <div class="pillar-num">PILLAR 02</div>
-        <div class="pillar-h">Closed-loop merchant rail</div>
-        <div class="pillar-d">WinX Tạp Hóa POS — free for tạp hóa. 50K → 500K outlets FY27 → FY34. WCM owned-stores layer on top. No competitor's POS sees both SI and SO.</div>
-        <div class="pillar-v"><b>50K → 500K</b> outlets · <b>1.4M</b> tạp hóa eligible</div>
+        <div class="pillar-num">SURFACE 02</div>
+        <div class="pillar-h">Merchant POS</div>
+        <div class="pillar-d">A Zalo Mini-App for tạp hóa shopkeepers — runs on the phone they already own. Ring up the basket, show the QR, see the money land. No terminal to buy.</div>
+        <div class="pillar-v">Giỏ hàng · Quét · Hoá đơn điện tử</div>
       </div>
       <div class="pillar">
-        <div class="pillar-num">PILLAR 03</div>
-        <div class="pillar-h">First-party brand budgets</div>
-        <div class="pillar-d">MCH 16 brands fund the at-till discount. Unilever, P&amp;G, Nestlé join the bid. CAC is brand-recovered first re-use cycle, not balance-sheet-funded.</div>
-        <div class="pillar-v"><b>~$0.32</b> net CAC · <b>$8–20</b> for MoMo</div>
+        <div class="pillar-num">SURFACE 03</div>
+        <div class="pillar-h">In-chat checkout</div>
+        <div class="pillar-d">An AI agent that lives inside any Zalo Official Account. Suggests baskets, takes orders, opens WinXPay to settle. Receipt comes back to the same conversation.</div>
+        <div class="pillar-v">Recommend · Checkout · E-invoice</div>
       </div>
       <div class="pillar">
-        <div class="pillar-num">PILLAR 04</div>
-        <div class="pillar-h">Bank partnership for BNPL</div>
-        <div class="pillar-d">Techcombank as channeling bank. 19.7% Masan economic interest. Klarna–Cross River pattern, transposed. Zero credit on WinXPay's balance sheet.</div>
-        <div class="pillar-v"><b>19.7%</b> TCB stake · <b>10–12%</b> NIM to TCB</div>
+        <div class="pillar-num">SURFACE 04</div>
+        <div class="pillar-h">Drop-in for any merchant</div>
+        <div class="pillar-d">A button, an SDK, a webhook. Lets any web shop, app, or POS accept WinXPay with the same QR + Pay-in-4 selector. No bespoke contract, no hardware.</div>
+        <div class="pillar-v">data-winxpay · /sdk · /webhook</div>
       </div>
     </div>
 
-    <!-- COMPETITIVE TABLE -->
-    <div class="moat-tbl reveal" style="margin-top:36px">
-      <table>
-        <thead>
-          <tr>
-            <th style="width:24%">Asset</th>
-            <th class="h-masan" style="width:13%">Masan</th>
-            <th>VinShop</th>
-            <th>KiotViet</th>
-            <th>MISA</th>
-            <th>TikTok Shop</th>
-            <th>BHX</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>Modern-Trade anchor</td>
-            <td class="t-y h-masan-cell"><span class="y-mark">✓</span>4,592 stores</td>
-            <td class="t-n"><span class="n-mark">✗</span>—</td>
-            <td class="t-n"><span class="n-mark">✗</span>—</td>
-            <td class="t-n"><span class="n-mark">✗</span>—</td>
-            <td class="t-n"><span class="n-mark">✗</span>—</td>
-            <td class="t-p"><span class="p-mark">~</span>≈2,000</td>
-          </tr>
-          <tr>
-            <td>GT sell-in rail</td>
-            <td class="t-y h-masan-cell"><span class="y-mark">✓</span>420K outlets</td>
-            <td class="t-p"><span class="p-mark">~</span>partial</td>
-            <td class="t-p"><span class="p-mark">~</span>partial</td>
-            <td class="t-n"><span class="n-mark">✗</span>—</td>
-            <td class="t-n"><span class="n-mark">✗</span>—</td>
-            <td class="t-n"><span class="n-mark">✗</span>—</td>
-          </tr>
-          <tr>
-            <td>First-party FMCG brands</td>
-            <td class="t-y h-masan-cell"><span class="y-mark">✓</span>MCH 16</td>
-            <td class="t-n"><span class="n-mark">✗</span>—</td>
-            <td class="t-n"><span class="n-mark">✗</span>—</td>
-            <td class="t-n"><span class="n-mark">✗</span>—</td>
-            <td class="t-n"><span class="n-mark">✗</span>—</td>
-            <td class="t-p"><span class="p-mark">~</span>private label</td>
-          </tr>
-          <tr>
-            <td>Identified shopper graph</td>
-            <td class="t-y h-masan-cell"><span class="y-mark">✓</span>12.6M</td>
-            <td class="t-p"><span class="p-mark">~</span>VinID separate</td>
-            <td class="t-n"><span class="n-mark">✗</span>—</td>
-            <td class="t-n"><span class="n-mark">✗</span>—</td>
-            <td class="t-p"><span class="p-mark">~</span>clicks only</td>
-            <td class="t-p"><span class="p-mark">~</span>nascent</td>
-          </tr>
-          <tr>
-            <td>Closed-loop POS</td>
-            <td class="t-y h-masan-cell"><span class="y-mark">✓</span>SI + SO</td>
-            <td class="t-n"><span class="n-mark">✗</span>—</td>
-            <td class="t-p"><span class="p-mark">~</span>sell-out only</td>
-            <td class="t-p"><span class="p-mark">~</span>sell-out</td>
-            <td class="t-n"><span class="n-mark">✗</span>—</td>
-            <td class="t-p"><span class="p-mark">~</span>sell-out · attribution only</td>
-          </tr>
-          <tr>
-            <td>Bank partnership for BNPL</td>
-            <td class="t-y h-masan-cell"><span class="y-mark">✓</span>TCB · 19.7%</td>
-            <td class="t-n"><span class="n-mark">✗</span>—</td>
-            <td class="t-n"><span class="n-mark">✗</span>—</td>
-            <td class="t-p"><span class="p-mark">~</span>partner-bank</td>
-            <td class="t-n"><span class="n-mark">✗</span>—</td>
-            <td class="t-n"><span class="n-mark">✗</span>—</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-
-    <div class="reveal" style="margin-top:18px;font-size:11px;color:var(--t3);font-weight:600;text-align:right">
-      Source: WinXPay Memo §9 · WinX IC Memo v22 · 29 April 2026
-    </div>
-
-  </div>
-</section>
-
-<div class="divider-h"></div>
-
-<!-- ======================== SECTION 5: ECONOMICS ======================== -->
-<section id="sec-econ" class="sec">
-  <div class="sec-inner">
-    <div class="reveal">
-      <div class="sec-eyebrow"><span class="se-num">05</span>The economics</div>
-      <h2 class="sec-h2">$50m → $8bn GPV · <span class="gtext em">two merchant-paid revenue lines</span></h2>
-      <p class="sec-sub">
-        Built bottom-up from the merchant base. Active merchants × annual GPV per active merchant gives total GPV. BNPL share applied to GPV gives the two revenue lines. CAC is structurally one-tenth of MoMo's incumbent cost because brand budgets — not our balance sheet — pay for it.
-      </p>
-    </div>
-
-    <!-- GPV CHART -->
-    <div class="reveal" style="margin-top:48px">
-      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px">
-        <div style="font-size:13px;font-weight:800;color:#fff">Total GPV trajectory · USD m</div>
-        <div style="display:flex;gap:18px;font-size:11px;color:var(--t3);font-weight:600">
-          <span style="display:inline-flex;align-items:center;gap:5px"><span style="width:10px;height:10px;border-radius:3px;background:linear-gradient(180deg,#FF2E63,#7C2DFF)"></span>Total GPV</span>
-          <span style="display:inline-flex;align-items:center;gap:5px;color:#FF7090">Total revenue =1% MDR + 3% net BNPL</span>
-        </div>
-      </div>
-      <div class="gpv-chart">
-        <div class="gpv-bar-wrap"><div class="gpv-bar-v">$50m</div><div class="gpv-bar-rev">$0.55m rev</div><div class="gpv-bar" style="height:1.2%"></div><div class="gpv-bar-yr">FY27</div></div>
-        <div class="gpv-bar-wrap"><div class="gpv-bar-v">$200m</div><div class="gpv-bar-rev">$2.2m rev</div><div class="gpv-bar" style="height:4%"></div><div class="gpv-bar-yr">FY28</div></div>
-        <div class="gpv-bar-wrap"><div class="gpv-bar-v">$1.6bn</div><div class="gpv-bar-rev">$19.9m rev</div><div class="gpv-bar" style="height:24%"></div><div class="gpv-bar-yr">FY30</div></div>
-        <div class="gpv-bar-wrap"><div class="gpv-bar-v">$4.3bn</div><div class="gpv-bar-rev">$58.5m rev</div><div class="gpv-bar" style="height:60%"></div><div class="gpv-bar-yr">FY32</div></div>
-        <div class="gpv-bar-wrap"><div class="gpv-bar-v">$8.0bn</div><div class="gpv-bar-rev">$120m rev</div><div class="gpv-bar" style="height:100%"></div><div class="gpv-bar-yr">FY34E</div></div>
-      </div>
-    </div>
-
-    <!-- BUILD TABLE -->
-    <div class="reveal" style="margin-top:60px;display:grid;grid-template-columns:1fr 1fr;gap:36px">
+    <!-- THE RAIL UNDERNEATH -->
+    <div class="reveal" style="margin-top:48px;background:rgba(255,255,255,.02);border:1px solid var(--line);border-radius:18px;padding:32px;display:grid;grid-template-columns:1.2fr 1fr 1fr 1fr;gap:24px;align-items:center">
       <div>
-        <div style="font-size:13px;font-weight:800;color:#fff;margin-bottom:14px">CAC compression · gross at-till discount net of brand recovery</div>
-        <div style="background:rgba(255,255,255,.02);border:1px solid var(--line);border-radius:14px;padding:6px 18px">
-          <div class="cac-grid">
-            <div class="cac-l"><span class="cac-d" style="background:#A50064"></span>MoMo · 2018-22 growth</div>
-            <div class="cac-bar"><div class="cac-bar-f" style="width:90%;background:linear-gradient(90deg,#A50064,#FF2E63)">200–500K VND</div></div>
-            <div class="cac-amt">$8–20</div>
-          </div>
-          <div class="cac-grid">
-            <div class="cac-l"><span class="cac-d" style="background:#0068FF"></span>ZaloPay</div>
-            <div class="cac-bar"><div class="cac-bar-f" style="width:75%;background:#0068FF">150–400K VND</div></div>
-            <div class="cac-amt">$6–16</div>
-          </div>
-          <div class="cac-grid">
-            <div class="cac-l"><span class="cac-d" style="background:#EE4D2D"></span>ShopeePay</div>
-            <div class="cac-bar"><div class="cac-bar-f" style="width:55%;background:#EE4D2D">100–300K VND</div></div>
-            <div class="cac-amt">$4–12</div>
-          </div>
-          <div class="cac-grid">
-            <div class="cac-l"><span class="cac-d" style="background:#888"></span>Moca <span style="font-size:9px;color:var(--t4);font-weight:600">(exited Jul-2024)</span></div>
-            <div class="cac-bar"><div class="cac-bar-f" style="width:45%;background:#666">200K+ VND</div></div>
-            <div class="cac-amt">$8+</div>
-          </div>
-          <div class="cac-grid">
-            <div class="cac-l"><span class="cac-d" style="background:#FFB020"></span>WinXPay · gross</div>
-            <div class="cac-bar"><div class="cac-bar-f" style="width:14%;background:linear-gradient(90deg,#FFB020,#FF7E1B)">30–50K</div></div>
-            <div class="cac-amt">$1.20–2.00</div>
-          </div>
-          <div class="cac-grid">
-            <div class="cac-l"><span class="cac-d" style="background:#00D9C0"></span><b style="color:#fff">WinXPay · net of brand recovery</b></div>
-            <div class="cac-bar"><div class="cac-bar-f" style="width:3%;background:linear-gradient(90deg,#00D9C0,#0099B0)">~8K</div></div>
-            <div class="cac-amt cac-em">~$0.32</div>
-          </div>
-        </div>
-        <div style="font-size:11px;color:var(--t3);margin-top:14px;line-height:1.6">
-          Incumbents fund 100% of CAC out of their own balance sheets. WinXPay's CAC is brand-funded via WinX Ads at the till, recovered within first re-use cycle from MCH first-party brand budgets that already exist. <span class="pdf-cite">Memo §10</span>
-        </div>
+        <div style="font-size:11px;font-weight:800;letter-spacing:.18em;color:var(--wxp);text-transform:uppercase;margin-bottom:8px">Underneath, always</div>
+        <div style="font-size:18px;font-weight:800;color:#fff;letter-spacing:-.3px;line-height:1.3">A single QR, a single rail, a single bank.</div>
+        <div style="font-size:13px;color:var(--t2);margin-top:8px;line-height:1.6">Every WinXPay payment, no matter which surface it starts on, goes through the same three components.</div>
       </div>
-
-      <div>
-        <div style="font-size:13px;font-weight:800;color:#fff;margin-bottom:14px">Revenue mix · two merchant-paid lines</div>
-        <div style="display:flex;flex-direction:column;gap:14px">
-          <div style="background:linear-gradient(135deg,rgba(255,46,99,.12),rgba(124,45,255,.06));border:1px solid rgba(255,46,99,.25);border-radius:14px;padding:18px">
-            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
-              <div style="font-size:14px;font-weight:800;color:#fff">Payment processing</div>
-              <div style="font-size:18px;font-weight:900;color:#FF2E63;font-variant-numeric:tabular-nums;letter-spacing:-.5px">1.0%</div>
-            </div>
-            <div style="font-size:12px;color:var(--t2);line-height:1.55">MDR on non-BNPL volume. Pure rail economics, no credit. Scales linearly with GPV.</div>
-            <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin-top:14px">
-              <div style="text-align:center;padding:6px;background:rgba(255,255,255,.03);border-radius:7px"><div style="font-size:11px;color:#fff;font-weight:800;font-variant-numeric:tabular-nums">$0.5m</div><div style="font-size:8px;color:var(--t4);font-weight:600;margin-top:1px">FY27</div></div>
-              <div style="text-align:center;padding:6px;background:rgba(255,255,255,.03);border-radius:7px"><div style="font-size:11px;color:#fff;font-weight:800;font-variant-numeric:tabular-nums">$1.9m</div><div style="font-size:8px;color:var(--t4);font-weight:600;margin-top:1px">FY28</div></div>
-              <div style="text-align:center;padding:6px;background:rgba(255,255,255,.03);border-radius:7px"><div style="font-size:11px;color:#fff;font-weight:800;font-variant-numeric:tabular-nums">$14m</div><div style="font-size:8px;color:var(--t4);font-weight:600;margin-top:1px">FY30</div></div>
-              <div style="text-align:center;padding:6px;background:rgba(255,255,255,.03);border-radius:7px"><div style="font-size:11px;color:#fff;font-weight:800;font-variant-numeric:tabular-nums">$35m</div><div style="font-size:8px;color:var(--t4);font-weight:600;margin-top:1px">FY32</div></div>
-              <div style="text-align:center;padding:6px;background:rgba(255,46,99,.18);border:1px solid rgba(255,46,99,.4);border-radius:7px"><div style="font-size:11px;color:#fff;font-weight:800;font-variant-numeric:tabular-nums">$60m</div><div style="font-size:8px;color:var(--wxp);font-weight:700;margin-top:1px">FY34E</div></div>
-            </div>
-          </div>
-          <div style="background:linear-gradient(135deg,rgba(255,176,32,.12),rgba(255,46,99,.06));border:1px solid rgba(255,176,32,.3);border-radius:14px;padding:18px">
-            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
-              <div style="font-size:14px;font-weight:800;color:#fff">BNPL fee · net of TCB</div>
-              <div style="font-size:18px;font-weight:900;color:#FFB020;font-variant-numeric:tabular-nums;letter-spacing:-.5px">3.0%</div>
-            </div>
-            <div style="font-size:12px;color:var(--t2);line-height:1.55">After 1.5% to TCB. Scales with BNPL share of GPV (3% FY27 → 25% FY34E). Zero credit on our balance sheet.</div>
-            <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin-top:14px">
-              <div style="text-align:center;padding:6px;background:rgba(255,255,255,.03);border-radius:7px"><div style="font-size:11px;color:#fff;font-weight:800;font-variant-numeric:tabular-nums">$0.05m</div><div style="font-size:8px;color:var(--t4);font-weight:600;margin-top:1px">FY27</div></div>
-              <div style="text-align:center;padding:6px;background:rgba(255,255,255,.03);border-radius:7px"><div style="font-size:11px;color:#fff;font-weight:800;font-variant-numeric:tabular-nums">$0.3m</div><div style="font-size:8px;color:var(--t4);font-weight:600;margin-top:1px">FY28</div></div>
-              <div style="text-align:center;padding:6px;background:rgba(255,255,255,.03);border-radius:7px"><div style="font-size:11px;color:#fff;font-weight:800;font-variant-numeric:tabular-nums">$5.8m</div><div style="font-size:8px;color:var(--t4);font-weight:600;margin-top:1px">FY30</div></div>
-              <div style="text-align:center;padding:6px;background:rgba(255,255,255,.03);border-radius:7px"><div style="font-size:11px;color:#fff;font-weight:800;font-variant-numeric:tabular-nums">$23m</div><div style="font-size:8px;color:var(--t4);font-weight:600;margin-top:1px">FY32</div></div>
-              <div style="text-align:center;padding:6px;background:rgba(255,176,32,.18);border:1px solid rgba(255,176,32,.4);border-radius:7px"><div style="font-size:11px;color:#fff;font-weight:800;font-variant-numeric:tabular-nums">$60m</div><div style="font-size:8px;color:#FFB020;font-weight:700;margin-top:1px">FY34E</div></div>
-            </div>
-          </div>
-        </div>
+      <div style="text-align:center;padding:14px;background:rgba(165,0,100,.08);border:1px solid rgba(165,0,100,.25);border-radius:12px">
+        <div style="font-size:24px;margin-bottom:6px">🔗</div>
+        <div style="font-size:13px;font-weight:800;color:#fff;margin-bottom:3px">VietQR</div>
+        <div style="font-size:11px;color:var(--t2);line-height:1.5">National QR standard. Issued by Techcombank, recognised by every bank app.</div>
+      </div>
+      <div style="text-align:center;padding:14px;background:rgba(0,104,255,.08);border:1px solid rgba(0,104,255,.25);border-radius:12px">
+        <div style="font-size:24px;margin-bottom:6px">⚡</div>
+        <div style="font-size:13px;font-weight:800;color:#fff;margin-bottom:3px">NAPAS 247</div>
+        <div style="font-size:11px;color:var(--t2);line-height:1.5">Vietnam's instant interbank rail. Settles 24/7, in seconds.</div>
+      </div>
+      <div style="text-align:center;padding:14px;background:rgba(237,28,36,.08);border:1px solid rgba(237,28,36,.25);border-radius:12px">
+        <div style="font-size:24px;margin-bottom:6px">🏦</div>
+        <div style="font-size:13px;font-weight:800;color:#fff;margin-bottom:3px">Techcombank</div>
+        <div style="font-size:11px;color:var(--t2);line-height:1.5">Holds the wallet account, underwrites Pay-in-4, books the receivable.</div>
       </div>
     </div>
 
   </div>
 </section>
 
-<!-- ======================== FOOTER / THE ASK ======================== -->
+<!-- ======================== FOOTER ======================== -->
 <footer class="foot">
   <div class="foot-inner">
-    <div class="foot-grid reveal">
-      <div>
-        <div class="sec-eyebrow" style="color:var(--wxp)"><span class="se-num">06</span>The ask</div>
-        <h2 class="foot-h">Phase 0 capital allocation: <span class="em">USD 4–6m</span> over 12 months. Closed pilot Q2 2027 · HCMC, Hà Nội, Đà Nẵng.</h2>
-        <p style="font-size:13px;color:var(--t2);margin-top:18px;line-height:1.6;max-width:480px">
-          Activation gate: 200K active users on WinX Tạp Hóa POS clearing 50K outlets, sustained over 60 working days. Window vs MoMo / ZaloPay / TCB-direct moves: <b style="color:#fff">18–36 months</b> per regulatory and POS-rail timing.
-        </p>
-      </div>
-      <div>
-        <div class="foot-asks">
-          <div class="foot-ask">
-            <div class="foot-ask-num">1</div>
-            <div class="foot-ask-bd">
-              <div class="fa-t">IC clearance</div>
-              <div class="fa-d">pre-Q3 2026</div>
-            </div>
-          </div>
-          <div class="foot-ask">
-            <div class="foot-ask-num">2</div>
-            <div class="foot-ask-bd">
-              <div class="fa-t">TCB MSA executed</div>
-              <div class="fa-d">by Q2 2026</div>
-            </div>
-          </div>
-          <div class="foot-ask">
-            <div class="foot-ask-num">3</div>
-            <div class="foot-ask-bd">
-              <div class="fa-t">POS rail to 50K outlets</div>
-              <div class="fa-d">by Q4 2026</div>
-            </div>
-          </div>
-          <div class="foot-ask">
-            <div class="foot-ask-num">4</div>
-            <div class="foot-ask-bd">
-              <div class="fa-t">Closed pilot launch</div>
-              <div class="fa-d">Q2 2027 · HCMC · Hà Nội · Đà Nẵng</div>
-            </div>
-          </div>
-          <div class="foot-ask">
-            <div class="foot-ask-num">5</div>
-            <div class="foot-ask-bd">
-              <div class="fa-t">Activation gate</div>
-              <div class="fa-d">200K users · 50K outlets · 60 working days</div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
     <div class="foot-meta">
-      <div class="fm-l">WinXPay · Memo for Danny Le · S&amp;D · pre-decisional · May 2026</div>
+      <div class="fm-l">WinXPay · Vietnamese consumer wallet · Built on Techcombank rails</div>
       <div class="fm-r">
-        <span>Memo source: <b style="color:var(--t1)">WinXPay Narrative v2</b></span>
-        <span>WinX IC Memo v22 · 29 Apr 2026</span>
+        <span>VietQR · NAPAS 247</span>
+        <span>Pay in 4 · 0% interest</span>
       </div>
     </div>
   </div>
