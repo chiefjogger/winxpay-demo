@@ -4,8 +4,8 @@
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"/>
 <meta name="theme-color" content="#F7F5F2"/>
-<title>WinXPay — Vietnamese consumer wallet</title>
-<meta name="description" content="WinXPay is a Vietnamese consumer wallet that pays at the till. QR scan, Pay-in-4, brand-funded discount. Built on Techcombank rails."/>
+<title>WinXPay — Ví thanh toán tại quầy · Hai sản phẩm, một thương hiệu</title>
+<meta name="description" content="WinXPay là nền tảng thanh toán tại quầy gồm hai sản phẩm: WinXPay cho Người bán (POS miễn phí) và WinXPay cho Người dùng (ví quét VietQR, trả góp 4 lần). Vận hành trên hạ tầng Techcombank."/>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,300;1,9..144,400;1,9..144,500;1,9..144,600&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Be+Vietnam+Pro:wght@400;500;600;700&display=swap"/>
@@ -173,18 +173,18 @@ body{font-family:var(--font-body);background:var(--paper);color:var(--ink);overf
 .wxp-card::after{content:'';position:absolute;top:18px;left:18px;right:18px;bottom:18px;border:1px solid rgba(255,255,255,0.18);border-radius:8px;pointer-events:none;animation:none}
 @keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(8px)}}
 .wxp-card-top{display:flex;justify-content:space-between;align-items:start;position:relative;z-index:2}
-.wxp-card-top .wxp-brand{font-size:10px;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;color:rgba(255,255,255,.85)}
-.wxp-card-top .wxp-id{font-size:9px;color:rgba(255,255,255,.65);margin-top:2px;font-family:'JetBrains Mono',monospace;letter-spacing:.3px}
+.wxp-card-top .wxp-brand{font-family:var(--font-display);font-size:18px;font-weight:400;font-style:italic;letter-spacing:-0.02em;text-transform:none;color:#fff;line-height:1}
+.wxp-card-top .wxp-id{font-size:10.5px;color:rgba(255,255,255,.72);margin-top:3px;font-family:var(--font-display);font-style:italic;letter-spacing:0;font-weight:400}
 .wxp-card-tcb{display:flex;align-items:center;gap:5px;background:rgba(255,255,255,.18);border:1px solid rgba(255,255,255,.25);padding:3px 8px;border-radius:12px;font-size:8.5px;font-weight:700;letter-spacing:.3px;backdrop-filter:blur(8px)}
 .wxp-card-tcb .tcb-d{width:6px;height:6px;border-radius:1px;background:#fff}
 .wxp-card-bal{position:relative;z-index:2}
-.wxp-card-bal .wcb-l{font-size:10px;color:rgba(255,255,255,.7);font-weight:500;text-transform:uppercase;letter-spacing:1px}
-.wxp-card-bal .wcb-v{font-size:30px;font-weight:900;color:#fff;letter-spacing:-1.5px;line-height:1;margin-top:4px;display:flex;align-items:baseline;gap:5px}
-.wxp-card-bal .wcb-v sup{font-size:14px;font-weight:700;opacity:.7;letter-spacing:0}
+.wxp-card-bal .wcb-l{font-size:10px;color:rgba(255,255,255,.65);font-weight:500;text-transform:uppercase;letter-spacing:0.16em;font-family:var(--font-body)}
+.wxp-card-bal .wcb-v{font-family:var(--font-display);font-size:32px;font-weight:400;color:#fff;letter-spacing:-1px;line-height:1;margin-top:6px;display:flex;align-items:baseline;gap:5px;font-variant-numeric:tabular-nums}
+.wxp-card-bal .wcb-v sup{font-size:15px;font-weight:400;opacity:.7;letter-spacing:0;font-style:italic}
 .wxp-card-bot{display:flex;justify-content:space-between;align-items:end;position:relative;z-index:2}
-.wxp-card-bot .wcb-credit .wcc-l{font-size:8px;color:rgba(255,255,255,.65);font-weight:600;text-transform:uppercase;letter-spacing:.5px}
-.wxp-card-bot .wcb-credit .wcc-v{font-size:11px;font-weight:800;color:#fff;margin-top:1px}
-.wxp-card-bot .wcb-vqr{display:flex;align-items:center;gap:4px;font-size:8px;font-weight:800;color:rgba(255,255,255,.85);letter-spacing:.5px;text-transform:uppercase}
+.wxp-card-bot .wcb-credit .wcc-l{font-size:9px;color:rgba(255,255,255,.62);font-weight:500;text-transform:uppercase;letter-spacing:0.14em;font-family:var(--font-body)}
+.wxp-card-bot .wcb-credit .wcc-v{font-family:var(--font-mono);font-size:12px;font-weight:500;color:#fff;margin-top:3px;letter-spacing:0}
+.wxp-card-bot .wcb-vqr{display:flex;align-items:center;gap:5px;font-size:9px;font-weight:500;color:rgba(255,255,255,.72);letter-spacing:0.10em;text-transform:uppercase;font-family:var(--font-body)}
 .wxp-card-bot .wcb-vqr .v-d{width:14px;height:14px;background:repeating-conic-gradient(#fff 0% 25%,transparent 0% 50%) 50% / 4px 4px;border-radius:2px}
 
 /* WALLET QUICK ACTIONS */
@@ -214,15 +214,15 @@ body{font-family:var(--font-body);background:var(--paper);color:var(--ink);overf
 .wxp-tx .wtx-amt .wta-v.pos{color:#5EEAD4}
 .wxp-tx .wtx-amt .wta-tag{font-size:7.5px;color:rgba(255,255,255,.5);font-weight:600;margin-top:1px;text-transform:uppercase;letter-spacing:.3px}
 
-/* BNPL ROW */
-.wxp-bnpl{margin:8px 14px;background:linear-gradient(135deg,rgba(255,176,32,.18),rgba(255,46,99,.06));border:1px solid rgba(255,176,32,.3);border-radius:12px;padding:10px 12px;position:relative;z-index:2;overflow:hidden}
-.wxp-bnpl .bn-h{display:flex;align-items:center;gap:6px;font-size:10px;font-weight:800;color:#FFB020;margin-bottom:6px;letter-spacing:.2px;text-transform:uppercase}
-.wxp-bnpl .bn-r{display:flex;justify-content:space-between;align-items:center;font-size:11px;color:#fff}
-.wxp-bnpl .bn-amt{font-weight:800;font-size:13px}
-.wxp-bnpl .bn-due{font-size:9px;color:rgba(255,255,255,.55);margin-top:2px;font-weight:500}
-.wxp-bnpl .bn-bar{height:3px;background:rgba(255,255,255,.08);border-radius:3px;margin-top:8px;overflow:hidden}
-.wxp-bnpl .bn-bar-f{height:100%;width:25%;background:linear-gradient(90deg,#FFB020,#FF7E1B);border-radius:3px}
-.wxp-bnpl .bn-info{display:flex;justify-content:space-between;font-size:8.5px;color:rgba(255,255,255,.5);margin-top:5px;font-weight:600}
+/* PAY-IN-4 ROW */
+.wxp-bnpl{margin:8px 14px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.10);border-radius:10px;padding:12px 14px;position:relative;z-index:2;overflow:hidden}
+.wxp-bnpl .bn-h{display:flex;align-items:center;gap:6px;font-size:10px;font-weight:500;color:rgba(255,255,255,.62);margin-bottom:8px;letter-spacing:0.14em;text-transform:uppercase;font-family:var(--font-body)}
+.wxp-bnpl .bn-r{display:flex;justify-content:space-between;align-items:center;color:#fff}
+.wxp-bnpl .bn-amt{font-family:var(--font-display);font-weight:400;font-size:18px;letter-spacing:-0.02em;font-variant-numeric:tabular-nums;line-height:1.1}
+.wxp-bnpl .bn-due{font-family:var(--font-body);font-size:10px;color:rgba(255,255,255,.55);margin-top:3px;font-weight:400}
+.wxp-bnpl .bn-bar{height:2px;background:rgba(255,255,255,.10);border-radius:2px;margin-top:10px;overflow:hidden}
+.wxp-bnpl .bn-bar-f{height:100%;width:25%;background:#fff;border-radius:2px}
+.wxp-bnpl .bn-info{display:flex;justify-content:space-between;font-size:9.5px;color:rgba(255,255,255,.50);margin-top:6px;font-weight:400;font-family:var(--font-mono);letter-spacing:0.04em}
 
 /* BOTTOM TAB */
 .wxp-tab{display:flex;border-top:1px solid rgba(255,255,255,.08);background:rgba(8,12,22,.65);backdrop-filter:blur(20px);padding:6px 0 14px;position:relative;z-index:3}
@@ -343,16 +343,16 @@ body{font-family:var(--font-body);background:var(--paper);color:var(--ink);overf
 .code-body{padding:22px 28px;line-height:1.75;overflow-x:auto;white-space:pre;color:rgba(255,255,255,0.92);font-feature-settings:'liga' 0}
 .code-body .k{color:#FF8FA9}.code-body .s{color:#7DD3FC}.code-body .n{color:#FCD34D}.code-body .c{color:rgba(255,255,255,0.45);font-style:italic}.code-body .v{color:#fff;opacity:.95}.code-body .p{color:#fff}.code-body .t{color:#C4B5FD}
 
-/* PILLAR — editorial 4-up bordered grid */
-.pillar-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:0;border-top:1px solid var(--ink);border-left:1px solid var(--ink)}
-.pillar{background:transparent;border:none;border-right:1px solid var(--ink);border-bottom:1px solid var(--ink);border-radius:0;padding:36px 30px 38px;position:relative;overflow:hidden;transition:background .25s}
+/* PILLAR — editorial 5-up bordered grid */
+.pillar-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:0;border-top:1px solid var(--ink);border-left:1px solid var(--ink)}
+.pillar{background:transparent;border:none;border-right:1px solid var(--ink);border-bottom:1px solid var(--ink);border-radius:0;padding:32px 24px 34px;position:relative;overflow:hidden;transition:background .25s;display:flex;flex-direction:column}
 .pillar:hover{background:rgba(192,24,92,0.04);transform:none}
 .pillar::before{display:none}
-.pillar-num{font-size:11px;font-weight:500;color:var(--ink-3);letter-spacing:0.16em;font-family:var(--font-mono);text-transform:uppercase}
-.pillar-h{font-family:var(--font-display);font-size:26px;font-weight:400;color:var(--ink);letter-spacing:-0.022em;margin-top:18px;margin-bottom:14px;line-height:1.1;font-style:italic}
-.pillar-d{font-size:14px;color:var(--ink-2);line-height:1.6;font-family:var(--font-body)}
-.pillar-v{margin-top:18px;font-size:11px;color:var(--ink-3);font-weight:500;text-transform:uppercase;letter-spacing:0.08em;font-family:var(--font-mono)}
-.pillar-v b{color:var(--ink);font-weight:500;font-family:var(--font-mono);font-size:11px;letter-spacing:0.04em}
+.pillar-num{font-size:10.5px;font-weight:500;color:var(--ink-3);letter-spacing:0.16em;font-family:var(--font-mono);text-transform:uppercase}
+.pillar-h{font-family:var(--font-display);font-size:23px;font-weight:400;color:var(--ink);letter-spacing:-0.022em;margin-top:16px;margin-bottom:12px;line-height:1.12;font-style:italic}
+.pillar-d{font-size:13.5px;color:var(--ink-2);line-height:1.55;font-family:var(--font-body);flex:1}
+.pillar-v{margin-top:18px;font-size:10.5px;color:var(--ink-3);font-weight:500;text-transform:uppercase;letter-spacing:0.08em;font-family:var(--font-mono);line-height:1.5}
+.pillar-v b{color:var(--ink);font-weight:500;font-family:var(--font-mono);font-size:10.5px;letter-spacing:0.04em}
 
 /* CHAT PHONE — ZALO OA AI */
 .zoa-app{flex:1;background:#E8F0F5;display:flex;flex-direction:column;overflow:hidden}
@@ -541,11 +541,11 @@ body{font-family:var(--font-body);background:var(--paper);color:var(--ink);overf
       </div>
     </a>
     <div class="flex-1"></div>
-    <a class="nav-link" onclick="document.getElementById('sec-flow').scrollIntoView({behavior:'smooth'})">At-the-till</a>
-    <a class="nav-link" onclick="document.getElementById('sec-ai').scrollIntoView({behavior:'smooth'})">In-chat checkout</a>
-    <a class="nav-link" onclick="document.getElementById('sec-api').scrollIntoView({behavior:'smooth'})">For merchants</a>
-    <a class="nav-link" onclick="document.getElementById('sec-arch').scrollIntoView({behavior:'smooth'})">How it works</a>
-    <div class="nav-pill"><span class="dot"></span>INTERACTIVE DEMO</div>
+    <a class="nav-link" onclick="document.getElementById('sec-flow').scrollIntoView({behavior:'smooth'})">Tại quầy</a>
+    <a class="nav-link" onclick="document.getElementById('sec-ai').scrollIntoView({behavior:'smooth'})">Trong Zalo</a>
+    <a class="nav-link" onclick="document.getElementById('sec-api').scrollIntoView({behavior:'smooth'})">Cho người bán</a>
+    <a class="nav-link" onclick="document.getElementById('sec-arch').scrollIntoView({behavior:'smooth'})">Kiến trúc</a>
+    <div class="nav-pill"><span class="dot"></span>BẢN DEMO TƯƠNG TÁC</div>
   </div>
 </nav>
 
@@ -555,18 +555,18 @@ body{font-family:var(--font-body);background:var(--paper);color:var(--ink);overf
   <div class="hero-inner reveal" style="position:relative;z-index:2">
     <div class="hero-eyebrow">
       <span class="e-ico">W</span>
-      Vietnamese consumer wallet · powered by Techcombank
+      Ví thanh toán tại quầy · Hai sản phẩm, một thương hiệu
     </div>
     <h1 class="hero-h1">
-      The wallet that meets you<br/>
-      <span class="gtext em">at the till.</span>
+      Một thương hiệu.<br/>
+      <span class="gtext em">Hai sản phẩm thanh toán.</span>
     </h1>
     <p class="hero-sub">
-      WinXPay is a consumer payment app for Vietnam. Scan a VietQR at the till, pay now or split into four, get a brand-funded discount instantly. The merchant settles the same way they always have — only it's faster, cheaper, and printed on paper if they want.
+      WinXPay <em style="font-family:var(--font-display);font-style:italic;color:var(--ink)">cho Người bán</em> là POS miễn phí chạy trên điện thoại của tạp hoá. WinXPay <em style="font-family:var(--font-display);font-style:italic;color:var(--ink)">cho Người dùng</em> là ví quét VietQR, trả ngay hoặc chia làm bốn, nhận ưu đãi do thương hiệu tài trợ ngay tại quầy. Cùng một mã QR, cùng một hạ tầng Techcombank.
     </p>
     <div class="hero-cta">
-      <button class="btn-prim" onclick="document.getElementById('sec-flow').scrollIntoView({behavior:'smooth'})">Watch a payment →</button>
-      <button class="btn-sec" onclick="document.getElementById('sec-api').scrollIntoView({behavior:'smooth'})">For merchants</button>
+      <button class="btn-prim" onclick="document.getElementById('sec-flow').scrollIntoView({behavior:'smooth'})">Xem một giao dịch →</button>
+      <button class="btn-sec" onclick="document.getElementById('sec-api').scrollIntoView({behavior:'smooth'})">Dành cho người bán</button>
     </div>
   </div>
 </section>
@@ -574,25 +574,25 @@ body{font-family:var(--font-body);background:var(--paper);color:var(--ink);overf
 <!-- TICKER -->
 <div class="ticker">
   <div class="ticker-track">
-    <div class="ticker-item"><span class="ti-d"></span><b>VietQR</b> · works at any merchant</div>
-    <div class="ticker-item"><span class="ti-d"></span><b>NAPAS 247</b> · same rail as your bank</div>
-    <div class="ticker-item"><span class="ti-d"></span><b>Pay in 4</b> · 0% interest · auto-debit</div>
-    <div class="ticker-item"><span class="ti-d"></span><b>TCB-linked</b> · one wallet, one bank</div>
-    <div class="ticker-item"><span class="ti-d"></span><b>Brand-funded discount</b> at the till</div>
-    <div class="ticker-item"><span class="ti-d"></span><b>Zalo Mini-App POS</b> · runs on tạp hóa's phone</div>
-    <div class="ticker-item"><span class="ti-d"></span><b>E-invoice</b> baked in · NĐ 70/2025 ready</div>
-    <div class="ticker-item"><span class="ti-d"></span><b>One QR</b> · in-store, in-chat, in-app</div>
-    <div class="ticker-item"><span class="ti-d"></span><span class="em">No new POS hardware</span> needed</div>
+    <div class="ticker-item"><span class="ti-d"></span><b>VietQR</b> · chấp nhận tại mọi điểm</div>
+    <div class="ticker-item"><span class="ti-d"></span><b>NAPAS 247</b> · cùng hạ tầng ngân hàng</div>
+    <div class="ticker-item"><span class="ti-d"></span><b>Trả 4 lần</b> · 0% lãi · tự động trừ</div>
+    <div class="ticker-item"><span class="ti-d"></span><b>VNeID</b> · đăng ký 35–50 giây</div>
+    <div class="ticker-item"><span class="ti-d"></span><b>Ưu đãi do thương hiệu tài trợ</b> ngay tại quầy</div>
+    <div class="ticker-item"><span class="ti-d"></span><b>Tác nhân AI</b> · gợi ý, ghi sổ, đặt hàng</div>
+    <div class="ticker-item"><span class="ti-d"></span><b>Hoá đơn điện tử</b> · NĐ 70/2025</div>
+    <div class="ticker-item"><span class="ti-d"></span><b>Một mã QR</b> · tại quầy, trong chat, trong app</div>
+    <div class="ticker-item"><span class="ti-d"></span><span class="em">Không cần mua máy POS mới</span></div>
     <!-- duplicate for seamless loop -->
-    <div class="ticker-item"><span class="ti-d"></span><b>VietQR</b> · works at any merchant</div>
-    <div class="ticker-item"><span class="ti-d"></span><b>NAPAS 247</b> · same rail as your bank</div>
-    <div class="ticker-item"><span class="ti-d"></span><b>Pay in 4</b> · 0% interest · auto-debit</div>
-    <div class="ticker-item"><span class="ti-d"></span><b>TCB-linked</b> · one wallet, one bank</div>
-    <div class="ticker-item"><span class="ti-d"></span><b>Brand-funded discount</b> at the till</div>
-    <div class="ticker-item"><span class="ti-d"></span><b>Zalo Mini-App POS</b> · runs on tạp hóa's phone</div>
-    <div class="ticker-item"><span class="ti-d"></span><b>E-invoice</b> baked in · NĐ 70/2025 ready</div>
-    <div class="ticker-item"><span class="ti-d"></span><b>One QR</b> · in-store, in-chat, in-app</div>
-    <div class="ticker-item"><span class="ti-d"></span><span class="em">No new POS hardware</span> needed</div>
+    <div class="ticker-item"><span class="ti-d"></span><b>VietQR</b> · chấp nhận tại mọi điểm</div>
+    <div class="ticker-item"><span class="ti-d"></span><b>NAPAS 247</b> · cùng hạ tầng ngân hàng</div>
+    <div class="ticker-item"><span class="ti-d"></span><b>Trả 4 lần</b> · 0% lãi · tự động trừ</div>
+    <div class="ticker-item"><span class="ti-d"></span><b>VNeID</b> · đăng ký 35–50 giây</div>
+    <div class="ticker-item"><span class="ti-d"></span><b>Ưu đãi do thương hiệu tài trợ</b> ngay tại quầy</div>
+    <div class="ticker-item"><span class="ti-d"></span><b>Tác nhân AI</b> · gợi ý, ghi sổ, đặt hàng</div>
+    <div class="ticker-item"><span class="ti-d"></span><b>Hoá đơn điện tử</b> · NĐ 70/2025</div>
+    <div class="ticker-item"><span class="ti-d"></span><b>Một mã QR</b> · tại quầy, trong chat, trong app</div>
+    <div class="ticker-item"><span class="ti-d"></span><span class="em">Không cần mua máy POS mới</span></div>
   </div>
 </div>
 
@@ -600,10 +600,10 @@ body{font-family:var(--font-body);background:var(--paper);color:var(--ink);overf
 <section id="sec-flow" class="sec">
   <div class="sec-inner">
     <div class="reveal">
-      <div class="sec-eyebrow"><span class="se-num">01</span>At the till</div>
-      <h2 class="sec-h2">Walk into a tạp hóa. Open the app.<br/><span class="gtext em">Pay in five seconds.</span></h2>
+      <div class="sec-eyebrow"><span class="se-num">01</span>Tại quầy thu ngân</div>
+      <h2 class="sec-h2">Bước vào tạp hoá. Mở ứng dụng.<br/><span class="gtext em">Thanh toán trong năm giây.</span></h2>
       <p class="sec-sub">
-        On the left, the WinX Tạp Hóa POS — a Zalo Mini-App that runs on Cô Lan's phone. On the right, the WinXPay consumer wallet on the shopper's phone. The two talk to each other over a single VietQR. The Pay-in-4 leg is underwritten by Techcombank in the background.
+        Bên trái là <em style="font-family:var(--font-display);font-style:italic;color:var(--ink)">WinXPay cho Người bán</em> — ứng dụng Mini-App trên Zalo chạy ngay trên điện thoại của cô Lan. Bên phải là <em style="font-family:var(--font-display);font-style:italic;color:var(--ink)">WinXPay cho Người dùng</em> — ví trên điện thoại của khách. Hai bên giao tiếp qua một mã VietQR duy nhất. Phần trả góp 4 lần do Techcombank thẩm định ở phía sau.
       </p>
     </div>
 
@@ -611,29 +611,29 @@ body{font-family:var(--font-body);background:var(--paper);color:var(--ink);overf
     <div class="tl-grid reveal">
       <div class="tl-step act" id="tl-1">
         <div class="tl-step-num">1</div>
-        <div class="tl-step-h">Scan</div>
-        <div class="tl-step-d">Cashier rings up the basket. POS shows a single QR — <span class="em">"Pay now"</span> or <span class="em">"Pay in 4"</span>.</div>
+        <div class="tl-step-h">Quét</div>
+        <div class="tl-step-d">Người bán bấm tổng tiền. POS hiện một mã QR — <span class="em">"Trả ngay"</span> hoặc <span class="em">"Trả 4 lần"</span>.</div>
       </div>
       <div class="tl-step" id="tl-2">
         <div class="tl-step-num">2</div>
-        <div class="tl-step-h">Underwrite</div>
-        <div class="tl-step-d">If the shopper picks Pay-in-4, WinXPay asks Techcombank to approve. Decision arrives in seconds.</div>
-        <div class="tl-step-time">~1.6 s</div>
+        <div class="tl-step-h">Thẩm định</div>
+        <div class="tl-step-d">Nếu chọn Trả 4 lần, WinXPay hỏi Techcombank duyệt. Kết quả về trong vài giây.</div>
+        <div class="tl-step-time">~1,6 giây</div>
       </div>
       <div class="tl-step" id="tl-3">
         <div class="tl-step-num">3</div>
-        <div class="tl-step-h">Settle</div>
-        <div class="tl-step-d">Merchant gets paid <b>instantly</b> into their wallet. Same as a normal QR transfer — no waiting, no T+2.</div>
+        <div class="tl-step-h">Thanh toán</div>
+        <div class="tl-step-d">Người bán nhận tiền vào ví <b>tức thì</b>. Giống chuyển khoản QR thông thường — không chờ, không T+2.</div>
       </div>
       <div class="tl-step" id="tl-4">
         <div class="tl-step-num">4</div>
-        <div class="tl-step-h">Auto-debit</div>
-        <div class="tl-step-d">Shopper pays back over four weekly installments via auto-debit from their TCB account. <b>Zero interest</b>.</div>
+        <div class="tl-step-h">Tự động trừ</div>
+        <div class="tl-step-d">Khách trả đủ qua bốn lần trừ tự động từ tài khoản TCB. <b>Lãi suất 0%</b>.</div>
       </div>
       <div class="tl-step" id="tl-5">
         <div class="tl-step-num">5</div>
-        <div class="tl-step-h">Receipt</div>
-        <div class="tl-step-d">E-invoice issued automatically (NĐ 70/2025 compliant). Receipt lands in the wallet, in chat, on paper — wherever you want.</div>
+        <div class="tl-step-h">Hoá đơn</div>
+        <div class="tl-step-d">Hoá đơn điện tử phát hành tự động (theo NĐ 70/2025). Gửi vào ví, vào chat, hoặc in giấy — tuỳ chọn của khách.</div>
       </div>
     </div>
 
@@ -644,22 +644,22 @@ body{font-family:var(--font-body);background:var(--paper);color:var(--ink);overf
         <div class="ann ann-r" style="top:64px;right:14px;max-width:230px">
           <div class="ann-num">A</div>
           <div class="ann-body">
-            <div class="ann-t">Runs on a phone</div>
-            <div class="ann-s">No new POS terminal. The shopkeeper opens our <b>Zalo Mini-App</b> and rings up the basket. Same phone they already have.</div>
+            <div class="ann-t">Chạy ngay trên điện thoại</div>
+            <div class="ann-s">Không cần máy POS mới. Cô Lan mở <b>Mini-App Zalo</b> và bấm tổng tiền — vẫn dùng chiếc điện thoại sẵn có.</div>
           </div>
         </div>
         <div class="ann ann-r" style="top:284px;right:14px;max-width:230px">
           <div class="ann-num">B</div>
           <div class="ann-body">
-            <div class="ann-t">Discount at the till</div>
-            <div class="ann-s">When the shopper pays with WinXPay, eligible items get a <span class="em-r">discount funded by the brand</span>, not the shop. The cashier just sees a lower total.</div>
+            <div class="ann-t">Ưu đãi ngay tại quầy</div>
+            <div class="ann-s">Khi khách trả bằng WinXPay, các mặt hàng đủ điều kiện được <span class="em-r">giảm giá do thương hiệu tài trợ</span> — không phải tiệm tạp hoá chịu. Cô Lan chỉ thấy tổng tiền thấp hơn.</div>
           </div>
         </div>
         <div class="ann ann-r" style="bottom:20px;right:14px;max-width:230px">
           <div class="ann-num">C</div>
           <div class="ann-body">
-            <div class="ann-t">A real VietQR</div>
-            <div class="ann-s">The QR uses <b>NAPAS 247</b> — the same national rail every Vietnamese bank speaks. Settlement to the merchant's wallet is <span class="em-g">instant</span>.</div>
+            <div class="ann-t">VietQR thật, không phải mô phỏng</div>
+            <div class="ann-s">Mã QR dùng <b>NAPAS 247</b> — cùng hạ tầng quốc gia mà mọi ngân hàng Việt đang dùng. Tiền về ví người bán <span class="em-g">tức thì</span>.</div>
           </div>
         </div>
       </div>
@@ -676,24 +676,24 @@ body{font-family:var(--font-body);background:var(--paper);color:var(--ink);overf
             <div class="pos-zalo-bar">
               <span class="pzb-back">‹</span>
               <div class="pzb-info">
-                <div class="pzb-t">WinX Tạp Hóa POS</div>
-                <div class="pzb-s"><span class="ps-d"></span>Zalo Mini App · Cô Lan, Q.1</div>
+                <div class="pzb-t">WinXPay cho Người bán</div>
+                <div class="pzb-s"><span class="ps-d"></span>Mini-App Zalo · Cô Lan, Q.1</div>
               </div>
               <span class="pzb-menu">⋯</span>
             </div>
             <div class="pos-url-bar">
               <span class="pul-lock">🔒</span>
-              <span class="pul-url">m.zaloapp.com / winx-tap-hoa</span>
+              <span class="pul-url">zalo.me / winxpay-nguoiban</span>
               <span class="pul-info">ⓘ</span>
             </div>
             <div class="pos-body">
               <div class="pos-store">
                 <div class="pst-logo">🏪</div>
                 <div class="pst-info">
-                  <div class="pst-name">Tạp Hóa Cô Lan</div>
-                  <div class="pst-meta">12 Lê Lợi · Q.1 · Merchant ID 001247</div>
+                  <div class="pst-name">Tạp Hoá Cô Lan</div>
+                  <div class="pst-meta">12 Lê Lợi · Q.1 · Mã NB 001247</div>
                 </div>
-                <span class="pst-tag">Tạp hóa</span>
+                <span class="pst-tag">Đã ký kết</span>
               </div>
 
               <div class="pos-cart">
@@ -747,13 +747,13 @@ body{font-family:var(--font-body);background:var(--paper);color:var(--ink);overf
                 </div>
               </div>
 
-              <div class="pos-pay-h">Phương thức thanh toán</div>
+              <div class="pos-pay-h">Hình thức thanh toán</div>
 
               <div class="pos-pay-opt wxp-rec">
                 <div class="pos-pay-opt-row">
                   <div class="pos-pay-opt-ico wxp-i">W</div>
                   <div class="pos-pay-opt-info">
-                    <div class="ppo-t">WinXPay</div>
+                    <div class="ppo-t">WinXPay cho Người dùng</div>
                     <div class="ppo-s">Trả ngay <b>200K</b> hoặc <span class="ppo-em">4 × 50K</span> qua TCB · giảm ngay <span class="ppo-em">50K</span></div>
                   </div>
                   <div class="pos-pay-opt-arr">›</div>
@@ -765,7 +765,7 @@ body{font-family:var(--font-body);background:var(--paper);color:var(--ink);overf
                   <div class="pos-pay-opt-ico cash-i">💵</div>
                   <div class="pos-pay-opt-info">
                     <div class="ppo-t">Tiền mặt</div>
-                    <div class="ppo-s">Thanh toán cho cô Lan trực tiếp</div>
+                    <div class="ppo-s">Khách trả trực tiếp cho cô Lan</div>
                   </div>
                   <div class="pos-pay-opt-arr">›</div>
                 </div>
@@ -775,7 +775,7 @@ body{font-family:var(--font-body);background:var(--paper);color:var(--ink);overf
                 <div class="pos-pay-opt-row">
                   <div class="pos-pay-opt-ico qr-i">📱</div>
                   <div class="pos-pay-opt-info">
-                    <div class="ppo-t">Bank transfer / Other QR</div>
+                    <div class="ppo-t">Chuyển khoản / QR ngân hàng</div>
                     <div class="ppo-s">Quét mã ngân hàng · không có ưu đãi</div>
                   </div>
                   <div class="pos-pay-opt-arr">›</div>
@@ -784,7 +784,7 @@ body{font-family:var(--font-body);background:var(--paper);color:var(--ink);overf
 
               <!-- POS QR (revealed when WinXPay tapped) -->
               <div class="pos-qr-show" style="margin-top:12px">
-                <div class="pqs-h">Quét bằng app WinXPay</div>
+                <div class="pqs-h">Khách quét bằng ví WinXPay</div>
                 <div class="pqs-amt">200.000 ₫</div>
                 <div class="pqs-disc">−50.000 ₫ ưu đãi · do thương hiệu tài trợ</div>
                 <div class="pqs-box">
@@ -793,7 +793,7 @@ body{font-family:var(--font-body);background:var(--paper);color:var(--ink);overf
                   <span class="pqs-tcb">TCB</span>
                 </div>
                 <div class="pqs-meta"><b>Cô Lan · 12 Lê Lợi · Q.1</b><br/>Mã GD: <span class="font-mono">WXP-2026-0509-001247</span></div>
-                <div class="pqs-status"><span class="pqs-d"></span>Chờ khách quét...</div>
+                <div class="pqs-status"><span class="pqs-d"></span>Đang chờ khách quét…</div>
               </div>
             </div>
           </div>
@@ -811,29 +811,29 @@ body{font-family:var(--font-body);background:var(--paper);color:var(--ink);overf
           <div class="wxp-app" id="wxp-app">
             <div class="wxp-hdr">
               <div>
-                <div class="wxp-greet">Chào buổi sáng</div>
+                <div class="wxp-greet">Xin chào</div>
                 <div class="wxp-name">Anh Minh 👋</div>
               </div>
               <div class="wxp-ava">M</div>
             </div>
 
-            <!-- WALLET CARD -->
+            <!-- WALLET CARD — wallet identity, not a credit card -->
             <div class="wxp-card">
               <div class="wxp-card-top">
                 <div>
                   <div class="wxp-brand">WinXPay</div>
-                  <div class="wxp-id">•••• 4291 · TCB-linked</div>
+                  <div class="wxp-id">cho Người dùng</div>
                 </div>
                 <div class="wxp-card-tcb"><span class="tcb-d"></span>TCB</div>
               </div>
               <div class="wxp-card-bal">
-                <div class="wcb-l">Số dư khả dụng</div>
+                <div class="wcb-l">Số dư ví</div>
                 <div class="wcb-v">2.847.500 <sup>₫</sup></div>
               </div>
               <div class="wxp-card-bot">
                 <div class="wcb-credit">
-                  <div class="wcc-l">Hạn mức Pay-in-4</div>
-                  <div class="wcc-v">3.500.000 ₫ · còn 3.300K</div>
+                  <div class="wcc-l">ID thanh toán</div>
+                  <div class="wcc-v">@anhminh</div>
                 </div>
                 <div class="wcb-vqr"><span class="v-d"></span>VietQR · NAPAS</div>
               </div>
@@ -861,18 +861,18 @@ body{font-family:var(--font-body);background:var(--paper);color:var(--ink);overf
 
             <!-- BNPL ROW -->
             <div class="wxp-bnpl">
-              <div class="bn-h">⚡ Pay-in-4 đang hoạt động</div>
+              <div class="bn-h">⚡ Trả 4 lần đang hoạt động</div>
               <div class="bn-r">
                 <div>
-                  <div class="bn-amt">VND 200.000</div>
-                  <div class="bn-due">Đợt 1/4 · đến hạn 15/05</div>
+                  <div class="bn-amt">200.000 ₫</div>
+                  <div class="bn-due">Kỳ 1/4 · đến hạn 15/05</div>
                 </div>
                 <div style="text-align:right;font-size:9px;color:rgba(255,255,255,.55);font-weight:600">
-                  Tổng vay<br/><b style="color:#fff;font-size:11px">800.000 ₫</b>
+                  Tổng đơn<br/><b style="color:#fff;font-size:11px">800.000 ₫</b>
                 </div>
               </div>
               <div class="bn-bar"><div class="bn-bar-f"></div></div>
-              <div class="bn-info"><span>VND 50K paid</span><span>3 × 50K còn lại</span></div>
+              <div class="bn-info"><span>Đã trả 50K</span><span>Còn 3 × 50K</span></div>
             </div>
 
             <!-- TRANSACTIONS -->
@@ -884,18 +884,18 @@ body{font-family:var(--font-body);background:var(--paper);color:var(--ink);overf
               <div class="wxp-tx">
                 <div class="wtx-i">🏪</div>
                 <div class="wtx-info">
-                  <div class="wtx-n">Tạp Hóa Cô Lan</div>
+                  <div class="wtx-n">Tạp Hoá Cô Lan</div>
                   <div class="wtx-m">Hôm nay · 09:41 · WXP-001247</div>
                 </div>
-                <div class="wtx-amt"><div class="wta-v neg">−200.000 ₫</div><div class="wta-tag">Pay in 4</div></div>
+                <div class="wtx-amt"><div class="wta-v neg">−200.000 ₫</div><div class="wta-tag">Trả 4 lần</div></div>
               </div>
               <div class="wxp-tx">
                 <div class="wtx-i">🎁</div>
                 <div class="wtx-info">
                   <div class="wtx-n">Hoàn tiền thương hiệu</div>
-                  <div class="wtx-m">Hôm nay · 09:41 · 5 SKUs</div>
+                  <div class="wtx-m">Hôm nay · 09:41 · 5 mặt hàng</div>
                 </div>
-                <div class="wtx-amt"><div class="wta-v pos">+50.000 ₫</div><div class="wta-tag">Brand-funded</div></div>
+                <div class="wtx-amt"><div class="wta-v pos">+50.000 ₫</div><div class="wta-tag">Tài trợ</div></div>
               </div>
               <div class="wxp-tx">
                 <div class="wtx-i">☕</div>
@@ -920,9 +920,9 @@ body{font-family:var(--font-body);background:var(--paper);color:var(--ink);overf
 
             <!-- QR OVERLAY (hidden by default) -->
             <div class="wxp-qr-overlay hidden" id="wxp-qr-overlay">
-              <div class="wxp-qr-h">Quét để trả</div>
+              <div class="wxp-qr-h">Quét để thanh toán</div>
               <div class="wxp-qr-amt">200.000 ₫</div>
-              <div class="wxp-qr-merchant">Tạp Hóa Cô Lan · 12 Lê Lợi, Q.1</div>
+              <div class="wxp-qr-merchant">Tạp Hoá Cô Lan · 12 Lê Lợi, Q.1</div>
               <div class="wxp-qr-box"><canvas id="wxp-qr"></canvas></div>
               <div class="wxp-qr-foot">
                 <div class="qf-l">Thanh toán qua</div>
@@ -932,7 +932,7 @@ body{font-family:var(--font-body);background:var(--paper);color:var(--ink);overf
                   <div class="qf-b">NAPAS 247</div>
                 </div>
               </div>
-              <button class="btn-prim" style="margin-top:18px;padding:10px 22px;font-size:12px" onclick="closeQR()">Pay 4 × 50K →</button>
+              <button class="btn-prim" style="margin-top:18px;padding:10px 22px;font-size:12px" onclick="closeQR()">Trả 4 × 50K →</button>
             </div>
 
           </div>
@@ -944,22 +944,22 @@ body{font-family:var(--font-body);background:var(--paper);color:var(--ink);overf
         <div class="ann ann-l" style="top:24px;left:14px;max-width:230px">
           <div class="ann-num">D</div>
           <div class="ann-body">
-            <div class="ann-t">Linked to a real bank</div>
-            <div class="ann-s">Each wallet is tied to a <b>Techcombank account</b>. KYC happens once. Top-ups, auto-debits, and refunds all flow through the same rail.</div>
+            <div class="ann-t">Đăng ký bằng VNeID</div>
+            <div class="ann-s">Mở ví trong <b>35–50 giây</b> bằng định danh VNeID. Lần dùng sau chỉ <b>5–7 giây</b> với sinh trắc học. Mỗi ví liên kết một tài khoản Techcombank.</div>
           </div>
         </div>
         <div class="ann ann-l" style="top:240px;left:14px;max-width:230px">
           <div class="ann-num">E</div>
           <div class="ann-body">
-            <div class="ann-t">Pay-in-4, in plain view</div>
-            <div class="ann-s">The wallet shows the active installment — what's been paid, what's coming, when. <span class="em-g">Zero interest</span>. Auto-debit weekly. No surprises.</div>
+            <div class="ann-t">Trả 4 lần, minh bạch</div>
+            <div class="ann-s">Ví hiển thị rõ kỳ hiện tại — đã trả gì, sắp trả gì, đến hạn ngày nào. <span class="em-g">Lãi suất 0%</span>. Trừ tự động hàng tuần. Không bất ngờ.</div>
           </div>
         </div>
         <div class="ann ann-l" style="bottom:80px;left:14px;max-width:230px">
           <div class="ann-num">F</div>
           <div class="ann-body">
-            <div class="ann-t">One QR, every surface</div>
-            <div class="ann-s">The same Quick-Pay action works at the till, in chat, and inside the app. <span class="em-y">Tap "Quét trả"</span> — wallet generates the QR, cashier scans, done.</div>
+            <div class="ann-t">Một QR cho mọi tình huống</div>
+            <div class="ann-s">Cùng một nút Quét trả dùng được tại quầy, trong chat, và trong app. <span class="em-y">Bấm "Quét trả"</span> — ví sinh QR, người bán quét, xong.</div>
           </div>
         </div>
       </div>
@@ -967,11 +967,11 @@ body{font-family:var(--font-body);background:var(--paper);color:var(--ink);overf
 
     <!-- LEGEND -->
     <div class="legend reveal" style="margin-top:36px">
-      <div class="legend-it"><span class="ld" style="background:#FF2E63"></span>WinXPay surface (consumer)</div>
-      <div class="legend-it"><span class="ld" style="background:#0068FF"></span>Zalo Mini App POS (merchant)</div>
-      <div class="legend-it"><span class="ld" style="background:#ED1C24"></span>Techcombank rail (BNPL underwriting)</div>
-      <div class="legend-it"><span class="ld" style="background:#A50064"></span>VietQR / NAPAS 247 (settlement)</div>
-      <div class="legend-it" style="margin-left:auto"><b style="color:#fff">Tap any phone to explore the flow →</b></div>
+      <div class="legend-it"><span class="ld" style="background:#A5135C"></span>WinXPay cho Người dùng</div>
+      <div class="legend-it"><span class="ld" style="background:#0068FF"></span>WinXPay cho Người bán (Mini-App Zalo)</div>
+      <div class="legend-it"><span class="ld" style="background:#ED1C24"></span>Techcombank · thẩm định Trả 4 lần</div>
+      <div class="legend-it"><span class="ld" style="background:#A50064"></span>VietQR / NAPAS 247 · thanh toán</div>
+      <div class="legend-it" style="margin-left:auto"><b>Chạm vào điện thoại để xem chi tiết →</b></div>
     </div>
   </div>
 </section>
@@ -982,10 +982,10 @@ body{font-family:var(--font-body);background:var(--paper);color:var(--ink);overf
 <section id="sec-ai" class="sec">
   <div class="sec-inner">
     <div class="reveal">
-      <div class="sec-eyebrow"><span class="se-num">02</span>In-chat checkout · Zalo OA</div>
-      <h2 class="sec-h2">"Hôm nay ăn gì?" → basket → <span class="gtext em">paid in 4 taps.</span></h2>
+      <div class="sec-eyebrow"><span class="se-num">02</span>Trong cuộc trò chuyện · Zalo OA</div>
+      <h2 class="sec-h2">"Hôm nay ăn gì?" → giỏ hàng → <span class="gtext em">thanh toán trong 4 cú chạm.</span></h2>
       <p class="sec-sub">
-        Most Vietnamese shoppers already chat with their favourite store on Zalo. WinXPay turns that chat into a checkout. The agent suggests a basket, the shopper picks "Pay in 4", and the wallet handles the rest — without leaving the conversation.
+        Phần lớn người mua Việt đã trò chuyện với cửa hàng yêu thích trên Zalo. WinXPay biến đoạn chat thành quầy thanh toán. <em style="font-family:var(--font-display);font-style:italic;color:var(--ink)">Tác nhân AI</em> gợi ý giỏ hàng, khách chọn "Trả 4 lần", và ví xử lý phần còn lại — tất cả ngay trong khung chat.
       </p>
     </div>
 
@@ -994,22 +994,22 @@ body{font-family:var(--font-body);background:var(--paper);color:var(--ink);overf
         <div class="ann ann-r" style="top:50px;right:14px;max-width:230px">
           <div class="ann-num">G</div>
           <div class="ann-body">
-            <div class="ann-t">Discovery in chat</div>
-            <div class="ann-s">The agent reads what the shopper asks for in plain Vietnamese — <span class="em-y">"thịt kho trứng cho 4 người"</span> — and replies with a basket they can buy as one bundle.</div>
+            <div class="ann-t">Tác nhân AI hiểu tiếng Việt</div>
+            <div class="ann-s">Tác nhân đọc câu hỏi tự nhiên của khách — <span class="em-y">"thịt kho trứng cho 4 người"</span> — và trả lời bằng một giỏ hàng đặt được trong một lần bấm.</div>
           </div>
         </div>
         <div class="ann ann-r" style="top:300px;right:14px;max-width:230px">
           <div class="ann-num">H</div>
           <div class="ann-body">
-            <div class="ann-t">A sponsored bundle</div>
-            <div class="ann-s">When a brand co-funds a recommendation, you see a small <b>"Tài trợ"</b> tag and a lower price. The shopper saves money; the brand reaches an actual basket.</div>
+            <div class="ann-t">Giỏ hàng được tài trợ</div>
+            <div class="ann-s">Khi thương hiệu đồng tài trợ một gợi ý, khách thấy nhãn nhỏ <b>"Tài trợ"</b> và giá thấp hơn. Khách tiết kiệm; thương hiệu chạm tới giỏ hàng thật.</div>
           </div>
         </div>
         <div class="ann ann-r" style="bottom:24px;right:14px;max-width:230px">
           <div class="ann-num">I</div>
           <div class="ann-body">
-            <div class="ann-t">Stay in the conversation</div>
-            <div class="ann-s">Tapping <b>"Trả ngay"</b> or <b>"4 × 50K"</b> opens WinXPay inside Zalo. Receipt, e-invoice, delivery time all come back to the same chat.</div>
+            <div class="ann-t">Không rời cuộc trò chuyện</div>
+            <div class="ann-s">Bấm <b>"Trả ngay"</b> hoặc <b>"4 × 50K"</b> mở WinXPay ngay trong Zalo. Hoá đơn điện tử, biên lai, giờ giao hàng đều trả về cùng đoạn chat.</div>
           </div>
         </div>
       </div>
@@ -1028,7 +1028,7 @@ body{font-family:var(--font-body);background:var(--paper);color:var(--ink);overf
               <div class="zh-ava">W+</div>
               <div class="zh-info">
                 <div class="zh-n">WinMart <span class="zh-v">OA</span></div>
-                <div class="zh-s"><span class="zsd"></span>Đang hoạt động · AI agent</div>
+                <div class="zh-s"><span class="zsd"></span>Đang hoạt động · Tác nhân AI</div>
               </div>
               <div class="zh-act"><span>📞</span><span>📹</span></div>
             </div>
@@ -1094,7 +1094,7 @@ body{font-family:var(--font-body);background:var(--paper);color:var(--ink);overf
               </div>
               <div class="zoa-row zr-bot">
                 <div class="zoa-m">W+</div>
-                <div class="zoa-bubble">Đang mở WinXPay để xác nhận BNPL với TCB... ⚡</div>
+                <div class="zoa-bubble">Đang mở WinXPay để xác nhận Trả 4 lần với Techcombank… ⚡</div>
               </div>
             </div>
             <div class="zoa-input">
@@ -1119,76 +1119,75 @@ body{font-family:var(--font-body);background:var(--paper);color:var(--ink);overf
             <div class="wxp-hdr">
               <div>
                 <div class="wxp-greet">Xác nhận thanh toán</div>
-                <div class="wxp-name">Pay-in-4 · TCB</div>
+                <div class="wxp-name">Trả 4 lần · TCB</div>
               </div>
               <div class="wxp-ava">M</div>
             </div>
 
             <!-- TCB APPROVAL CARD -->
-            <div style="margin:8px 14px 14px;padding:18px;border-radius:18px;background:linear-gradient(135deg,rgba(237,28,36,.18),rgba(124,45,255,.12));border:1px solid rgba(237,28,36,.35);position:relative;z-index:2;overflow:hidden">
-              <div style="position:absolute;inset:0;background:radial-gradient(circle at 80% 20%,rgba(237,28,36,.25),transparent 50%);pointer-events:none"></div>
-              <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px;position:relative;z-index:1">
-                <div style="width:30px;height:30px;border-radius:8px;background:#ED1C24;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:13px;color:#fff;box-shadow:0 4px 12px rgba(237,28,36,.4)">T</div>
+            <div style="margin:8px 14px 14px;padding:18px;border-radius:14px;background:rgba(237,28,36,0.10);border:1px solid rgba(237,28,36,0.28);position:relative;z-index:2;overflow:hidden">
+              <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;position:relative;z-index:1">
+                <div style="width:32px;height:32px;border-radius:7px;background:#ED1C24;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:14px;color:#fff;font-family:var(--font-display);font-style:italic">T</div>
                 <div>
-                  <div style="font-size:11px;font-weight:700;color:#fff;letter-spacing:-.1px">Techcombank BNPL</div>
-                  <div style="font-size:9px;color:rgba(255,255,255,.6);margin-top:1px">Quyết định: <b style="color:#00D9C0">Đồng ý</b> · 1.6s</div>
+                  <div style="font-size:11.5px;font-weight:600;color:#fff;letter-spacing:-.1px">Techcombank · Trả 4 lần</div>
+                  <div style="font-size:9.5px;color:rgba(255,255,255,.62);margin-top:2px">Phản hồi trong 1,6 giây</div>
                 </div>
-                <div style="margin-left:auto;display:inline-flex;align-items:center;gap:5px;padding:4px 9px;border-radius:14px;background:rgba(0,217,192,.15);border:1px solid rgba(0,217,192,.35);font-size:9px;font-weight:800;color:#00D9C0;letter-spacing:.3px">
-                  <span style="width:5px;height:5px;border-radius:50%;background:#00D9C0;box-shadow:0 0 6px #00D9C0"></span>APPROVED
+                <div style="margin-left:auto;display:inline-flex;align-items:center;gap:5px;padding:4px 10px;border-radius:99px;background:rgba(94,234,212,0.12);border:1px solid rgba(94,234,212,0.32);font-size:9px;font-weight:600;color:#5EEAD4;letter-spacing:.06em;text-transform:uppercase;font-family:var(--font-mono)">
+                  <span style="width:5px;height:5px;border-radius:50%;background:#5EEAD4"></span>Đã duyệt
                 </div>
               </div>
-              <div style="font-size:30px;font-weight:900;color:#fff;letter-spacing:-1.5px;line-height:1;position:relative;z-index:1;font-variant-numeric:tabular-nums">200.000 ₫</div>
-              <div style="font-size:10px;color:rgba(255,255,255,.6);margin-top:4px;position:relative;z-index:1">Tạp Hóa Cô Lan · WinMart Q.1 · 12 Lê Lợi</div>
+              <div style="font-size:32px;font-weight:400;color:#fff;letter-spacing:-1.2px;line-height:1;position:relative;z-index:1;font-variant-numeric:tabular-nums;font-family:var(--font-display)">200.000 ₫</div>
+              <div style="font-size:11px;color:rgba(255,255,255,.62);margin-top:6px;position:relative;z-index:1">Tạp Hoá Cô Lan · 12 Lê Lợi, Q.1</div>
               <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-top:14px;position:relative;z-index:1">
-                <div style="background:rgba(255,46,99,.18);border:1px solid rgba(255,46,99,.35);border-radius:8px;padding:6px 4px;text-align:center">
-                  <div style="font-size:10px;font-weight:900;color:#fff;font-variant-numeric:tabular-nums">50K</div>
-                  <div style="font-size:7px;color:rgba(255,255,255,.65);font-weight:700;margin-top:1px">HÔM NAY</div>
+                <div style="background:rgba(165,19,92,0.22);border:1px solid rgba(165,19,92,0.40);border-radius:6px;padding:8px 4px;text-align:center">
+                  <div style="font-size:11px;font-weight:600;color:#fff;font-variant-numeric:tabular-nums;font-family:var(--font-mono)">50K</div>
+                  <div style="font-size:7.5px;color:rgba(255,255,255,.78);font-weight:600;margin-top:2px;letter-spacing:0.06em;text-transform:uppercase">Hôm nay</div>
                 </div>
-                <div style="background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);border-radius:8px;padding:6px 4px;text-align:center">
-                  <div style="font-size:10px;font-weight:800;color:rgba(255,255,255,.9);font-variant-numeric:tabular-nums">50K</div>
-                  <div style="font-size:7px;color:rgba(255,255,255,.5);font-weight:600;margin-top:1px">15/05</div>
+                <div style="background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.10);border-radius:6px;padding:8px 4px;text-align:center">
+                  <div style="font-size:11px;font-weight:500;color:rgba(255,255,255,.85);font-variant-numeric:tabular-nums;font-family:var(--font-mono)">50K</div>
+                  <div style="font-size:7.5px;color:rgba(255,255,255,.50);font-weight:500;margin-top:2px;font-family:var(--font-mono)">15/05</div>
                 </div>
-                <div style="background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);border-radius:8px;padding:6px 4px;text-align:center">
-                  <div style="font-size:10px;font-weight:800;color:rgba(255,255,255,.9);font-variant-numeric:tabular-nums">50K</div>
-                  <div style="font-size:7px;color:rgba(255,255,255,.5);font-weight:600;margin-top:1px">22/05</div>
+                <div style="background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.10);border-radius:6px;padding:8px 4px;text-align:center">
+                  <div style="font-size:11px;font-weight:500;color:rgba(255,255,255,.85);font-variant-numeric:tabular-nums;font-family:var(--font-mono)">50K</div>
+                  <div style="font-size:7.5px;color:rgba(255,255,255,.50);font-weight:500;margin-top:2px;font-family:var(--font-mono)">22/05</div>
                 </div>
-                <div style="background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);border-radius:8px;padding:6px 4px;text-align:center">
-                  <div style="font-size:10px;font-weight:800;color:rgba(255,255,255,.9);font-variant-numeric:tabular-nums">50K</div>
-                  <div style="font-size:7px;color:rgba(255,255,255,.5);font-weight:600;margin-top:1px">29/05</div>
+                <div style="background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.10);border-radius:6px;padding:8px 4px;text-align:center">
+                  <div style="font-size:11px;font-weight:500;color:rgba(255,255,255,.85);font-variant-numeric:tabular-nums;font-family:var(--font-mono)">50K</div>
+                  <div style="font-size:7.5px;color:rgba(255,255,255,.50);font-weight:500;margin-top:2px;font-family:var(--font-mono)">29/05</div>
                 </div>
               </div>
-              <div style="font-size:9px;color:rgba(255,255,255,.55);margin-top:10px;line-height:1.5;position:relative;z-index:1">
-                <b style="color:#fff">0% lãi suất</b> · TCB book receivable · Auto-debit từ tài khoản TCB của bạn
+              <div style="font-size:10px;color:rgba(255,255,255,.62);margin-top:12px;line-height:1.55;position:relative;z-index:1">
+                <b style="color:#fff;font-weight:600">Lãi suất 0%</b> · TCB ghi nhận khoản phải thu · Tự động trừ từ tài khoản TCB của bạn
               </div>
             </div>
 
             <!-- WHAT JUST HAPPENED -->
-            <div style="margin:0 14px 12px;padding:14px;border-radius:14px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.08);position:relative;z-index:2">
-              <div style="font-size:10px;font-weight:800;color:#fff;letter-spacing:.3px;text-transform:uppercase;margin-bottom:10px">What just happened</div>
-              <div style="display:flex;align-items:center;gap:8px;padding:5px 0;font-size:10.5px;color:rgba(255,255,255,.85)">
-                <span style="width:6px;height:6px;border-radius:50%;background:#00D9C0;box-shadow:0 0 6px #00D9C0;flex-shrink:0"></span>
-                <span style="flex:1">Identity verified · TCB account linked</span>
-                <span style="font-family:monospace;font-size:10px;color:#00D9C0;font-weight:800">OK</span>
+            <div style="margin:0 14px 14px;padding:16px 16px 12px;border-radius:12px;background:rgba(255,255,255,.025);border:1px solid rgba(255,255,255,.08);position:relative;z-index:2">
+              <div style="font-family:var(--font-mono);font-size:10px;font-weight:500;color:rgba(255,255,255,.55);letter-spacing:0.14em;text-transform:uppercase;margin-bottom:12px">— Vừa được xác nhận</div>
+              <div style="display:flex;align-items:center;gap:10px;padding:5px 0;font-size:11.5px;color:rgba(255,255,255,.88);font-family:var(--font-body)">
+                <span style="width:5px;height:5px;border-radius:50%;background:#5EEAD4;flex-shrink:0"></span>
+                <span style="flex:1">Định danh VNeID · liên kết tài khoản TCB</span>
+                <span style="font-family:var(--font-mono);font-size:10px;color:#5EEAD4;font-weight:500">OK</span>
               </div>
-              <div style="display:flex;align-items:center;gap:8px;padding:5px 0;font-size:10.5px;color:rgba(255,255,255,.85)">
-                <span style="width:6px;height:6px;border-radius:50%;background:#00D9C0;box-shadow:0 0 6px #00D9C0;flex-shrink:0"></span>
-                <span style="flex:1">Pay-in-4 limit available</span>
-                <span style="font-family:monospace;font-size:10px;color:#00D9C0;font-weight:800">YES</span>
+              <div style="display:flex;align-items:center;gap:10px;padding:5px 0;font-size:11.5px;color:rgba(255,255,255,.88);font-family:var(--font-body)">
+                <span style="width:5px;height:5px;border-radius:50%;background:#5EEAD4;flex-shrink:0"></span>
+                <span style="flex:1">Hạn mức Trả 4 lần khả dụng</span>
+                <span style="font-family:var(--font-mono);font-size:10px;color:#5EEAD4;font-weight:500">CÓ</span>
               </div>
-              <div style="display:flex;align-items:center;gap:8px;padding:5px 0;font-size:10.5px;color:rgba(255,255,255,.85)">
-                <span style="width:6px;height:6px;border-radius:50%;background:#00D9C0;box-shadow:0 0 6px #00D9C0;flex-shrink:0"></span>
-                <span style="flex:1">Basket eligible for instant discount</span>
-                <span style="font-family:monospace;font-size:10px;color:#00D9C0;font-weight:800">−50K</span>
+              <div style="display:flex;align-items:center;gap:10px;padding:5px 0;font-size:11.5px;color:rgba(255,255,255,.88);font-family:var(--font-body)">
+                <span style="width:5px;height:5px;border-radius:50%;background:#5EEAD4;flex-shrink:0"></span>
+                <span style="flex:1">Giỏ hàng đủ điều kiện ưu đãi tại quầy</span>
+                <span style="font-family:var(--font-mono);font-size:10px;color:#5EEAD4;font-weight:500">−50K</span>
               </div>
-              <div style="display:flex;align-items:center;gap:8px;padding:5px 0;font-size:10.5px;color:rgba(255,255,255,.85)">
-                <span style="width:6px;height:6px;border-radius:50%;background:#0EA5E9;box-shadow:0 0 6px #0EA5E9;flex-shrink:0"></span>
-                <span style="flex:1">E-invoice queued · NĐ 70/2025</span>
-                <span style="font-family:monospace;font-size:10px;color:#0EA5E9;font-weight:800">READY</span>
+              <div style="display:flex;align-items:center;gap:10px;padding:5px 0;font-size:11.5px;color:rgba(255,255,255,.88);font-family:var(--font-body)">
+                <span style="width:5px;height:5px;border-radius:50%;background:#7DD3FC;flex-shrink:0"></span>
+                <span style="flex:1">Hoá đơn điện tử (NĐ 70/2025) sẵn sàng</span>
+                <span style="font-family:var(--font-mono);font-size:10px;color:#7DD3FC;font-weight:500">READY</span>
               </div>
-              <div style="display:flex;align-items:center;gap:8px;padding:5px 0;font-size:10.5px;color:rgba(255,255,255,.85)">
-                <span style="width:6px;height:6px;border-radius:50%;background:#FF2E63;box-shadow:0 0 6px #FF2E63;flex-shrink:0"></span>
-                <span style="flex:1">Auto-debit scheduled · 4 weeks</span>
-                <span style="font-family:monospace;font-size:10px;color:#FF2E63;font-weight:800">SET</span>
+              <div style="display:flex;align-items:center;gap:10px;padding:5px 0;font-size:11.5px;color:rgba(255,255,255,.88);font-family:var(--font-body)">
+                <span style="width:5px;height:5px;border-radius:50%;background:#F472B6;flex-shrink:0"></span>
+                <span style="flex:1">Lịch trừ tự động · 4 tuần</span>
+                <span style="font-family:var(--font-mono);font-size:10px;color:#F472B6;font-weight:500">SET</span>
               </div>
             </div>
 
@@ -1196,12 +1195,12 @@ body{font-family:var(--font-body);background:var(--paper);color:var(--ink);overf
 
             <!-- CTA -->
             <div style="padding:0 14px 14px;position:relative;z-index:2">
-              <button style="width:100%;padding:14px;border-radius:14px;background:var(--wxp-grad);color:#fff;font-size:14px;font-weight:900;border:none;cursor:pointer;letter-spacing:-.2px;box-shadow:0 10px 28px rgba(255,46,99,.4),inset 0 1px 0 rgba(255,255,255,.25)">
-                Xác nhận · Chi 50K hôm nay
+              <button style="width:100%;padding:14px;border-radius:99px;background:#fff;color:#0A2540;font-size:13.5px;font-weight:600;border:none;cursor:pointer;letter-spacing:-.2px;font-family:var(--font-body)">
+                Xác nhận · Trả 50.000 ₫ hôm nay
               </button>
-              <div style="text-align:center;font-size:9px;color:rgba(255,255,255,.45);margin-top:8px;line-height:1.5">
-                Bằng việc xác nhận, bạn đồng ý điều khoản BNPL của Techcombank<br/>
-                Mã GD: <span class="font-mono">WXP-2026-0509-001247</span>
+              <div style="text-align:center;font-size:9.5px;color:rgba(255,255,255,.45);margin-top:10px;line-height:1.55;font-family:var(--font-body)">
+                Bằng việc xác nhận, bạn đồng ý điều khoản Trả 4 lần của Techcombank<br/>
+                Mã GD <span class="font-mono">WXP-2026-0509-001247</span>
               </div>
             </div>
 
@@ -1222,49 +1221,43 @@ body{font-family:var(--font-body);background:var(--paper);color:var(--ink);overf
         <div class="ann ann-l" style="top:30px;left:14px;max-width:230px">
           <div class="ann-num">J</div>
           <div class="ann-body">
-            <div class="ann-t">Approved in seconds</div>
-            <div class="ann-s">Techcombank reads the shopper's profile and the basket, decides Yes / No <span class="em-g">in about 1.6 seconds</span>, then books the receivable on its own balance sheet.</div>
+            <div class="ann-t">Duyệt trong vài giây</div>
+            <div class="ann-s">Techcombank đọc hồ sơ khách và giỏ hàng, quyết định <span class="em-g">trong khoảng 1,6 giây</span>, rồi ghi nhận khoản phải thu lên sổ sách của ngân hàng.</div>
           </div>
         </div>
         <div class="ann ann-l" style="top:240px;left:14px;max-width:230px">
           <div class="ann-num">K</div>
           <div class="ann-body">
-            <div class="ann-t">Four equal payments</div>
-            <div class="ann-s">The total splits into <b>4 weekly installments</b>. The first comes off today, the next three on the same day each week. <span class="em-g">Always 0% interest</span>.</div>
+            <div class="ann-t">Bốn kỳ bằng nhau</div>
+            <div class="ann-s">Tổng tiền chia thành <b>4 kỳ hàng tuần</b>. Kỳ đầu trừ hôm nay, ba kỳ tiếp theo cùng ngày mỗi tuần. <span class="em-g">Luôn lãi suất 0%</span>.</div>
           </div>
         </div>
         <div class="ann ann-l" style="bottom:30px;left:14px;max-width:230px">
           <div class="ann-num">L</div>
           <div class="ann-body">
-            <div class="ann-t">Auto-debit, set and forget</div>
-            <div class="ann-s">Payments come straight from the shopper's TCB account. <span class="em-y">Push notification 24h before</span> each debit. Pause or pay early any time.</div>
+            <div class="ann-t">Tự động trừ, không phải nhớ</div>
+            <div class="ann-s">Khoản trả tự động từ tài khoản TCB của khách. <span class="em-y">Thông báo 24 giờ trước</span> mỗi kỳ trừ. Tạm dừng hoặc trả sớm bất cứ lúc nào.</div>
           </div>
         </div>
       </div>
     </div>
 
     <!-- AI ANNOTATIONS BELOW -->
-    <div class="reveal" style="margin-top:48px;display:grid;grid-template-columns:repeat(3,1fr);gap:18px">
-      <div class="glass-2" style="padding:22px">
-        <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px">
-          <div style="width:28px;height:28px;border-radius:8px;background:linear-gradient(135deg,#FF6B00,#FF8C33);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:900;color:#fff">W+</div>
-          <div style="font-size:13px;font-weight:800;color:#fff">Recommend in chat</div>
-        </div>
-        <div style="font-size:13px;color:var(--t2);line-height:1.6">The agent suggests a basket from natural-language requests. Tap a card and it's added to the order — no menu trees, no app switch.</div>
+    <div class="reveal" style="margin-top:48px;display:grid;grid-template-columns:repeat(3,1fr);gap:0;border-top:1px solid var(--ink);border-left:1px solid var(--ink)">
+      <div style="padding:32px 28px;border-right:1px solid var(--ink);border-bottom:1px solid var(--ink)">
+        <div style="font-family:var(--font-mono);font-size:11px;font-weight:500;color:var(--ink-3);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:10px">— Khám phá</div>
+        <div style="font-family:var(--font-display);font-size:24px;font-weight:400;font-style:italic;color:var(--ink);letter-spacing:-0.022em;margin-bottom:12px;line-height:1.1">Tác nhân AI gợi ý trong chat</div>
+        <div style="font-family:var(--font-body);font-size:14px;color:var(--ink-2);line-height:1.6">Tác nhân hiểu yêu cầu tự nhiên và đề xuất một giỏ hàng. Bấm thẻ là thêm vào đơn — không cần menu, không phải đổi ứng dụng.</div>
       </div>
-      <div class="glass-2" style="padding:22px">
-        <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px">
-          <div style="width:28px;height:28px;border-radius:8px;background:var(--wxp-grad);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:900;color:#fff">W</div>
-          <div style="font-size:13px;font-weight:800;color:#fff">Pay without leaving</div>
-        </div>
-        <div style="font-size:13px;color:var(--t2);line-height:1.6">Trả ngay or 4 × 50K — both open WinXPay <b style="color:#fff">inside Zalo</b>. The QR is generated server-side and confirmed in seconds.</div>
+      <div style="padding:32px 28px;border-right:1px solid var(--ink);border-bottom:1px solid var(--ink)">
+        <div style="font-family:var(--font-mono);font-size:11px;font-weight:500;color:var(--ink-3);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:10px">— Thanh toán</div>
+        <div style="font-family:var(--font-display);font-size:24px;font-weight:400;font-style:italic;color:var(--ink);letter-spacing:-0.022em;margin-bottom:12px;line-height:1.1">Trả mà không cần rời chat</div>
+        <div style="font-family:var(--font-body);font-size:14px;color:var(--ink-2);line-height:1.6">Trả ngay hay 4 × 50K — cả hai đều mở WinXPay <b>ngay trong Zalo</b>. QR sinh ở máy chủ, xác nhận trong vài giây.</div>
       </div>
-      <div class="glass-2" style="padding:22px">
-        <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px">
-          <div style="width:28px;height:28px;border-radius:8px;background:#0EA5E9;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:900;color:#fff">📄</div>
-          <div style="font-size:13px;font-weight:800;color:#fff">Receipt + e-invoice</div>
-        </div>
-        <div style="font-size:13px;color:var(--t2);line-height:1.6">A receipt comes back to the chat. A compliant <b style="color:#fff">e-invoice</b> goes to the shopper's email — same one the cashier would print at the till.</div>
+      <div style="padding:32px 28px;border-right:1px solid var(--ink);border-bottom:1px solid var(--ink)">
+        <div style="font-family:var(--font-mono);font-size:11px;font-weight:500;color:var(--ink-3);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:10px">— Hoá đơn</div>
+        <div style="font-family:var(--font-display);font-size:24px;font-weight:400;font-style:italic;color:var(--ink);letter-spacing:-0.022em;margin-bottom:12px;line-height:1.1">Biên lai và hoá đơn điện tử</div>
+        <div style="font-family:var(--font-body);font-size:14px;color:var(--ink-2);line-height:1.6">Biên lai trả về chính cuộc trò chuyện. <b>Hoá đơn điện tử</b> theo NĐ 70/2025 gửi vào email — cùng mẫu mà người bán sẽ in tại quầy.</div>
       </div>
     </div>
 
@@ -1277,10 +1270,10 @@ body{font-family:var(--font-body);background:var(--paper);color:var(--ink);overf
 <section id="sec-api" class="sec">
   <div class="sec-inner">
     <div class="reveal">
-      <div class="sec-eyebrow"><span class="se-num">03</span>For merchants</div>
-      <h2 class="sec-h2">One line of code.<br/><span class="gtext em">QR + Pay-in-4, dropped into any checkout.</span></h2>
+      <div class="sec-eyebrow"><span class="se-num">03</span>Dành cho người bán</div>
+      <h2 class="sec-h2">Một dòng mã.<br/><span class="gtext em">QR + Trả 4 lần, gắn vào mọi quầy thanh toán.</span></h2>
       <p class="sec-sub">
-        Merchants on the Zalo Mini-App POS get WinXPay automatically — it's just another payment button. For everyone else, integration is a single embed: a button on the page, an API call from the server, or a webhook. No bespoke contracts. No new POS hardware.
+        Người bán đã dùng <em style="font-family:var(--font-display);font-style:italic;color:var(--ink)">WinXPay cho Người bán</em> tự động có sẵn tính năng — chỉ là thêm một nút thanh toán. Với mọi người khác, tích hợp gọn trong một nhúng: một nút trên trang, một lệnh API từ máy chủ, hoặc một webhook. Không hợp đồng riêng. Không máy POS mới.
       </p>
     </div>
 
@@ -1290,36 +1283,36 @@ body{font-family:var(--font-body);background:var(--paper);color:var(--ink);overf
         <div class="merch-feat">
           <div class="merch-feat-ico">⚡</div>
           <div class="merch-feat-bd">
-            <div class="mf-t">Drop-in checkout button</div>
-            <div class="mf-d">One HTML attribute, or one SDK call from your server. Renders the WinXPay QR plus the <b>Pay-in-4</b> option in any web page, app, or POS surface.</div>
+            <div class="mf-t">Nút thanh toán nhúng-sẵn</div>
+            <div class="mf-d">Một thuộc tính HTML, hoặc một lệnh SDK từ máy chủ. Hiển thị QR WinXPay cùng tuỳ chọn <b>Trả 4 lần</b> trên mọi trang web, ứng dụng, hay màn hình POS.</div>
           </div>
         </div>
         <div class="merch-feat">
           <div class="merch-feat-ico">🔁</div>
           <div class="merch-feat-bd">
-            <div class="mf-t">Webhook-driven settlement</div>
-            <div class="mf-d">Real-time <span class="font-mono" style="color:#fff">payment.captured</span> and <span class="font-mono" style="color:#fff">bnpl.approved</span> events fire as soon as the shopper confirms. Money lands in the merchant wallet <b>instantly</b>.</div>
+            <div class="mf-t">Thanh toán qua webhook</div>
+            <div class="mf-d">Sự kiện <span class="font-mono">payment.captured</span> và <span class="font-mono">bnpl.approved</span> kích hoạt ngay khi khách xác nhận. Tiền vào ví người bán <b>tức thì</b>.</div>
           </div>
         </div>
         <div class="merch-feat">
           <div class="merch-feat-ico">🧾</div>
           <div class="merch-feat-bd">
-            <div class="mf-t">E-invoice baked in (NĐ 70/2025)</div>
-            <div class="mf-d">A compliant <b>HĐĐT-MTT</b> is issued for every settled transaction. The shopkeeper never touches a tax form. Customer can email it, print it, or scan a QR receipt.</div>
+            <div class="mf-t">Hoá đơn điện tử có sẵn (NĐ 70/2025)</div>
+            <div class="mf-d">Mỗi giao dịch tự phát hành <b>HĐĐT-MTT</b> hợp lệ. Người bán không phải đụng tới biểu mẫu thuế. Khách có thể gửi email, in giấy, hoặc quét QR biên lai.</div>
           </div>
         </div>
         <div class="merch-feat">
           <div class="merch-feat-ico">🏦</div>
           <div class="merch-feat-bd">
-            <div class="mf-t">No credit risk for the merchant</div>
-            <div class="mf-d">Pay-in-4 is underwritten by Techcombank — <b>not</b> by the shop. The merchant always sees the full amount, settled today, regardless of how the shopper chose to pay.</div>
+            <div class="mf-t">Người bán không gánh rủi ro tín dụng</div>
+            <div class="mf-d">Trả 4 lần do Techcombank thẩm định — <b>không phải</b> tiệm tạp hoá. Người bán luôn nhận đủ số tiền, ngay hôm nay, bất kể khách chọn trả ngay hay trả góp.</div>
           </div>
         </div>
         <div class="merch-feat">
           <div class="merch-feat-ico">🪪</div>
           <div class="merch-feat-bd">
-            <div class="mf-t">No new hardware</div>
-            <div class="mf-d">Works on a phone, on a counter tablet, or printed as a static QR. If the merchant can show a QR, they can accept WinXPay.</div>
+            <div class="mf-t">Không cần phần cứng mới</div>
+            <div class="mf-d">Chạy trên điện thoại, máy tính bảng tại quầy, hoặc in ra QR tĩnh. Hễ người bán hiển thị được mã QR, là chấp nhận được WinXPay.</div>
           </div>
         </div>
       </div>
@@ -1329,9 +1322,9 @@ body{font-family:var(--font-body);background:var(--paper);color:var(--ink);overf
         <div class="code-blk">
           <div class="code-hdr">
             <div class="ch-dots"><span></span><span></span><span></span></div>
-            <span>checkout.html · drop-in widget</span>
+            <span>checkout.html · nhúng nút thanh toán</span>
           </div>
-          <div class="code-body"><span class="c">&lt;!-- Add the WinXPay button to any HTML page --&gt;</span>
+          <div class="code-body"><span class="c">&lt;!-- Thêm nút WinXPay vào bất kỳ trang HTML nào --&gt;</span>
 <span class="k">&lt;script</span> <span class="v">src</span>=<span class="s">"https://js.winxpay.vn/v1/sdk.js"</span><span class="k">&gt;&lt;/script&gt;</span>
 
 <span class="k">&lt;button</span>
@@ -1348,26 +1341,26 @@ body{font-family:var(--font-body);background:var(--paper);color:var(--ink);overf
         <div class="code-blk" style="margin-top:18px">
           <div class="code-hdr">
             <div class="ch-dots"><span></span><span></span><span></span></div>
-            <span>server.ts · capture + webhook</span>
+            <span>server.ts · ghi nhận + webhook</span>
           </div>
           <div class="code-body"><span class="k">import</span> { <span class="t">WinXPay</span> } <span class="k">from</span> <span class="s">'@winxpay/sdk'</span>;
 
 <span class="k">const</span> <span class="v">wxp</span> = <span class="k">new</span> <span class="t">WinXPay</span>({ <span class="v">apiKey</span>: <span class="v">process</span>.<span class="v">env</span>.<span class="v">WXP_KEY</span> });
 
-<span class="c">// Create a checkout — receive QR + paymentId</span>
+<span class="c">// Tạo phiên thanh toán — nhận QR + mã giao dịch</span>
 <span class="k">const</span> <span class="v">checkout</span> = <span class="k">await</span> <span class="v">wxp</span>.<span class="t">checkouts</span>.<span class="t">create</span>({
   <span class="v">amount</span>: <span class="n">200_000</span>,
   <span class="v">basket</span>: <span class="v">cart</span>.<span class="v">items</span>,
-  <span class="v">bnpl</span>: <span class="s">'auto'</span>,        <span class="c">// auto-decide via TCB</span>
-  <span class="v">brandFundedDiscount</span>: <span class="k">true</span>,  <span class="c">// pulls eligible brand budget</span>
-  <span class="v">callbackUrl</span>: <span class="s">'https://store.vn/wxp'</span>
+  <span class="v">bnpl</span>: <span class="s">'auto'</span>,        <span class="c">// để TCB tự thẩm định</span>
+  <span class="v">brandFundedDiscount</span>: <span class="k">true</span>,  <span class="c">// dùng ngân sách thương hiệu phù hợp</span>
+  <span class="v">callbackUrl</span>: <span class="s">'https://cuahang.vn/wxp'</span>
 });
 
-<span class="c">// Webhook handler — fires when consumer scans + TCB approves</span>
+<span class="c">// Webhook — kích hoạt khi khách quét và TCB duyệt</span>
 <span class="v">app</span>.<span class="t">post</span>(<span class="s">'/wxp'</span>, (<span class="v">req</span>) =&gt; {
   <span class="k">if</span> (<span class="v">req</span>.<span class="v">body</span>.<span class="v">event</span> === <span class="s">'payment.captured'</span>) {
     <span class="v">orders</span>.<span class="t">markPaid</span>(<span class="v">req</span>.<span class="v">body</span>.<span class="v">merchantRef</span>);
-    <span class="c">// money lands in the merchant wallet, instant</span>
+    <span class="c">// tiền vào ví người bán, tức thì</span>
   }
 });</div>
         </div>
@@ -1379,40 +1372,46 @@ body{font-family:var(--font-body);background:var(--paper);color:var(--ink);overf
 
 <div class="divider-h"></div>
 
-<!-- ======================== SECTION 4: HOW IT WORKS ======================== -->
+<!-- ======================== SECTION 4: KIẾN TRÚC ======================== -->
 <section id="sec-arch" class="sec">
   <div class="sec-inner">
     <div class="reveal">
-      <div class="sec-eyebrow"><span class="se-num">04</span>How it works</div>
-      <h2 class="sec-h2">Four surfaces.<br/><span class="gtext em">One quiet rail underneath.</span></h2>
+      <div class="sec-eyebrow"><span class="se-num">04</span>Kiến trúc</div>
+      <h2 class="sec-h2">Năm bề mặt.<br/><span class="gtext em">Một hạ tầng yên lặng phía dưới.</span></h2>
       <p class="sec-sub">
-        WinXPay is a single product that shows up in four places. Whichever surface you start from — your wallet, the shopkeeper's till, a chat with your favourite store, or a brand promo — the underlying QR, settlement, and Pay-in-4 logic is the same.
+        WinXPay là một sản phẩm xuất hiện ở năm chỗ. Dù bạn vào từ ví riêng, từ POS của tạp hoá, từ chat với cửa hàng yêu thích, từ một mã nhúng trên web, hay từ tác nhân AI — logic QR, thanh toán, và Trả 4 lần phía sau vẫn là một.
       </p>
     </div>
 
     <div class="pillar-grid reveal" style="margin-top:36px">
       <div class="pillar">
-        <div class="pillar-num">SURFACE 01</div>
-        <div class="pillar-h">Consumer wallet</div>
-        <div class="pillar-d">A standalone iOS &amp; Android app, plus a Mini-App inside Zalo. Top-up, scan, pay, split, get receipts. Pay-in-4 is a button, not a separate product.</div>
-        <div class="pillar-v">Quét trả · Pay in 4 · Lịch sử · Quà</div>
+        <div class="pillar-num">BỀ MẶT 01</div>
+        <div class="pillar-h">WinXPay cho Người dùng</div>
+        <div class="pillar-d">Ứng dụng iOS &amp; Android độc lập, cùng Mini-App trong Zalo. Nạp tiền, quét, trả, chia nhỏ, nhận biên lai. Trả 4 lần là một nút, không phải sản phẩm tách rời.</div>
+        <div class="pillar-v">Quét trả · Trả 4 lần · Lịch sử · Quà</div>
       </div>
       <div class="pillar">
-        <div class="pillar-num">SURFACE 02</div>
-        <div class="pillar-h">Merchant POS</div>
-        <div class="pillar-d">A Zalo Mini-App for tạp hóa shopkeepers — runs on the phone they already own. Ring up the basket, show the QR, see the money land. No terminal to buy.</div>
-        <div class="pillar-v">Giỏ hàng · Quét · Hoá đơn điện tử</div>
+        <div class="pillar-num">BỀ MẶT 02</div>
+        <div class="pillar-h">WinXPay cho Người bán</div>
+        <div class="pillar-d">Mini-App Zalo cho tạp hoá — chạy trên chiếc điện thoại sẵn có. Ghi đơn, hiện QR, thấy tiền về. Ghi sổ điện tử, hoá đơn, kê khai thuế đều gói trong một ứng dụng.</div>
+        <div class="pillar-v">Giỏ hàng · Ghi sổ · Hoá đơn · Thuế</div>
       </div>
       <div class="pillar">
-        <div class="pillar-num">SURFACE 03</div>
-        <div class="pillar-h">In-chat checkout</div>
-        <div class="pillar-d">An AI agent that lives inside any Zalo Official Account. Suggests baskets, takes orders, opens WinXPay to settle. Receipt comes back to the same conversation.</div>
-        <div class="pillar-v">Recommend · Checkout · E-invoice</div>
+        <div class="pillar-num">BỀ MẶT 03</div>
+        <div class="pillar-h">Tác nhân AI</div>
+        <div class="pillar-d">Tầng AI cho ba bên: gợi ý giỏ hàng và ưu đãi cho người dùng; tự động ghi sổ, đặt hàng, kê khai thuế cho người bán; bảng phân bổ và đo lường chuyển đổi cho thương hiệu.</div>
+        <div class="pillar-v">Người dùng · Người bán · Thương hiệu</div>
       </div>
       <div class="pillar">
-        <div class="pillar-num">SURFACE 04</div>
-        <div class="pillar-h">Drop-in for any merchant</div>
-        <div class="pillar-d">A button, an SDK, a webhook. Lets any web shop, app, or POS accept WinXPay with the same QR + Pay-in-4 selector. No bespoke contract, no hardware.</div>
+        <div class="pillar-num">BỀ MẶT 04</div>
+        <div class="pillar-h">WinX Ads</div>
+        <div class="pillar-d">Sàn đấu giá lập trình nơi thương hiệu CPG đặt giá để được phân bổ chuyển đổi cấp SKU ngay tại quầy. Khép vòng đo lường mà pixel của Meta không thể thấy.</div>
+        <div class="pillar-v">Phân bổ · ROAS · Đo lường tại quầy</div>
+      </div>
+      <div class="pillar">
+        <div class="pillar-num">BỀ MẶT 05</div>
+        <div class="pillar-h">Nhúng cho mọi người bán</div>
+        <div class="pillar-d">Một nút, một SDK, một webhook. Cho phép mọi cửa hàng web, ứng dụng, hay POS chấp nhận WinXPay với cùng QR và lựa chọn Trả 4 lần. Không hợp đồng riêng, không phần cứng.</div>
         <div class="pillar-v">data-winxpay · /sdk · /webhook</div>
       </div>
     </div>
@@ -1420,24 +1419,24 @@ body{font-family:var(--font-body);background:var(--paper);color:var(--ink);overf
     <!-- THE RAIL UNDERNEATH -->
     <div class="reveal" style="margin-top:64px;border-top:1px solid var(--ink);padding-top:48px;display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:48px;align-items:start">
       <div>
-        <div style="font-family:var(--font-body);font-size:11px;font-weight:500;letter-spacing:0.16em;color:var(--ink-3);text-transform:uppercase;margin-bottom:14px">Underneath, always</div>
-        <div style="font-family:var(--font-display);font-size:30px;font-weight:400;font-style:italic;color:var(--ink);letter-spacing:-0.024em;line-height:1.1">A single QR, a single rail, <span style="color:var(--accent)">a single bank.</span></div>
-        <div style="font-family:var(--font-body);font-size:14.5px;color:var(--ink-2);margin-top:16px;line-height:1.55;max-width:320px">Every WinXPay payment — at the till, in chat, or on the web — goes through the same three components.</div>
+        <div style="font-family:var(--font-body);font-size:11px;font-weight:500;letter-spacing:0.16em;color:var(--ink-3);text-transform:uppercase;margin-bottom:14px">Phía dưới, luôn luôn</div>
+        <div style="font-family:var(--font-display);font-size:30px;font-weight:400;font-style:italic;color:var(--ink);letter-spacing:-0.024em;line-height:1.12">Một mã QR, một hạ tầng, <span style="color:var(--accent)">một ngân hàng.</span></div>
+        <div style="font-family:var(--font-body);font-size:14.5px;color:var(--ink-2);margin-top:16px;line-height:1.55;max-width:320px">Mọi giao dịch WinXPay — tại quầy, trong chat, hay trên web — đều đi qua ba thành phần như nhau.</div>
       </div>
       <div>
         <div style="font-family:var(--font-mono);font-size:11px;font-weight:500;letter-spacing:0.06em;color:var(--ink-3);text-transform:uppercase;margin-bottom:10px">— 01</div>
         <div style="font-family:var(--font-display);font-size:24px;font-weight:400;font-style:italic;color:var(--ink);letter-spacing:-0.022em;margin-bottom:10px;line-height:1.1">VietQR</div>
-        <div style="font-family:var(--font-body);font-size:14px;color:var(--ink-2);line-height:1.55">National QR standard. Issued by Techcombank, recognised by every Vietnamese bank app.</div>
+        <div style="font-family:var(--font-body);font-size:14px;color:var(--ink-2);line-height:1.55">Chuẩn QR quốc gia. Phát hành bởi Techcombank, mọi ứng dụng ngân hàng Việt đều nhận diện được.</div>
       </div>
       <div>
         <div style="font-family:var(--font-mono);font-size:11px;font-weight:500;letter-spacing:0.06em;color:var(--ink-3);text-transform:uppercase;margin-bottom:10px">— 02</div>
         <div style="font-family:var(--font-display);font-size:24px;font-weight:400;font-style:italic;color:var(--ink);letter-spacing:-0.022em;margin-bottom:10px;line-height:1.1">NAPAS 247</div>
-        <div style="font-family:var(--font-body);font-size:14px;color:var(--ink-2);line-height:1.55">Vietnam's instant interbank rail. Settles twenty-four hours a day, in seconds.</div>
+        <div style="font-family:var(--font-body);font-size:14px;color:var(--ink-2);line-height:1.55">Hạ tầng chuyển tiền liên ngân hàng tức thời của Việt Nam. Vận hành 24 giờ, thanh toán trong vài giây.</div>
       </div>
       <div>
         <div style="font-family:var(--font-mono);font-size:11px;font-weight:500;letter-spacing:0.06em;color:var(--ink-3);text-transform:uppercase;margin-bottom:10px">— 03</div>
         <div style="font-family:var(--font-display);font-size:24px;font-weight:400;font-style:italic;color:var(--ink);letter-spacing:-0.022em;margin-bottom:10px;line-height:1.1">Techcombank</div>
-        <div style="font-family:var(--font-body);font-size:14px;color:var(--ink-2);line-height:1.55">Holds the wallet account, underwrites Pay-in-4, books the receivable.</div>
+        <div style="font-family:var(--font-body);font-size:14px;color:var(--ink-2);line-height:1.55">Giữ tài khoản ví, thẩm định Trả 4 lần, ghi nhận khoản phải thu trên sổ ngân hàng.</div>
       </div>
     </div>
 
@@ -1448,10 +1447,10 @@ body{font-family:var(--font-body);background:var(--paper);color:var(--ink);overf
 <footer class="foot">
   <div class="foot-inner">
     <div class="foot-meta">
-      <div class="fm-l">WinXPay · Vietnamese consumer wallet · Built on Techcombank rails</div>
+      <div class="fm-l"><b>WinXPay</b> · Ví thanh toán tại quầy · Vận hành trên hạ tầng Techcombank</div>
       <div class="fm-r">
         <span>VietQR · NAPAS 247</span>
-        <span>Pay in 4 · 0% interest</span>
+        <span>Trả 4 lần · 0% lãi</span>
       </div>
     </div>
   </div>
@@ -1697,47 +1696,44 @@ if(!reduceMotion && cardCanvas){
     });
     cardGeom.center();
 
-    // ---- CARD FACE TEXTURE (Stripe Press editorial) ----
+    // ---- CARD FACE TEXTURE (Stripe Press · ví thanh toán, không phải thẻ tín dụng) ----
     function makeCardTexture(){
       const c = document.createElement('canvas');
       c.width = 1024; c.height = 640;
       const x = c.getContext('2d');
 
-      // Solid deep-magenta face (single Vietnamese signature color)
+      // Solid deep-magenta face
       x.fillStyle = '#A5135C';
       x.fillRect(0, 0, 1024, 640);
 
-      // Soft directional sheen (top-left corner highlight)
+      // Soft directional sheen
       const sheen = x.createLinearGradient(0, 0, 1024, 640);
       sheen.addColorStop(0, 'rgba(255,255,255,0.16)');
       sheen.addColorStop(0.45, 'rgba(255,255,255,0.02)');
       sheen.addColorStop(1, 'rgba(0,0,0,0.18)');
       x.fillStyle = sheen; x.fillRect(0, 0, 1024, 640);
 
-      // Subtle radial in upper-right (warm highlight)
+      // Warm radial highlight upper-right
       const r1 = x.createRadialGradient(820, 140, 20, 820, 140, 480);
       r1.addColorStop(0, 'rgba(255,210,200,0.18)');
       r1.addColorStop(1, 'rgba(255,210,200,0)');
       x.fillStyle = r1; x.fillRect(0, 0, 1024, 640);
 
-      // Hairline inner border (Stripe Press editorial frame)
+      // Hairline inner border
       x.strokeStyle = 'rgba(255,255,255,0.22)';
       x.lineWidth = 1;
       x.strokeRect(36, 36, 1024 - 72, 640 - 72);
 
       // ============= TYPOGRAPHY =============
-
-      // Top eyebrow — small caps tracked
+      // Eyebrow tracked Vietnamese
       x.fillStyle = 'rgba(255,255,255,0.62)';
       x.font = '500 18px "Inter", system-ui';
       x.textBaseline = 'alphabetic';
-      // letter-spacing trick: draw chars manually
-      const eyebrow = 'WINXPAY';
-      const sub = 'A WALLET MADE IN VIETNAM';
       x.save();
       x.translate(72, 110);
+      const eyebrow = 'WINXPAY';
+      const sub = 'VÍ THANH TOÁN VIỆT NAM';
       let xPos = 0;
-      x.font = '500 18px "Inter", system-ui';
       for(const ch of eyebrow){ x.fillText(ch, xPos, 0); xPos += x.measureText(ch).width + 4.5; }
       x.fillStyle = 'rgba(255,255,255,0.42)';
       x.fillText(' · ', xPos, 0); xPos += x.measureText(' · ').width;
@@ -1748,69 +1744,92 @@ if(!reduceMotion && cardCanvas){
       // Big serif italic wordmark
       x.fillStyle = '#fff';
       x.font = 'italic 400 156px "Fraunces", "Times New Roman", serif';
-      x.textBaseline = 'alphabetic';
-      x.fillText('Win', 60, 320);
+      x.fillText('Win', 60, 310);
       const winW = x.measureText('Win').width;
-      // Italicized "X" in slightly lighter hue
       x.fillStyle = 'rgba(255,255,255,0.88)';
-      x.font = 'italic 400 156px "Fraunces", "Times New Roman", serif';
-      x.fillText('X', 60 + winW - 8, 320);
+      x.fillText('X', 60 + winW - 8, 310);
       const xW = x.measureText('X').width;
       x.fillStyle = '#fff';
-      x.fillText('Pay', 60 + winW - 8 + xW - 8, 320);
+      x.fillText('Pay', 60 + winW - 8 + xW - 8, 310);
 
-      // Italic tag below wordmark
-      x.fillStyle = 'rgba(255,255,255,0.72)';
-      x.font = 'italic 400 26px "Fraunces", serif';
-      x.fillText('the wallet that meets you at the till', 64, 360);
+      // Italic Vietnamese tag below wordmark
+      x.fillStyle = 'rgba(255,255,255,0.78)';
+      x.font = 'italic 400 32px "Fraunces", serif';
+      x.fillText('cho Người dùng', 64, 360);
+
+      // ============= MIDDLE: large QR mark (this is a QR-first wallet) =============
+      // Decorative VietQR block — large, off to the right
+      const qrSize = 168, qrX = 1024 - 72 - qrSize, qrY = 200;
+      // Background panel for QR
+      x.fillStyle = 'rgba(255,255,255,0.96)';
+      x.fillRect(qrX, qrY, qrSize, qrSize);
+      // QR pattern
+      x.fillStyle = '#0A2540';
+      const cell = qrSize / 21;
+      for(let i=0;i<21;i++) for(let j=0;j<21;j++){
+        const r = (i*7 + j*11 + (i*j % 5));
+        if(r % 2 === 0 || (i<3 && j<3) || (i>17 && j<3) || (i<3 && j>17)){
+          x.fillRect(qrX + i*cell + 1, qrY + j*cell + 1, cell - 2, cell - 2);
+        }
+      }
+      // QR finder corners (3 squares)
+      const drawFinder = (fx, fy) => {
+        x.fillStyle = '#fff';
+        x.fillRect(fx, fy, cell*7, cell*7);
+        x.fillStyle = '#0A2540';
+        x.fillRect(fx, fy, cell*7, cell*7);
+        x.fillStyle = '#fff';
+        x.fillRect(fx + cell, fy + cell, cell*5, cell*5);
+        x.fillStyle = '#0A2540';
+        x.fillRect(fx + cell*2, fy + cell*2, cell*3, cell*3);
+      };
+      drawFinder(qrX, qrY);
+      drawFinder(qrX + cell*14, qrY);
+      drawFinder(qrX, qrY + cell*14);
+      // VietQR mark in QR center
+      x.fillStyle = '#fff';
+      x.fillRect(qrX + cell*8, qrY + cell*8, cell*5, cell*5);
+      x.fillStyle = '#A5135C';
+      x.font = 'bold 18px "Inter"';
+      x.textAlign = 'center';
+      x.fillText('QR', qrX + qrSize/2, qrY + qrSize/2 + 6);
+      x.textAlign = 'left';
 
       // ============= BOTTOM ROW =============
-      // Small caps labels
+      // Tracked label
       x.fillStyle = 'rgba(255,255,255,0.55)';
       x.font = '500 13px "Inter"';
       x.save();
       x.translate(72, 510);
+      const lbl = 'PHÁT HÀNH BỞI TECHCOMBANK · VIETQR · NAPAS 247';
       let lx = 0;
-      const lbl = 'ISSUED BY TECHCOMBANK · VIETQR · NAPAS 247';
-      for(const ch of lbl){ x.fillText(ch, lx, 0); lx += x.measureText(ch).width + 2.5; }
+      for(const ch of lbl){ x.fillText(ch, lx, 0); lx += x.measureText(ch).width + 2.2; }
       x.restore();
 
-      // Mono account fragment (subtle, low-emphasis)
-      x.fillStyle = 'rgba(255,255,255,0.78)';
-      x.font = '500 28px "JetBrains Mono", ui-monospace';
-      x.fillText('•••• •••• 4291', 72, 562);
+      // Payment ID handle
+      x.fillStyle = 'rgba(255,255,255,0.85)';
+      x.font = '500 30px "JetBrains Mono", ui-monospace';
+      x.fillText('@anhminh', 72, 558);
 
-      // Right side — cardholder
+      // Right side — wallet ID label + serif italic name
       x.fillStyle = 'rgba(255,255,255,0.55)';
       x.font = '500 13px "Inter"';
       x.save();
       x.translate(620, 510);
+      const ch2 = 'CHỦ VÍ';
       let cx = 0;
-      const ch2 = 'CARDHOLDER';
       for(const ch of ch2){ x.fillText(ch, cx, 0); cx += x.measureText(ch).width + 2.5; }
       x.restore();
-
       x.fillStyle = '#fff';
-      x.font = 'italic 400 32px "Fraunces", serif';
-      x.fillText('Nguyen Van Minh', 620, 562);
+      x.font = 'italic 400 30px "Fraunces", serif';
+      x.fillText('Nguyễn Văn Minh', 620, 558);
 
-      // Edition / volume mark — tiny upper right
+      // Edition mark — tiny upper right
       x.fillStyle = 'rgba(255,255,255,0.58)';
       x.font = 'italic 400 18px "Fraunces", serif';
       x.textAlign = 'right';
-      x.fillText('vol. i', 1024 - 72, 110);
+      x.fillText('phiên bản i', 1024 - 72, 110);
       x.textAlign = 'left';
-
-      // Small VietQR symbol — bottom right
-      x.fillStyle = 'rgba(255,255,255,0.20)';
-      const qrSize = 56, qrX = 1024 - 72 - qrSize, qrY = 640 - 72 - qrSize;
-      // Stylized QR corner blocks
-      for(let i=0;i<7;i++) for(let j=0;j<7;j++){
-        if((i*j*3+i+j)%2===0) x.fillRect(qrX + i*8, qrY + j*8, 6, 6);
-      }
-      x.strokeStyle = 'rgba(255,255,255,0.35)';
-      x.lineWidth = 1;
-      x.strokeRect(qrX-4, qrY-4, qrSize+8, qrSize+8);
 
       const t = new THREE.CanvasTexture(c);
       t.anisotropy = 16;
